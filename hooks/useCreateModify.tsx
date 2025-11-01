@@ -7,7 +7,7 @@ import { blogContent, content, tagsType } from "@lib/types";
 import { getAllTags } from "@services/tags";
 import { getBlogContentById } from "@services/blogContent";
 
-export function useTagsAndTopics(id: string) {
+export function useCreateModify(id: string) {
   const [topicList, setTopicList] = useState<string[]>([]);
   const [tagList, setTagList] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);

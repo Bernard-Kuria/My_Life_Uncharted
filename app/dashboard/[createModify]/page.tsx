@@ -6,7 +6,7 @@ import Link from "next/link";
 import Draftify from "@c/Draftify";
 import SectionTitle from "@c/SectionTitle";
 
-import { handleTagChange, useTagsAndTopics } from "@hooks/useCreateModify";
+import { handleTagChange, useCreateModify } from "@hooks/useCreateModify";
 
 export default function CreateModifyBlog({
   params,
@@ -14,13 +14,11 @@ export default function CreateModifyBlog({
   params: Promise<{ createModify: string }>;
 }) {
   const { createModify } = use(params);
-
-  // ✅ Load topics and tags using the custom hook
-  const { topicList, tagList, loading, error, blogContent } =
-    useTagsAndTopics(createModify);
-
   const [selectedTopic, setSelectedTopic] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const { topicList, tagList, loading, error, blogContent } =
+    useCreateModify(createModify);
 
   if (loading) return <div>Loading topics and tags...</div>;
   if (error) return <div className="text-red-500">{error}</div>;

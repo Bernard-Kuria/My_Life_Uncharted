@@ -3,12 +3,12 @@
 import { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { handleThemeBtnClick } from "../../hooks/DraftifyHooks/ToolBarHooks/ToggleEffects";
+import { handleThemeBtnClick } from "../../lib/Draftify/ToolBarHooks/ToggleEffects";
 import {
   handleDownloadJSON,
   handleCopy,
   exportBlocksToDocx,
-} from "../../hooks/DraftifyHooks/ToolBarHooks/ToolBarInteractions";
+} from "../../lib/Draftify/ToolBarHooks/ToolBarInteractions";
 
 export default function ToolBar({ view, setView, blocksData }) {
   const [copy, setCopy] = useState(false);
