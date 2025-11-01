@@ -1,6 +1,12 @@
 import { BlogTopicsType } from "../lib/types";
 import { getAllTopics } from "@services/topics";
 
+export const cleanUpLink = (link: string) =>
+  link
+    .split("-")
+    .map((p) => (p === "%26" ? "&" : p))
+    .join("-");
+
 export const getTopicFromLink = (link: string) =>
   link
     .split("-")

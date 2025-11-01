@@ -5,11 +5,6 @@ import { nanoid } from "nanoid";
 
 import { newContentTable } from "./tableHooks/tableInteractions";
 
-// Assume this exists or mock it for the sake of the example
-async function imageToBase64(b) {
-  return "base64-string-here";
-}
-
 export function useDraftify(initialBlocks = []) {
   const [blocksData, setBlocksData] = useState(() => {
     if (typeof window !== "undefined") {

@@ -1,37 +1,17 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 
 import Blogs from "@c/Blogs";
 import Hero from "@c/Hero";
 
-import { getAllTopics } from "@services/topics";
-
 import { getLinkFromTopic } from "@utils/conversions";
 
-import { BlogTopicsType } from "@lib/types";
+import { useIndex } from "@hooks/useIndex";
 
 export default function Home() {
   const location = usePathname();
-  const [topics, setTopics] = useState<BlogTopicsType>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchTopics() {
-      try {
-        const data: BlogTopicsType = await getAllTopics();
-        setTopics(data);
-      } catch (err) {
-        console.error("Failed to fetch topics:", err);
-        setError("Failed to load topics");
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchTopics();
-  }, []);
+  const { topics, loading, error } = useIndex();
 
   return (
     <div className="grid justify-center mt-[30px] gap-[100px]">

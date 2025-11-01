@@ -11,8 +11,8 @@ import ToolBar from "./DraftifyProComponents/ToolBar";
 import Grabber from "./DraftifyProComponents/Grabber";
 import BackGround from "./DraftifyProComponents/Background";
 
-import { useDraftify } from "../hooks/DraftifyHooks/useDraftify";
-import { useGenerateGrid } from "../hooks/DraftifyHooks/BackgroundHooks/backGroundEffects";
+import { useDraftify } from "../lib/Draftify/useDraftify";
+import { useGenerateGrid } from "../lib/Draftify/BackgroundHooks/backGroundEffects";
 
 export default function Draftify({ data }) {
   const [mounted, setMounted] = useState(false);

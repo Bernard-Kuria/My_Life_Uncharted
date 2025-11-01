@@ -1,5 +1,5 @@
 "use client";
-import { use, useEffect, useState } from "react";
+import { use } from "react";
 
 import { useRouter, useParams } from "next/navigation";
 
@@ -7,32 +7,19 @@ import BlogReading from "@c/BlogReading";
 import Comments from "@c/Comments";
 import Blogs from "@c/Blogs";
 
-import { getAllBlogs } from "@services/blogs";
-
-import { getTopicFromLink } from "@utils/conversions";
-
-import { BlogsType } from "@lib/types";
+import { useBlogPage } from "@hooks/useBlogPage";
 
 export default function Page({
   params,
 }: {
   params: Promise<{ blogpage: string }>;
 }) {
-  const [blogs, setBlogs] = useState<BlogsType | undefined>(undefined);
-  const [loaded, setLoaded] = useState(false);
+  const { blogpage } = use(params);
   const router = useRouter();
   const param = useParams();
+  const topicPage = param.blogTopicPage?.toString();
 
-  const { blogpage } = use(params);
-
-  const topic = getTopicFromLink(param.blogTopicPage?.toString() || "");
-  const backLink = param.blogTopicPage;
-
-  useEffect(() => {
-    getAllBlogs()
-      .then(setBlogs)
-      .finally(() => setLoaded(true));
-  }, []);
+  const { blogs, loaded, topic, backLink } = useBlogPage(topicPage || "");
 
   if (!loaded) return <div>Loading Blogs</div>;
 
