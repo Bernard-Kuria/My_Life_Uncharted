@@ -4,7 +4,7 @@ import { getAllBlogs } from "@services/blogs";
 
 import { getAllTopics } from "@services/topics";
 
-import { cleanUpLink, getTopicMatchingPage } from "@utils/conversions";
+import { cleanUpLink, getBlogMatchingPage } from "@utils/conversions";
 
 import { BlogsType, BlogTopicsType, topic } from "@lib/types";
 
@@ -20,7 +20,7 @@ export const useBlogTopicPage = (blogTopicPage: string) => {
   const page = cleanUpLink(blogTopicPage);
 
   useEffect(() => {
-    getTopicMatchingPage(page).then(setTopicPage);
+    getBlogMatchingPage(page).then(setTopicPage);
   }, []);
 
   useEffect(() => {
