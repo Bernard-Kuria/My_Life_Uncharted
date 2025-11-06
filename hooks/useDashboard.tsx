@@ -16,6 +16,7 @@ export const useDashboard = () => {
   const [draftsByTopic, setDraftsByTopic] = useState<
     Record<string, draftsType>
   >({});
+  const [refreshTrigger, setRefreshTrigger] = useState(false); // ✅ triggers re-fetch
 
   useEffect(() => {
     async function fetchBlogsAndDrafts() {
@@ -45,5 +46,12 @@ export const useDashboard = () => {
 
     fetchBlogsAndDrafts();
   }, []);
-  return { topics, blogsByTopic, draftsByTopic };
+
+  return {
+    topics,
+    blogsByTopic,
+    draftsByTopic,
+    refreshTrigger,
+    setRefreshTrigger,
+  };
 };

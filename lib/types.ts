@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type linesTypes = {
   width?: string;
   height?: string;
@@ -97,3 +99,5 @@ export type Milestones = {
   topic: string;
   milestones: milestone[];
 };
+
+export type handleFeaturedType = (id: string, topic: string) => Promise<void>;

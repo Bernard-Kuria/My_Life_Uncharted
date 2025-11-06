@@ -11,7 +11,13 @@ import DraftList from "@c/DraftList";
 import { useDashboard } from "@hooks/useDashboard";
 
 export default function Dashboard() {
-  const { topics, blogsByTopic, draftsByTopic } = useDashboard();
+  const {
+    topics,
+    blogsByTopic,
+    draftsByTopic,
+    refreshTrigger,
+    setRefreshTrigger,
+  } = useDashboard();
 
   return (
     <div className="grid justify-center">
@@ -37,7 +43,11 @@ export default function Dashboard() {
                     key={blog.id}
                     className="w-full flex justify-between gap-[10px] items-center"
                   >
-                    <BlogsList blog={blog} />
+                    <BlogsList
+                      blog={blog}
+                      refreshTrigger={refreshTrigger}
+                      setRefreshTrigger={setRefreshTrigger}
+                    />
                     <FontAwesomeIcon
                       icon={["fas", "trash"]}
                       className="hover:text-red-500 cursor-pointer"

@@ -8,7 +8,6 @@ import {
   collection,
   query,
   where,
-  getDoc,
 } from "firebase/firestore";
 
 // GET: fetch all featured blogs or one by ID
@@ -18,41 +17,34 @@ export async function GET(req: Request) {
     const topic = url.searchParams.get("topic");
     const id = url.searchParams.get("id");
 
-    // Fetch by ID
-    if (id) {
-      const docRef = doc(db, "featuredBlogs", id);
-      const docSnap = await getDoc(docRef);
-      // if (!docSnap.exists())
-      //   return new Response("Featured blog not found", { status: 404 });
+    const featuredBlogCollection = collection(db, "featuredBlogs");
 
-      return NextResponse.json({ id: docSnap.id, ...docSnap.data() });
+    // Fetch by internal id stored in the document
+    if (id) {
+      const q = query(featuredBlogCollection, where("id", "==", id));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        return new Response("Featured blog not found", { status: 404 });
+      }
+
+      // If multiple documents somehow have the same id, just return the first one
+      const featuredBlog = querySnapshot.docs[0].data();
+      return NextResponse.json(featuredBlog);
     }
 
     // Fetch by topic
     if (topic) {
-      const featuredblogRef = collection(db, "featuredBlogs");
-      const q = query(featuredblogRef, where("topic", "==", topic));
+      const q = query(featuredBlogCollection, where("topic", "==", topic));
       const querySnapshot = await getDocs(q);
 
-      const featuredBlogs = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-      // if (featuredBlogs.length === 0)
-      //   return new Response("No featured blogs found for this topic", {
-      //     status: 404,
-      //   });
-
+      const featuredBlogs = querySnapshot.docs.map((doc) => doc.data());
       return NextResponse.json(featuredBlogs);
     }
 
     // Fetch all featured blogs
-    const snapshot = await getDocs(collection(db, "featuredBlogs"));
-    const allBlogs = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const snapshot = await getDocs(featuredBlogCollection);
+    const allBlogs = snapshot.docs.map((doc) => doc.data());
 
     return NextResponse.json(allBlogs);
   } catch (error) {
@@ -80,21 +72,46 @@ export async function POST(req: Request) {
   }
 }
 
-// PUT: update or create blog by ID
+// PUT: update the featured blog for a given topic
 export async function PUT(req: Request) {
   try {
     const data = await req.json();
     const { id, topic } = data;
 
-    // This single operation updates if the doc exists or creates it if not.
-    // It is a much more efficient "upsert" pattern.
-    const blogRef = doc(db, "featuredBlogs", id);
-    await setDoc(blogRef, { topic, id }, { merge: true });
+    if (!id || !topic)
+      return new Response("Missing required fields", { status: 400 });
 
-    return NextResponse.json({ id, message: "Blog updated or created!" });
+    // Query the featuredBlogs collection for the given topic
+    const featuredRef = collection(db, "featuredBlogs");
+    const q = query(featuredRef, where("topic", "==", topic));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      // If the topic already exists, update that document
+      const docRef = querySnapshot.docs[0].ref;
+      await setDoc(docRef, { id, topic }, { merge: true });
+
+      return NextResponse.json({
+        id,
+        topic,
+        message: "Featured blog updated for this topic!",
+      });
+    } else {
+      // If no document exists for that topic, create a new one
+      const newDocRef = doc(collection(db, "featuredBlogs"));
+      await setDoc(newDocRef, { id, topic });
+
+      return NextResponse.json({
+        id,
+        topic,
+        message: "New featured blog created for this topic!",
+      });
+    }
   } catch (error) {
-    console.error("Error updating/creating blog:", error);
-    return new Response("Failed to update or create blog", { status: 500 });
+    console.error("Error updating/creating featured blog:", error);
+    return new Response("Failed to update or create featured blog", {
+      status: 500,
+    });
   }
 }
 
