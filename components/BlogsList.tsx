@@ -2,25 +2,50 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
 import { FontAwesomeIcon } from "@node_modules/@fortawesome/react-fontawesome/dist";
-
 import { Blog } from "@lib/types";
-import { checkIsFeatured } from "@services/featuredBlogs";
-import { useEffect, useState } from "react";
+import { checkIsFeatured, setFeatured } from "@services/featuredBlogs";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-export default function BlogsList({ blog }: { blog: Blog }) {
+type BlogsListProps = {
+  blog: Blog;
+  refreshTrigger: boolean;
+  setRefreshTrigger: Dispatch<SetStateAction<boolean>>;
+};
+
+export default function BlogsList({
+  blog,
+  refreshTrigger,
+  setRefreshTrigger,
+}: BlogsListProps) {
   const [isFeatured, setIsFeatured] = useState<boolean | undefined>();
+  const [loading, setLoading] = useState(false);
   const location = usePathname();
   const { id } = blog;
-  const { title, subtitle, views, comments, likes } = blog.blogMeta;
+  const { title, subtitle, views, comments, likes, topic } = blog.blogMeta;
 
+  // ✅ Fetch featured status on mount + when refreshTrigger toggles
   useEffect(() => {
-    async function checkStatus() {
-      return await checkIsFeatured(id);
+    async function fetchFeaturedStatus() {
+      const featured = await checkIsFeatured(id);
+      setIsFeatured(featured);
     }
-    checkStatus().then(setIsFeatured);
-  }, []);
+    fetchFeaturedStatus();
+  }, [refreshTrigger]);
+
+  // ✅ Handles the toggle logic
+  const handleFeatured = async () => {
+    try {
+      setLoading(true);
+      setIsFeatured((prev) => !prev); // optimistic update for instant UI feedback
+      await setFeatured(id, topic);
+      setRefreshTrigger((prev) => !prev); // trigger re-fetch to confirm real status
+    } catch (error) {
+      console.error("Error toggling featured:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="h-[200px] flex gap-[10px] border rounded-[10px] flex-1 p-5">
@@ -45,8 +70,17 @@ export default function BlogsList({ blog }: { blog: Blog }) {
             {likes}
           </div>
         </div>
-        <button className={`${isFeatured ? "buttonInverted" : "button"}`}>
-          {isFeatured ? "Featured" : "Set as Featured"}
+
+        <button
+          disabled={loading}
+          onClick={handleFeatured}
+          className={`${isFeatured ? "buttonInverted" : "button"}`}
+        >
+          {loading
+            ? "Updating..."
+            : isFeatured
+            ? "Featured"
+            : "Set as Featured"}
         </button>
       </div>
     </div>

@@ -39,3 +39,19 @@ export const checkIsFeatured = async (id: string) => {
 // await getFeaturedBlogs(); // all
 // await getFeaturedBlogs({ topic: "tech" }); // by topic
 // await getFeaturedBlogs({ id: "abc123" }); // single blog
+
+export const setFeatured = async (id: string, topic: string) => {
+  try {
+    const res = await fetch(`/api/featuredBlogs`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, topic }),
+    });
+
+    if (!res.ok) throw new Error(`Failed to update featured blog`);
+    return await res.json();
+  } catch (err) {
+    console.error("Error in setFeatured:", err);
+    throw err;
+  }
+};
