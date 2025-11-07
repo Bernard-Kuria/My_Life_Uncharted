@@ -6,7 +6,7 @@ import Link from "next/link";
 import Draftify from "@c/Draftify";
 import SectionTitle from "@c/SectionTitle";
 
-import { handleTagChange, useCreateModify } from "@hooks/useCreateModify";
+import { useCreateModify } from "@hooks/useCreateModify";
 
 export default function CreateModifyBlog({
   params,
@@ -17,8 +17,21 @@ export default function CreateModifyBlog({
   const [selectedTopic, setSelectedTopic] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  const { topicList, tagList, loading, error, blogContent } =
-    useCreateModify(createModify);
+  const {
+    topicList,
+    tagList,
+    loading,
+    error,
+    blogContent,
+    handleTagChange,
+    handleAddBlog,
+    handleSaveDraft,
+    handleDelete,
+    handleUpdateBlog,
+    addStatus,
+    updateStatus,
+    deleteStatus,
+  } = useCreateModify(createModify);
 
   if (loading) return <div>Loading topics and tags...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
@@ -93,26 +106,38 @@ export default function CreateModifyBlog({
 
         {createModify === "new" ? (
           <div className="flex justify-between">
-            <button className="border p-2 text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) hover:text-white cursor-pointer">
-              Add New Post
+            <button
+              className="border p-2 text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) hover:text-white cursor-pointer"
+              onClick={handleAddBlog}
+            >
+              {addStatus ? "Adding" : "Add New Post"}
             </button>
-            <button className="border p-2 text-(--secondary-blue) border-(--secondary-blue) hover:bg-(--secondary-blue) hover:text-white cursor-pointer">
-              Save as Draft
+            <button
+              className="border p-2 text-(--secondary-blue) border-(--secondary-blue) hover:bg-(--secondary-blue) hover:text-white cursor-pointer"
+              onClick={handleSaveDraft}
+            >
+              {updateStatus ? "Saving" : "Save as Draft"}
             </button>
-            <button className="border p-2 text-red-500 border-red-500 hover:bg-red-500 hover:text-white cursor-pointer">
-              Delete Draft
+            <button
+              className="border p-2 text-red-500 border-red-500 hover:bg-red-500 hover:text-white cursor-pointer"
+              onClick={handleDelete}
+            >
+              {deleteStatus ? "Deleting" : "Delete Draft"}
             </button>
           </div>
         ) : (
           <div className="flex justify-between">
-            <button className="border p-2 text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) hover:text-white cursor-pointer">
+            <button
+              className="border p-2 text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) hover:text-white cursor-pointer"
+              onClick={handleUpdateBlog}
+            >
               Update Post
             </button>
-            <button className="border p-2 text-(--secondary-blue) border-(--secondary-blue) hover:bg-(--secondary-blue) hover:text-white cursor-pointer">
-              <Link href={"/dashboard"}>Undo update</Link>
-            </button>
-            <button className="border p-2 text-red-500 border-red-500 hover:bg-red-500 hover:text-white cursor-pointer">
-              Delete This post
+            <button
+              className="border p-2 text-red-500 border-red-500 hover:bg-red-500 hover:text-white cursor-pointer"
+              onClick={handleDelete}
+            >
+              Delete this post
             </button>
           </div>
         )}

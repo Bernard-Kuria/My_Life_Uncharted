@@ -30,7 +30,7 @@ export async function GET(req: Request) {
       return NextResponse.json(draftSnap.data());
     } else if (topic) {
       const blogRef = collection(db, "drafts");
-      const q = query(blogRef, where("topic", "==", topic));
+      const q = query(blogRef, where("draftMeta.topic", "==", topic));
       const querySnapshot = await getDocs(q);
 
       const drafts = querySnapshot.docs.map((doc) => doc.data());
