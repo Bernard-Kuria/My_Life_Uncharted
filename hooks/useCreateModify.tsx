@@ -5,7 +5,14 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { blogContent, content, tagsType } from "@lib/types";
 
 import { getAllTags } from "@services/tags";
-import { getBlogContentById } from "@services/blogContent";
+import {
+  addBlogContent,
+  deleteBlogContent,
+  getBlogContentById,
+  updateBlogContent,
+} from "@services/blogContent";
+import { useDraftify } from "@lib/Draftify/useDraftify";
+import { nanoid } from "@node_modules/nanoid";
 
 export function useCreateModify(id: string) {
   const [topicList, setTopicList] = useState<string[]>([]);
@@ -13,6 +20,10 @@ export function useCreateModify(id: string) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [blogContent, setBlogContent] = useState<content | null>(null);
+  const { blocksData } = useDraftify([]);
+  const [addStatus, setAddStatus] = useState<boolean>(false);
+  const [updateStatus, setUpdateStatus] = useState<boolean>(false);
+  const [deleteStatus, setDeleteStatus] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -71,35 +82,76 @@ export function useCreateModify(id: string) {
     fetchData();
   }, [id]);
 
-  return { topicList, tagList, loading, error, blogContent };
+  const handleTagChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    selectedTags: string[],
+    setSelectedTags: Dispatch<SetStateAction<string[]>>
+  ) => {
+    const newTag = e.target.value;
+    if (!selectedTags.includes(newTag)) {
+      setSelectedTags((prevTags) => [...prevTags, newTag]);
+    }
+  };
+
+  const handleAddBlog = async () => {
+    const BlogId = nanoid();
+    try {
+      setAddStatus(true);
+      await addBlogContent({ id: BlogId, blogContent: blocksData });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setAddStatus(false);
+    }
+  };
+
+  const handleSaveDraft = async () => {
+    const BlogId = nanoid();
+    try {
+      setUpdateStatus(true);
+      await addBlogContent({ id: BlogId, blogContent: blocksData });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setUpdateStatus(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      setDeleteStatus(true);
+      await deleteBlogContent(id);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setDeleteStatus(false);
+    }
+  };
+
+  const handleUpdateBlog = async () => {
+    try {
+      setUpdateStatus(true);
+      await updateBlogContent({ id: id, blogContent: blocksData });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setUpdateStatus(false);
+    }
+  };
+
+  return {
+    topicList,
+    tagList,
+    loading,
+    error,
+    blogContent,
+    handleTagChange,
+    handleAddBlog,
+    handleSaveDraft,
+    handleDelete,
+    handleUpdateBlog,
+    addStatus,
+    updateStatus,
+    deleteStatus,
+  };
 }
-
-export const applyToggleStyles = (
-  t: "light" | "dark",
-  btn: HTMLLIElement | null,
-  toggle: HTMLDivElement | null
-) => {
-  if (!btn || !toggle) return;
-  if (t === "dark") {
-    btn.style.borderColor = "#f4f5f0";
-    btn.style.backgroundColor = "#232323";
-    toggle.style.backgroundColor = "#f4f5f0";
-    toggle.style.transform = "translateX(15px)";
-  } else {
-    btn.style.borderColor = "#232323";
-    btn.style.backgroundColor = "#f4f5f0";
-    toggle.style.backgroundColor = "#232323";
-    toggle.style.transform = "translateX(1px)";
-  }
-};
-
-export const handleTagChange = (
-  e: React.ChangeEvent<HTMLSelectElement>,
-  selectedTags: string[],
-  setSelectedTags: Dispatch<SetStateAction<string[]>>
-) => {
-  const newTag = e.target.value;
-  if (!selectedTags.includes(newTag)) {
-    setSelectedTags((prevTags) => [...prevTags, newTag]);
-  }
-};

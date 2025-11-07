@@ -75,13 +75,13 @@ export async function POST(req: Request) {
 export async function PUT(req: Request) {
   try {
     const data = await req.json();
-    const { id, ...content } = data;
+    const { id } = data;
 
     if (!id) return new Response("Missing blog ID", { status: 400 });
 
     const contentRef = doc(db, "blogContent", id);
 
-    await updateDoc(contentRef, { id: id, blogContent: content });
+    await updateDoc(contentRef, data);
 
     return NextResponse.json({ id, message: "Blog updated!" });
   } catch (error) {
@@ -93,8 +93,7 @@ export async function PUT(req: Request) {
 // DELETE: delete blog by ID
 export async function DELETE(req: Request) {
   try {
-    const data = await req.json();
-    const { id } = data;
+    const id = await req.json();
 
     if (!id) return new Response("Missing blog ID", { status: 400 });
 

@@ -65,12 +65,14 @@ export type featuredBlogType = featuredBlog[];
 
 export type draft = {
   id: string;
-  image: string;
-  topic: string;
-  title: string;
-  subtitle: string;
-  dateCreated: string;
-  tags: string[];
+  draftMeta: {
+    image: string;
+    topic: string;
+    title: string;
+    subtitle: string;
+    dateCreated: string;
+    tags: string[];
+  };
 };
 
 export type draftsType = draft[];
