@@ -8,17 +8,25 @@ import { getLinkFromTopic } from "@utils/conversions";
 import Link from "@node_modules/next/link";
 import { useEffect, useState } from "react";
 import { Blog } from "@lib/types";
+import { getImgUrl } from "@services/FirestoreStorage";
 
 export default function FeaturedBlog({ topic }: { topic: string }) {
-  console.log(topic);
   const [featuredBlog, setFeaturedBlog] = useState<Blog | undefined>(undefined);
   const [loaded, setLoaded] = useState(false);
+  const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {
     getFeaturedBlogs({ topic: topic })
       .then((e) => getAllBlogs({ id: e[0].id }).then(setFeaturedBlog))
       .finally(() => setLoaded(true));
   }, []);
+
+  useEffect(() => {
+    if (featuredBlog) {
+      console.log(featuredBlog.blogMeta.image);
+      getImgUrl(`blogImg/${featuredBlog.blogMeta.image}`).then(setImage);
+    }
+  }, [featuredBlog]);
 
   if (!featuredBlog) {
     return <div>Blog not found for topic: {topic}</div>;
@@ -36,11 +44,9 @@ export default function FeaturedBlog({ topic }: { topic: string }) {
       <div className="flex items-center text-white">Featured Blog</div>
       <div className="flex gap-[30px]">
         <div className="relative w-[50%]">
-          {featuredBlog.blogMeta.image === "" ? (
-            ""
-          ) : (
+          {image && (
             <Image
-              src={`${featuredBlog.blogMeta.image}`}
+              src={image}
               alt="Bike Riding"
               fill
               className="object-cover"

@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
-
 export type linesTypes = {
   width?: string;
   height?: string;
@@ -14,20 +12,13 @@ export type content = {
   id: string;
   type: string;
   content: string;
-  tableContent: null;
+  tableContent?: null;
 };
 
 export type blogContent = {
   id: string;
-  blogContent: {
-    id: string;
-    type: string;
-    content: string;
-    tableContent: null;
-  };
+  blogContent: content[];
 };
-
-export type blogContentType = blogContent[];
 
 export type topic = {
   id: string;
@@ -38,20 +29,35 @@ export type topic = {
 
 export type BlogTopicsType = topic[];
 
+export type blogMeta = {
+  image: string;
+  topic: string;
+  title: string;
+  subtitle: string;
+  dateCreated: string;
+  tags: string[];
+  likes: number;
+  comments: number;
+  views: number;
+  minsRead: number;
+};
+
+export type blogMetaParams = {
+  image?: string;
+  topic?: string;
+  title?: string;
+  subtitle?: string;
+  dateCreated?: string;
+  tags?: string[];
+  likes?: number;
+  comments?: number;
+  views?: number;
+  minsRead?: number;
+};
+
 export type Blog = {
   id: string;
-  blogMeta: {
-    image: string;
-    topic: string;
-    title: string;
-    subtitle: string;
-    dateCreated: string;
-    tags: string[];
-    likes: number;
-    comments: number;
-    views: number;
-    minsRead: number;
-  };
+  blogMeta: blogMeta;
 };
 
 export type BlogsType = Blog[];
@@ -103,3 +109,16 @@ export type Milestones = {
 };
 
 export type handleFeaturedType = (id: string, topic: string) => Promise<void>;
+
+export type BlogProps = {
+  link: string;
+  imageUrl: string;
+  topic: string;
+  timeStamp: string;
+};
+
+// Draftify Types
+export type tableContent = {
+  head: { id: number; content: string }[];
+  body: { id: number[]; content: string }[];
+};

@@ -1,20 +1,22 @@
 "use client";
+import { useEffect, useState } from "react";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-type BlogProps = {
-  link: string;
-  imageUrl: string;
-  topic: string;
-  timeStamp: string;
-};
+import { BlogProps } from "@lib/types";
+
+import { getImgUrl } from "@services/FirestoreStorage";
 
 export default function Blogs({ link, imageUrl, topic, timeStamp }: BlogProps) {
   const location = usePathname();
   const [hovered, setHovered] = useState(false);
+  const [image, setImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    getImgUrl(imageUrl).then(setImage);
+  }, []);
 
   return (
     <div className="">
@@ -37,12 +39,14 @@ export default function Blogs({ link, imageUrl, topic, timeStamp }: BlogProps) {
                 location === "/" ? "h-[250px]" : "h-full"
               } overflow-hidden`}
             >
-              <Image
-                src={`${imageUrl}`}
-                alt="image"
-                fill
-                className="object-cover"
-              />
+              {image && (
+                <Image
+                  src={`${image}`}
+                  alt="image"
+                  fill
+                  className="object-cover"
+                />
+              )}
             </div>
             <div
               className={`duration-300 ${

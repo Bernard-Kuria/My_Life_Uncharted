@@ -13,8 +13,9 @@ import BackGround from "./DraftifyProComponents/Background";
 
 import { useDraftify } from "../lib/Draftify/useDraftify";
 import { useGenerateGrid } from "../lib/Draftify/BackgroundHooks/backGroundEffects";
+import { blogContent, content } from "@lib/types";
 
-export default function Draftify({ data }) {
+export default function Draftify({ data }: { data: content[] }) {
   const [mounted, setMounted] = useState(false);
   const [view, setView] = useState("editor");
   const [gridDots, setGridDots] = useState([]);
@@ -33,7 +34,6 @@ export default function Draftify({ data }) {
     onDragLeave,
     containerVariants,
     itemVariants,
-    transitions,
     whileHover,
   } = useDraftify(draft);
 
@@ -66,12 +66,16 @@ export default function Draftify({ data }) {
                 exit="hidden"
               >
                 <AnimatePresence>
-                  {blocksData.map((b, index) => (
+                  {blocksData.map((b: blogContent, index: number) => (
                     <motion.div
                       key={b.id}
                       layout
                       variants={itemVariants}
-                      transition={transitions}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 20,
+                      }}
                       whileHover={whileHover}
                       draggable
                       onDragStart={(e) => onDragStart(e, index)}

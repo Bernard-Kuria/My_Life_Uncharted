@@ -1,5 +1,5 @@
 "use client";
-import { use } from "react";
+import { use, useEffect } from "react";
 
 import Image from "next/image";
 
@@ -19,8 +19,12 @@ export default function Page({
 }) {
   const { blogTopicPage } = use(params);
 
-  const { loaded, topicPage, page, targetBlogs, allTopics } =
+  const { loaded, topicPage, page, targetBlogs, allTopics, image } =
     useBlogTopicPage(blogTopicPage);
+
+  useEffect(() => {
+    console.log(image);
+  }, [image]);
 
   if (!loaded) return <div>Loading Blogs</div>;
 
@@ -28,15 +32,15 @@ export default function Page({
     <div className="relative flex flex-col gap-[20px] w-full">
       {/* Background Image */}
       <div className="absolute w-full h-[calc(100vh-70px)]">
-        {topicPage?.image === "" ? (
-          ""
-        ) : (
+        {image && (
           <Image
-            src={`${topicPage?.image}`}
+            src={image}
             alt={topicPage?.title || "Topic Image"}
             fill
             objectFit="cover"
             priority
+            style={{ objectFit: "cover" }}
+            unoptimized
           />
         )}
       </div>
@@ -48,9 +52,10 @@ export default function Page({
           <div>
             <div className="sub-title">Recent Posts</div>
             <div className="grid grid-cols-3 gap-[20px]">
-              {targetBlogs && (
-                <BlogCards location={page} targetBlogs={targetBlogs} />
-              )}
+              {targetBlogs &&
+                targetBlogs.map((blog) => (
+                  <BlogCards key={blog.id} location={page} blog={blog} />
+                ))}
             </div>
           </div>
         </div>
@@ -68,7 +73,7 @@ export default function Page({
                 <Blogs
                   key={b.id}
                   link={link}
-                  imageUrl={b.image}
+                  imageUrl={`blogTopicImg/${b.image}`}
                   topic={b.title}
                   timeStamp={b.timeStamp}
                 />

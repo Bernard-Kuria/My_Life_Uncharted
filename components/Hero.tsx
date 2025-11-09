@@ -1,14 +1,13 @@
-const imagesHome = [
-  "/assets/homeImages/chill.jpg",
-  "/assets/homeImages/bike-riding.jpg",
-  "/assets/homeImages/jkuat-hackathon.jpg",
-];
+"use client";
 
-export const homePageImages = () => imagesHome;
-
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
-export default function Hero() {
+export default function Hero({
+  landingPageImages,
+}: {
+  landingPageImages: string[];
+}) {
   const lines = [
     {
       width: "200",
@@ -47,6 +46,18 @@ export default function Hero() {
     },
   ];
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
+  console.log("Images url:", landingPageImages);
+
+  if (!landingPageImages || landingPageImages.length === 0) {
+    return <div>Loading images...</div>;
+  }
+
   return (
     <div className="relative w-[1035px] h-[450px] border-[5px] rounded-[10px] border-(--border-color) flex items-center p-[30px]">
       <div className="merriweather-font text-[80px] w-[65%] font-semibold leading-tight">
@@ -55,26 +66,32 @@ export default function Hero() {
       </div>
 
       <div className="relative w-[350px] h-[350px] overflow-hidden">
-        <Image
-          src={`${homePageImages()[0]}`}
-          alt="chill image"
-          width={700} // Set the width explicitly based on the parent
-          height={700}
-          className="object-cover object-[0%_30%] scale-200"
-        />
+        {landingPageImages[1] && (
+          <Image
+            src={landingPageImages[1]}
+            alt="chill image"
+            width={350}
+            height={700}
+            unoptimized
+            className="object-cover object-[0%_30%] scale-200"
+          />
+        )}
       </div>
 
       <div className="absolute top-[-68px] left-[-70px]">
         <div className="relative p-[3px]">
           <BorderLines />
           <div className="relative w-[143px] h-[198px] overflow-hidden">
-            <Image
-              src={homePageImages()[1]}
-              alt="chill image"
-              width={286}
-              height={396}
-              className="w-full h-full object-cover object-[-0%_40%] scale-200"
-            />
+            {landingPageImages[0] && (
+              <Image
+                src={landingPageImages[0]}
+                alt="chill image"
+                width={286}
+                height={396}
+                unoptimized
+                className="w-full h-full object-cover object-[-0%_40%] scale-200"
+              />
+            )}
           </div>
         </div>
       </div>
@@ -83,12 +100,15 @@ export default function Hero() {
         <div className="relative p-[3px]">
           <BorderLines />
           <div className="relative w-[292px] h-[143px] overflow-hidden">
-            <Image
-              src={`${homePageImages()[2]}`}
-              alt="chill image"
-              fill
-              className="object-cover object-[0%_40%]"
-            />
+            {landingPageImages[2] && (
+              <Image
+                src={`${landingPageImages[2]}`}
+                alt="chill image"
+                fill
+                unoptimized
+                className="object-cover object-[0%_40%]"
+              />
+            )}
           </div>
         </div>
       </div>

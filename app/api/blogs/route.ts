@@ -11,6 +11,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { blogMetaParams } from "@lib/types";
 
 // GET: fetch all blogs or one by ID
 export async function GET(req: Request) {
@@ -60,13 +61,10 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-    const { id, metadata } = data;
+    const { id } = data;
 
     // Save blog metadata
-    await setDoc(doc(db, "blogs", id), {
-      blogMeta: metadata,
-      id: id,
-    });
+    await setDoc(doc(db, "blogs", id), data);
 
     return NextResponse.json({ id: id, message: "Blog created!" });
   } catch (error) {
@@ -79,13 +77,27 @@ export async function POST(req: Request) {
 export async function PUT(req: Request) {
   try {
     const data = await req.json();
-    const { id, ...metadata } = data;
+    const { id, blogMeta } = data as { id: string; blogMeta: blogMetaParams };
 
     if (!id) return new Response("Missing blog ID", { status: 400 });
 
-    const blogRef = doc(db, "blogs", id);
+    // Build dynamic update object
+    const updates: Partial<
+      Record<
+        `blogMeta.${keyof blogMetaParams}`,
+        string | string[] | number | undefined
+      >
+    > = {};
 
-    await updateDoc(blogRef, { id: id, blogMeta: metadata });
+    for (const [key, value] of Object.entries(blogMeta)) {
+      if (value !== undefined) {
+        updates[`blogMeta.${key}` as `blogMeta.${keyof blogMetaParams}`] =
+          value;
+      }
+    }
+
+    const blogRef = doc(db, "blogs", id);
+    await updateDoc(blogRef, updates);
 
     return NextResponse.json({ id, message: "Blog updated!" });
   } catch (error) {
@@ -97,8 +109,7 @@ export async function PUT(req: Request) {
 // DELETE: delete blog by ID
 export async function DELETE(req: Request) {
   try {
-    const data = await req.json();
-    const { id } = data;
+    const id = await req.json();
 
     if (!id) return new Response("Missing blog ID", { status: 400 });
 
