@@ -42,7 +42,7 @@ export default function Page({
                 <Blogs
                   key={b.id}
                   link={link}
-                  imageUrl={b.blogMeta.image}
+                  imageUrl={`blogImg/${b.blogMeta.image}`}
                   topic={b.blogMeta.title}
                   timeStamp={b.blogMeta.dateCreated}
                 />

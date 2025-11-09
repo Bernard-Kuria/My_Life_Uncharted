@@ -11,11 +11,18 @@ import { useIndex } from "@hooks/useIndex";
 
 export default function Home() {
   const location = usePathname();
-  const { topics, loading, error } = useIndex();
+  const { landingPageImages, topics, loadingTopics, loadingImages, error } =
+    useIndex();
+
+  const loading = loadingTopics || loadingImages;
+
+  if (loading) return <div>Loading images or topics...</div>;
+
+  if (error) return <div className="text-red-500">{error}</div>;
 
   return (
     <div className="grid justify-center mt-[30px] gap-[100px]">
-      <Hero />
+      <Hero landingPageImages={landingPageImages} />
       <div
         className={`w-[1035px] grid gap-[50px] ${
           location === "/" ? "justify-center text-center" : "text-left"
@@ -23,24 +30,18 @@ export default function Home() {
       >
         {location === "/" ? "Browse" : "Other"} Topics
         <div className="flex flex-wrap gap-[20px]">
-          {loading ? (
-            <p>Loading topics...</p>
-          ) : error ? (
-            <p className="text-red-500">{error}</p>
-          ) : (
-            topics.map((b) => {
-              const link = getLinkFromTopic(b.title);
-              return (
-                <Blogs
-                  key={b.id}
-                  link={link}
-                  imageUrl={b.image}
-                  topic={b.title}
-                  timeStamp={b.timeStamp}
-                />
-              );
-            })
-          )}
+          {topics.map((b) => {
+            const link = getLinkFromTopic(b.title);
+            return (
+              <Blogs
+                key={b.id}
+                link={link}
+                imageUrl={`blogTopicImg/${b.image}`}
+                topic={b.title}
+                timeStamp={b.timeStamp}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

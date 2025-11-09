@@ -1,4 +1,4 @@
-import { content } from "@lib/types";
+import { blogContent } from "@lib/types";
 import { API_BASE } from "@utils/constants";
 
 export async function getAllBlogsContent() {
@@ -24,15 +24,12 @@ export async function getBlogContentById(id: string) {
     const data = await res.json();
     return { id: data.id, blogContent: data.blogContent };
   } catch (err) {
-    console.error("Error in getAllBlogsContent:", err);
+    console.error("Error in getAllBlogsContentById:", err);
     throw err;
   }
 }
 
-export async function addBlogContent(data: {
-  id: string;
-  blogContent: content;
-}) {
+export async function addBlogContent(data: blogContent) {
   try {
     const res = await fetch(`/api/blogs/new`, {
       method: "POST",
@@ -40,15 +37,15 @@ export async function addBlogContent(data: {
       body: JSON.stringify(data),
     });
 
-    if (!res.ok) throw new Error(`Failed to add blog`);
+    if (!res.ok) throw new Error(`Failed to add blog content`);
     return await res.json();
   } catch (err) {
-    console.error("Error in adding blog:", err);
+    console.error("Error in adding blog content:", err);
     throw err;
   }
 }
 
-export async function addDraft(data: { id: string; blogContent: content }) {
+export async function addDraftContent(data: blogContent) {
   try {
     const res = await fetch(`/api/blogs/new`, {
       method: "POST",
@@ -56,18 +53,15 @@ export async function addDraft(data: { id: string; blogContent: content }) {
       body: JSON.stringify(data),
     });
 
-    if (!res.ok) throw new Error(`Failed to add blog`);
+    if (!res.ok) throw new Error(`Failed to add blog content`);
     return await res.json();
   } catch (err) {
-    console.error("Error in adding blog:", err);
+    console.error("Error in adding blog content:", err);
     throw err;
   }
 }
 
-export async function updateBlogContent(data: {
-  id: string;
-  blogContent: content;
-}) {
+export async function updateBlogContent(data: blogContent) {
   try {
     const res = await fetch(`/api/blogs/${data.id}`, {
       method: "PUT",
@@ -75,10 +69,10 @@ export async function updateBlogContent(data: {
       body: JSON.stringify(data),
     });
 
-    if (!res.ok) throw new Error(`Failed to update blog`);
+    if (!res.ok) throw new Error(`Failed to update blog content`);
     return await res.json();
   } catch (err) {
-    console.error("Error in blog update:", err);
+    console.error("Error in blog content update:", err);
     throw err;
   }
 }

@@ -17,6 +17,7 @@ export default function Dashboard() {
     draftsByTopic,
     refreshTrigger,
     setRefreshTrigger,
+    handleDelete,
   } = useDashboard();
 
   return (
@@ -51,6 +52,7 @@ export default function Dashboard() {
                     <FontAwesomeIcon
                       icon={["fas", "trash"]}
                       className="hover:text-red-500 cursor-pointer"
+                      onClick={() => handleDelete(blog.id)}
                     />
                   </div>
                 ))}
@@ -80,6 +82,7 @@ export default function Dashboard() {
                     <FontAwesomeIcon
                       icon={["fas", "trash"]}
                       className="hover:text-red-500 cursor-pointer"
+                      onClick={() => handleDelete(blog.id)}
                     />
                   </div>
                 ))}

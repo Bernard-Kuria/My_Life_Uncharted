@@ -14,10 +14,12 @@ export default function CreateModifyBlog({
   params: Promise<{ createModify: string }>;
 }) {
   const { createModify } = use(params);
-  const [selectedTopic, setSelectedTopic] = useState("");
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const {
+    selectedTopic,
+    setSelectedTopic,
+    selectedTags,
+    setSelectedTags,
     topicList,
     tagList,
     loading,
@@ -46,7 +48,21 @@ export default function CreateModifyBlog({
           &larr; Back
         </Link>
 
-        <Draftify data={createModify === "new" ? [] : blogContent} />
+        {blogContent && (
+          <Draftify
+            data={
+              createModify === "new"
+                ? [
+                    {
+                      id: "",
+                      type: "",
+                      content: "",
+                    },
+                  ]
+                : blogContent
+            }
+          />
+        )}
 
         <div className="flex gap-[100px]">
           {/* Topic Selector */}

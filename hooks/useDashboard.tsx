@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 
-import { getAllBlogs } from "@services/blogs";
+import { deleteBlogMeta, getAllBlogs } from "@services/blogs";
 import { getAllDrafts } from "@services/drafts";
 import { getAllTopics } from "@services/topics";
 
 import { BlogsType, BlogTopicsType, draftsType } from "@lib/types";
+import { deleteBlogContent } from "@services/blogContent";
 
 export const useDashboard = () => {
   const [topics, setTopics] = useState<BlogTopicsType>();
@@ -47,11 +48,24 @@ export const useDashboard = () => {
     fetchBlogsAndDrafts();
   }, []);
 
+  const handleDelete = async (id: string) => {
+    try {
+      // setDeleteStatus(true);
+      await deleteBlogMeta(id);
+      await deleteBlogContent(id);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      // setDeleteStatus(false);
+    }
+  };
+
   return {
     topics,
     blogsByTopic,
     draftsByTopic,
     refreshTrigger,
     setRefreshTrigger,
+    handleDelete,
   };
 };

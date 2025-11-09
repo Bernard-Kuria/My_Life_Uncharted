@@ -1,4 +1,4 @@
-import { BlogTopicsType } from "../lib/types";
+import { BlogTopicsType, content } from "../lib/types";
 import { getAllTopics } from "@services/topics";
 
 // converts ASCII value & back to &
@@ -29,3 +29,8 @@ export const getBlogMatchingPage = async (page: string) => {
   const topics: BlogTopicsType = await getAllTopics();
   return topics.find((t) => getLinkFromTopic(t.title) === cleanUpLink(page));
 };
+
+// Match search with standard lowercase naming
+export const findByType = (type: string, blocksData: content[]) =>
+  blocksData.find((b) => b.type.toLowerCase() === type.toLowerCase())
+    ?.content ?? "";
