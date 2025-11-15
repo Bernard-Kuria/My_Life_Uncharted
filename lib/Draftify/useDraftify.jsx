@@ -1,37 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 
 import { newContentTable } from "./tableHooks/tableInteractions";
 
-export function useDraftify(initialBlocks = []) {
-  const [blocksData, setBlocksData] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("blocksData");
-      return saved ? JSON.parse(saved) : initialBlocks;
-    }
-    return initialBlocks;
-  });
-
-  useEffect(() => {
-    // Only update if the initialBlocks is not empty and is different from the current state
-    if (initialBlocks.length > 0 && initialBlocks !== blocksData) {
-      setBlocksData(initialBlocks);
-    }
-  }, [initialBlocks]);
-
-  // Effect to save to localStorage whenever blocksData changes
-  useEffect(() => {
-    const saveBlockData = (blocks) => {
-      localStorage.setItem("blocksData", JSON.stringify(blocks));
-    };
-
-    if (blocksData.length > 0) {
-      saveBlockData(blocksData);
-    }
-  }, [blocksData]);
-
+export function useDraftify(blocksData, setBlocksData) {
   const handleClick = (block, cells) => {
     let newTableContent;
 

@@ -1,5 +1,5 @@
 "use client";
-import { use, useEffect } from "react";
+import { use } from "react";
 
 import Image from "next/image";
 
@@ -22,22 +22,17 @@ export default function Page({
   const { loaded, topicPage, page, targetBlogs, allTopics, image } =
     useBlogTopicPage(blogTopicPage);
 
-  useEffect(() => {
-    console.log(image);
-  }, [image]);
-
   if (!loaded) return <div>Loading Blogs</div>;
 
   return (
     <div className="relative flex flex-col gap-[20px] w-full">
       {/* Background Image */}
       <div className="absolute w-full h-[calc(100vh-70px)]">
-        {image && (
+        {image && image !== "undefined" && (
           <Image
             src={image}
             alt={topicPage?.title || "Topic Image"}
             fill
-            objectFit="cover"
             priority
             style={{ objectFit: "cover" }}
             unoptimized
@@ -47,7 +42,7 @@ export default function Page({
 
       <div className="grid justify-center">
         <div className="grid gap-[20px] w-[1035px]">
-          <FeaturedBlog topic={topicPage?.title || ""} />
+          {topicPage && <FeaturedBlog topic={topicPage?.title || ""} />}
 
           <div>
             <div className="sub-title">Recent Posts</div>

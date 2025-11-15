@@ -1,4 +1,4 @@
-import { blogContent } from "@lib/types";
+import { BlogContent } from "@lib/types";
 import { API_BASE } from "@utils/constants";
 
 export async function getAllBlogsContent() {
@@ -29,7 +29,7 @@ export async function getBlogContentById(id: string) {
   }
 }
 
-export async function addBlogContent(data: blogContent) {
+export async function addBlogContent(data: BlogContent) {
   try {
     const res = await fetch(`/api/blogs/new`, {
       method: "POST",
@@ -45,7 +45,7 @@ export async function addBlogContent(data: blogContent) {
   }
 }
 
-export async function addDraftContent(data: blogContent) {
+export async function addDraftContent(data: BlogContent) {
   try {
     const res = await fetch(`/api/blogs/new`, {
       method: "POST",
@@ -61,7 +61,7 @@ export async function addDraftContent(data: blogContent) {
   }
 }
 
-export async function updateBlogContent(data: blogContent) {
+export async function updateBlogContent(data: BlogContent) {
   try {
     const res = await fetch(`/api/blogs/${data.id}`, {
       method: "PUT",

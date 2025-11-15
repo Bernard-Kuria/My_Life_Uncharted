@@ -10,7 +10,7 @@ export default function BlogsList({ blog }: { blog: draft }) {
 
   return (
     <div className="h-[200px] flex gap-[10px] border rounded-[10px] flex-1 p-5">
-      <Link className="flex-1" href={`${location}/${blog.id}`}>
+      <Link className="flex-1" href={`${location}/${blog.id}draft`}>
         <div className="flex-1 flex flex-col gap-[15px]">
           <div className="sub-title">{blog.draftMeta.title}</div>
           <div className="flex-1 blog-font">{blog.draftMeta.subtitle}</div>

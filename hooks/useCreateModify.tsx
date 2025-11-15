@@ -1,11 +1,22 @@
 "use client";
 
 import { nanoid } from "@node_modules/nanoid";
-import { findByType } from "@utils/conversions";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-import { Blog, blogContent, blogMeta, content, tagsType } from "@lib/types";
+import { findByType } from "@utils/conversions";
+import { defaultBlogContent, defaultMeta } from "@utils/constants";
+
+import {
+  AnyMeta,
+  Blog,
+  BlogContent,
+  BlogOrDraft,
+  Content,
+  Draft,
+  TagsType,
+} from "@lib/types";
 import { useDraftify } from "@lib/Draftify/useDraftify";
+import { getCurrentDateFormatted } from "@lib/utils";
 
 import { getAllTags } from "@services/tags";
 import {
@@ -20,9 +31,13 @@ import {
   getBlogMetaById,
   updateBlogMeta,
 } from "@services/blogs";
-import { getCurrentDateFormatted } from "@lib/utils";
+import {
+  addDraftMeta,
+  getDraftMetaById,
+  updateDraftMeta,
+} from "@services/drafts";
 
-export function useCreateModify(id: string) {
+export function useCreateModify(id: string, type: string) {
   // topics and tags
   const [topicList, setTopicList] = useState<string[]>([]);
   const [tagList, setTagList] = useState<string[]>([]);
@@ -32,16 +47,22 @@ export function useCreateModify(id: string) {
   // statuses
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [addStatus, setAddStatus] = useState<boolean>(false);
-  const [updateStatus, setUpdateStatus] = useState<boolean>(false);
-  const [deleteStatus, setDeleteStatus] = useState<boolean>(false);
+  const [addBlogStatus, setAddBlogStatus] = useState(false);
+  const [addDraftStatus, setAddDraftStatus] = useState(false);
+  const [updateBlogStatus, setUpdateBlogStatus] = useState(false);
+  const [updateDraftStatus, setUpdateDraftStatus] = useState(false);
+  const [deleteStatus, setDeleteStatus] = useState(false);
+  const [topicStatus, setTopicStatus] = useState<boolean | undefined>(
+    undefined
+  );
+  const [tagStatus, setTagStatus] = useState<boolean | undefined>(undefined);
 
   // data
-  const [blogContent, setBlogContent] = useState<content[] | null>(null);
-  const [blogMeta, setBlogMeta] = useState<blogMeta | null>(null);
+  const [blogContent, setBlogContent] = useState<Content[] | null>(null);
+  const [blogMeta, setBlogMeta] = useState<AnyMeta | null>(null);
 
   // hook
-  const { blocksData } = useDraftify([]);
+  const draftify = useDraftify(blogContent ?? [], setBlogContent);
 
   useEffect(() => {
     async function fetchData() {
@@ -54,16 +75,27 @@ export function useCreateModify(id: string) {
 
         // fetching blog content and meta
 
-        const blogContent: blogContent =
+        const blogContentRes: BlogContent =
           id === "new"
-            ? { id: "", blogContent: {} }
+            ? { id: "", blogContent: defaultBlogContent }
             : await getBlogContentById(id);
 
-        const blogMeta: Blog =
-          id === "new" ? { id: "", blogMeta: {} } : await getBlogMetaById(id);
+        const blogOrDraft: BlogOrDraft =
+          id === "new"
+            ? { type: "blogs", id: "", blogMeta: defaultMeta }
+            : type === "blogs"
+            ? ((await getBlogMetaById(id)) as Blog)
+            : ((await getDraftMetaById(id)) as Draft);
 
-        const content = blogContent?.blogContent;
-        const meta = blogMeta?.blogMeta;
+        let meta: AnyMeta;
+
+        if (blogOrDraft.type === "blogs") {
+          meta = blogOrDraft.blogMeta;
+        } else {
+          meta = blogOrDraft.draftMeta;
+        }
+
+        const content = blogContentRes?.blogContent;
 
         if (!content || !meta) {
           setError(`Blog with ID ${id} not found`);
@@ -71,37 +103,14 @@ export function useCreateModify(id: string) {
           return;
         }
 
-        setBlogContent(
-          content ?? [
-            {
-              id: "",
-              type: "",
-              content: "",
-              tableContent: null,
-            },
-          ]
-        );
-
-        setBlogMeta(
-          meta ?? {
-            image: "",
-            topic: "",
-            title: "",
-            subtitle: "",
-            dateCreated: "",
-            tags: [""],
-            likes: 0,
-            comments: 0,
-            views: 0,
-            minsRead: 0,
-          }
-        );
+        setBlogContent(content ?? defaultBlogContent);
+        setBlogMeta(meta ?? defaultMeta);
 
         // fetching tags and topics
 
         const topicSet = new Set<string>();
         const tagsSet = new Set<string>();
-        const allTags: tagsType = await Promise.resolve(getAllTags());
+        const allTags: TagsType = await Promise.resolve(getAllTags());
 
         allTags.map((tagGroup) => {
           topicSet.add(tagGroup.topic);
@@ -122,12 +131,12 @@ export function useCreateModify(id: string) {
     }
 
     fetchData();
-  }, [id]);
+  }, [id, type]);
 
   useEffect(() => {
     if (blogMeta) {
       setSelectedTopic(blogMeta?.topic);
-      setSelectedTags(blogMeta?.tags);
+      setSelectedTags(blogMeta?.tags ?? []);
     }
   }, [blogMeta]);
 
@@ -142,54 +151,64 @@ export function useCreateModify(id: string) {
     }
   };
 
-  const handleAddBlog = async () => {
-    console.log(
-      typeof blocksData?.find((data: content) => data.type === "image")?.content
-    );
+  // Called when adding or updating blogs or drafts
 
+  const updates = () => {
+    const blocks = blogContent ?? defaultBlogContent;
+    return {
+      image: (findByType("image", blocks) as string) ?? "image placeholder",
+      topic: selectedTopic,
+      title: (findByType("heading", blocks) as string) ?? "title",
+      subtitle: (findByType("subheading", blocks) as string) ?? "subtitle",
+      dateCreated: getCurrentDateFormatted(),
+      tags: selectedTags,
+    };
+  };
+
+  // Handling blogs
+
+  const handleAddBlog = async () => {
     const BlogId = nanoid();
 
-    if (!blocksData || blocksData.length === 0) {
-      console.error("No blocks data found, aborting...");
+    if (!blogContent) {
+      console.error("No blog content found, aborting...");
       return;
     }
 
     try {
-      setAddStatus(true);
-      await addBlogContent({ id: BlogId, blogContent: blocksData });
+      setAddBlogStatus(true);
+      await addBlogContent({ id: BlogId, blogContent: blogContent });
       await addBlogMeta({
+        type: "blogs",
         id: BlogId,
         blogMeta: {
-          image: findByType("image", blocksData) ?? "image placeholder",
-          topic: selectedTopic,
-          title: findByType("heading", blocksData) ?? "title",
-          subtitle: findByType("subheading", blocksData) ?? "subtitle",
-          comments: 0,
-          dateCreated: getCurrentDateFormatted(),
-          likes: 0,
+          ...updates(),
           minsRead: 2,
-          tags: selectedTags,
+          likes: 0,
+          comments: 0,
           views: 0,
         },
       });
     } finally {
-      setAddStatus(false);
+      setAddBlogStatus(false);
     }
   };
 
-  const handleSaveDraft = async () => {
-    const BlogId = nanoid();
-
-    if (!blocksData || blocksData.length === 0) {
-      console.error("No blocks data found, aborting...");
+  const handleUpdateBlog = async () => {
+    if (!blogMeta || !blogContent) {
+      console.error("No blog content found, aborting...");
       return;
     }
 
     try {
-      setUpdateStatus(true);
-      await addBlogContent({ id: BlogId, blogContent: blocksData });
+      setUpdateBlogStatus(true);
+      await updateBlogContent({ id: id, blogContent: blogContent });
+      await updateBlogMeta({
+        id: id,
+        blogMeta: updates(),
+      });
     } finally {
-      setUpdateStatus(false);
+      setUpdateBlogStatus(false);
     }
   };
 
@@ -203,36 +222,56 @@ export function useCreateModify(id: string) {
     }
   };
 
-  const handleUpdateBlog = async () => {
-    if (!blogMeta || !blocksData || blocksData.length === 0) {
-      console.error("No blocks data found, aborting...");
+  // handling drafts
+
+  const handleAddDraft = async () => {
+    const BlogId = nanoid();
+
+    if (!blogContent) {
+      console.error("No blog content found, aborting...");
       return;
     }
 
     try {
-      setUpdateStatus(true);
-      await updateBlogContent({ id: id, blogContent: blocksData });
-      await updateBlogMeta({
-        id: id,
-        blogMeta: {
-          image: findByType("image", blocksData) ?? "image placeholder",
-          topic: selectedTopic,
-          title: findByType("heading", blocksData) ?? "title",
-          subtitle: findByType("subheading", blocksData) ?? "subtitle",
-          dateCreated: getCurrentDateFormatted(),
-          tags: selectedTags,
-        },
+      setAddDraftStatus(true);
+      await addBlogContent({ id: BlogId, blogContent: blogContent });
+      await addDraftMeta({
+        type: "draft",
+        id: BlogId,
+        draftMeta: updates(),
       });
     } finally {
-      setUpdateStatus(false);
+      setAddDraftStatus(false);
+    }
+  };
+
+  const handleUpdateDraft = async () => {
+    if (!blogMeta || !blogContent) {
+      console.error("No blog content found, aborting...");
+      return;
+    }
+
+    try {
+      setUpdateDraftStatus(true);
+      await updateBlogContent({ id: id, blogContent: blogContent });
+      await updateDraftMeta({
+        id: id,
+        draftMeta: updates(),
+      });
+    } finally {
+      setUpdateDraftStatus(false);
     }
   };
 
   return {
     selectedTopic,
     setSelectedTopic,
+    topicStatus,
+    setTopicStatus,
     selectedTags,
     setSelectedTags,
+    tagStatus,
+    setTagStatus,
     topicList,
     tagList,
     loading,
@@ -240,11 +279,15 @@ export function useCreateModify(id: string) {
     blogContent,
     handleTagChange,
     handleAddBlog,
-    handleSaveDraft,
+    handleAddDraft,
     handleDelete,
     handleUpdateBlog,
-    addStatus,
-    updateStatus,
+    addBlogStatus,
+    addDraftStatus,
+    updateBlogStatus,
+    updateDraftStatus,
     deleteStatus,
+    handleUpdateDraft,
+    draftify,
   };
 }

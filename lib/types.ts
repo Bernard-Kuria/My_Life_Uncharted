@@ -1,4 +1,4 @@
-export type linesTypes = {
+export type LinesTypes = {
   width?: string;
   height?: string;
   top?: string;
@@ -8,28 +8,28 @@ export type linesTypes = {
   angle: string;
 };
 
-export type content = {
+export type Content = {
   id: string;
   type: string;
-  content: string;
+  content: string | string[];
   tableContent?: null;
 };
 
-export type blogContent = {
+export type BlogContent = {
   id: string;
-  blogContent: content[];
+  blogContent: Content[];
 };
 
-export type topic = {
+export type Topic = {
   id: string;
   image: string;
   title: string;
   timeStamp: string;
 };
 
-export type BlogTopicsType = topic[];
+export type BlogTopicsType = Topic[];
 
-export type blogMeta = {
+export type BlogMeta = {
   image: string;
   topic: string;
   title: string;
@@ -42,7 +42,7 @@ export type blogMeta = {
   minsRead: number;
 };
 
-export type blogMetaParams = {
+export type BlogMetaParams = {
   image?: string;
   topic?: string;
   title?: string;
@@ -56,59 +56,76 @@ export type blogMetaParams = {
 };
 
 export type Blog = {
+  type: "blogs";
   id: string;
-  blogMeta: blogMeta;
+  blogMeta: BlogMeta;
 };
 
 export type BlogsType = Blog[];
 
-export type featuredBlog = {
+export type DraftMeta = {
+  image: string;
+  topic: string;
+  title: string;
+  subtitle: string;
+  dateCreated: string;
+  tags: string[];
+};
+
+export type DraftMetaParams = {
+  image?: string;
+  topic?: string;
+  title?: string;
+  subtitle?: string;
+  dateCreated?: string;
+  tags?: string[];
+};
+
+export type Draft = {
+  type: "draft";
+  id: string;
+  draftMeta: DraftMeta;
+};
+
+export type DraftsType = Draft[];
+
+export type BlogOrDraft = Blog | Draft;
+
+export type AnyMeta = BlogMeta | DraftMeta;
+
+export type FeaturedBlog = {
   id: string;
   topic: string;
 };
 
-export type featuredBlogType = featuredBlog[];
+export type FeaturedBlogType = FeaturedBlog[];
 
-export type draft = {
-  id: string;
-  draftMeta: {
-    image: string;
-    topic: string;
-    title: string;
-    subtitle: string;
-    dateCreated: string;
-    tags: string[];
-  };
-};
-
-export type draftsType = draft[];
-
-export type comment = {
+export type Comment = {
   id: string;
   comment: string;
   likes: number;
 };
 
-export type commentsType = comment[];
+export type CommentsType = Comment[];
 
-export type tag = {
+export type Tag = {
   topic: string;
   tags: string[];
 };
 
-export type tagsType = tag[];
+export type TagsType = Tag[];
 
-export type milestone = {
+export type Milestone = {
   title: string;
   value: number;
 };
 
 export type Milestones = {
   topic: string;
-  milestones: milestone[];
+  milestones: Milestone[];
 };
 
-export type handleFeaturedType = (id: string, topic: string) => Promise<void>;
+export type HandleFeaturedType = (id: string, topic: string) => Promise<void>;
 
 export type BlogProps = {
   link: string;

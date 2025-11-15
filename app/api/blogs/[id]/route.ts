@@ -26,21 +26,14 @@ export async function GET(
 
       return NextResponse.json(blogsSnapshot.docs.map((doc) => doc.data()));
     } else {
-      const blogMetaRef = doc(db, "blogs", id);
-
       const blogContentRef = doc(db, "blogContent", id);
+      const contentSnap = await getDoc(blogContentRef);
 
-      const [metaSnap, contentSnap] = await Promise.all([
-        getDoc(blogMetaRef),
-        getDoc(blogContentRef),
-      ]);
-
-      if (!metaSnap.exists() || !contentSnap.exists())
+      if (!contentSnap.exists())
         return new Response("Blog not found", { status: 404 });
 
       const blogData = {
         id,
-        blogMeta: metaSnap.data().blogMeta,
         blogContent: contentSnap.data().blogContent,
       };
 

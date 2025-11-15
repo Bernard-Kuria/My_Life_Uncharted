@@ -3,12 +3,12 @@
 import Image from "next/image";
 
 import { getFeaturedBlogs } from "@services/featuredBlogs";
-import { getAllBlogs } from "@services/blogs";
+import { getBlogMetaById } from "@services/blogs";
 import { getLinkFromTopic } from "@utils/conversions";
 import Link from "@node_modules/next/link";
 import { useEffect, useState } from "react";
 import { Blog } from "@lib/types";
-import { getImgUrl } from "@services/FirestoreStorage";
+import { getBlogImgUrl } from "@services/FirestoreStorage";
 
 export default function FeaturedBlog({ topic }: { topic: string }) {
   const [featuredBlog, setFeaturedBlog] = useState<Blog | undefined>(undefined);
@@ -17,14 +17,17 @@ export default function FeaturedBlog({ topic }: { topic: string }) {
 
   useEffect(() => {
     getFeaturedBlogs({ topic: topic })
-      .then((e) => getAllBlogs({ id: e[0].id }).then(setFeaturedBlog))
+      .then((e) => {
+        getBlogMetaById(e[0].id).then((e) => {
+          setFeaturedBlog(e as Blog);
+        });
+      })
       .finally(() => setLoaded(true));
-  }, []);
+  }, [topic]);
 
   useEffect(() => {
     if (featuredBlog) {
-      console.log(featuredBlog.blogMeta.image);
-      getImgUrl(`blogImg/${featuredBlog.blogMeta.image}`).then(setImage);
+      getBlogImgUrl(featuredBlog.blogMeta.image).then(setImage);
     }
   }, [featuredBlog]);
 
@@ -49,7 +52,9 @@ export default function FeaturedBlog({ topic }: { topic: string }) {
               src={image}
               alt="Bike Riding"
               fill
+              style={{ objectFit: "cover" }}
               className="object-cover"
+              unoptimized
             />
           )}
         </div>
