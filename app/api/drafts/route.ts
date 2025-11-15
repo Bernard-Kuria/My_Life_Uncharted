@@ -11,6 +11,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { DraftMetaParams } from "@lib/types";
 
 // GET: fetch all drafts or one by ID
 export async function GET(req: Request) {
@@ -25,15 +26,25 @@ export async function GET(req: Request) {
       const draftSnap = await getDoc(draftRef);
 
       if (!draftSnap.exists())
-        return new Response("Draft not found", { status: 404 });
+        return NextResponse.json(
+          { message: "Draft not found" },
+          { status: 404 }
+        );
 
       return NextResponse.json(draftSnap.data());
     } else if (topic) {
+      // Fetch drafts corresponding to particular topic
       const blogRef = collection(db, "drafts");
       const q = query(blogRef, where("draftMeta.topic", "==", topic));
+
       const querySnapshot = await getDocs(q);
 
       const drafts = querySnapshot.docs.map((doc) => doc.data());
+
+      // if (drafts.length === 0)
+      //   return NextResponse.json([], {
+      //     status: 404,
+      //   });
 
       return NextResponse.json(drafts);
     } else {
@@ -44,7 +55,10 @@ export async function GET(req: Request) {
     }
   } catch (error) {
     console.error("Error fetching drafts:", error);
-    return new Response("Failed to fetch drafts", { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to fetch drafts" },
+      { status: 500 }
+    );
   }
 }
 
@@ -60,7 +74,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ id: id, message: "Draft created!" });
   } catch (error) {
     console.error("Error creating draft:", error);
-    return new Response("Failed to create draft", { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to create draft" },
+      { status: 500 }
+    );
   }
 }
 
@@ -68,18 +85,42 @@ export async function POST(req: Request) {
 export async function PUT(req: Request) {
   try {
     const data = await req.json();
-    const { id, ...metadata } = data;
+    const { id, draftMeta } = data as {
+      id: string;
+      draftMeta: DraftMetaParams;
+    };
 
-    if (!id) return new Response("Missing draft ID", { status: 400 });
+    if (!id)
+      return NextResponse.json(
+        { message: "Missing draft ID" },
+        { status: 400 }
+      );
+
+    // Build dynamic update object
+    const updates: Partial<
+      Record<
+        `draftMeta.${keyof DraftMetaParams}`,
+        string | string[] | number | undefined
+      >
+    > = {};
+
+    for (const [key, value] of Object.entries(draftMeta)) {
+      if (value !== undefined) {
+        updates[`draftMeta.${key}` as `draftMeta.${keyof DraftMetaParams}`] =
+          value;
+      }
+    }
 
     const draftRef = doc(db, "drafts", id);
+    await updateDoc(draftRef, updates);
 
-    await updateDoc(draftRef, { id: id, draftMeta: metadata });
-
-    return NextResponse.json({ id, message: "Blog updated!" });
+    return NextResponse.json({ id, message: "Draft updated!" });
   } catch (error) {
-    console.error("Error updating blog:", error);
-    return new Response("Failed to update blog", { status: 500 });
+    console.error("Error updating draft:", error);
+    return NextResponse.json(
+      { message: "Failed to update draft" },
+      { status: 500 }
+    );
   }
 }
 
@@ -89,13 +130,20 @@ export async function DELETE(req: Request) {
     const data = await req.json();
     const { id } = data;
 
-    if (!id) return new Response("Missing draft ID", { status: 400 });
+    if (!id)
+      return NextResponse.json(
+        { message: "Missing draft ID" },
+        { status: 400 }
+      );
 
     await deleteDoc(doc(db, "drafts", id));
 
     return NextResponse.json({ id, message: "Draft deleted!" });
   } catch (error) {
     console.error("Error deleting draft:", error);
-    return new Response("Failed to delete draft", { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to delete draft" },
+      { status: 500 }
+    );
   }
 }

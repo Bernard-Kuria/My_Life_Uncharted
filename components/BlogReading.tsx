@@ -6,11 +6,11 @@ import OutputBlock from "./DraftifyProComponents/OutputBlock";
 
 import { getBlogContentById } from "@services/blogContent";
 import { getBlogMetaById } from "@services/blogs";
-import { blogContent, Blog } from "@lib/types";
+import { BlogContent, Blog } from "@lib/types";
 
 export default function BlogArea({ blogId }: { blogId: string }) {
   const [blog, setBlog] = useState<Blog>();
-  const [blogContent, setBlogContent] = useState<blogContent>();
+  const [blogContent, setBlogContent] = useState<BlogContent>();
   const [isLoading, setIsloading] = useState(true);
 
   useEffect(() => {
@@ -18,13 +18,13 @@ export default function BlogArea({ blogId }: { blogId: string }) {
 
     async function fetchData() {
       try {
-        const [blog, content] = await Promise.all([
+        const [Blog, content] = await Promise.all([
           getBlogMetaById(blogId),
           getBlogContentById(blogId),
         ]);
 
         if (mounted) {
-          setBlog(blog);
+          setBlog(Blog as Blog);
           setBlogContent(content);
         }
       } catch (err) {

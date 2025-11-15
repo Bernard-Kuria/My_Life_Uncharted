@@ -25,7 +25,10 @@ export async function GET(req: Request) {
       const querySnapshot = await getDocs(q);
 
       if (querySnapshot.empty) {
-        return new Response("Featured blog not found", { status: 404 });
+        return NextResponse.json({
+          id: "",
+          topic: "",
+        });
       }
 
       // If multiple documents somehow have the same id, just return the first one

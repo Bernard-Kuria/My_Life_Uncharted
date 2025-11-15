@@ -2,10 +2,10 @@ export function dropHandler(e, setFile, setFileName) {
   e.preventDefault();
   [...e.dataTransfer.items].forEach((item) => {
     if (item.kind === "file") {
-      const file = item.getAsFile();
-      if (file) {
-        setFile(URL.createObjectURL(file));
-        setFileName(file.name);
+      const fileObj = item.getAsFile();
+      if (fileObj) {
+        setFile(fileObj); // store actual File
+        setFileName(fileObj.name);
       }
     }
   });
@@ -14,8 +14,7 @@ export function dropHandler(e, setFile, setFileName) {
 export function onFileChange(e, setFile, setFileName) {
   const selectedFile = e.target.files[0];
   if (selectedFile) {
-    const fileUrl = URL.createObjectURL(selectedFile);
-    setFile(fileUrl);
+    setFile(selectedFile); // store actual File
     setFileName(selectedFile.name);
   }
 }

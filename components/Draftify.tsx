@@ -13,13 +13,16 @@ import BackGround from "./DraftifyProComponents/Background";
 
 import { useDraftify } from "../lib/Draftify/useDraftify";
 import { useGenerateGrid } from "../lib/Draftify/BackgroundHooks/backGroundEffects";
-import { blogContent, content } from "@lib/types";
+import { BlogContent } from "@lib/types";
 
-export default function Draftify({ data }: { data: content[] }) {
+type DraftifyProps = {
+  draftify: ReturnType<typeof useDraftify>;
+};
+
+export default function Draftify({ draftify }: DraftifyProps) {
   const [mounted, setMounted] = useState(false);
   const [view, setView] = useState("editor");
   const [gridDots, setGridDots] = useState([]);
-  const [draft, setDraft] = useState(data);
 
   const {
     blocksData,
@@ -35,11 +38,10 @@ export default function Draftify({ data }: { data: content[] }) {
     containerVariants,
     itemVariants,
     whileHover,
-  } = useDraftify(draft);
+  } = draftify;
 
   useEffect(() => {
     setMounted(true);
-    setDraft([]);
   }, []);
 
   useGenerateGrid(setGridDots);
@@ -66,7 +68,7 @@ export default function Draftify({ data }: { data: content[] }) {
                 exit="hidden"
               >
                 <AnimatePresence>
-                  {blocksData.map((b: blogContent, index: number) => (
+                  {blocksData.map((b: BlogContent, index: number) => (
                     <motion.div
                       key={b.id}
                       layout

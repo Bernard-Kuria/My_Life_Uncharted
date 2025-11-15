@@ -6,7 +6,7 @@ import { deleteBlogMeta, getAllBlogs } from "@services/blogs";
 import { getAllDrafts } from "@services/drafts";
 import { getAllTopics } from "@services/topics";
 
-import { BlogsType, BlogTopicsType, draftsType } from "@lib/types";
+import { BlogsType, BlogTopicsType, DraftsType } from "@lib/types";
 import { deleteBlogContent } from "@services/blogContent";
 
 export const useDashboard = () => {
@@ -15,14 +15,14 @@ export const useDashboard = () => {
     {}
   );
   const [draftsByTopic, setDraftsByTopic] = useState<
-    Record<string, draftsType>
+    Record<string, DraftsType>
   >({});
   const [refreshTrigger, setRefreshTrigger] = useState(false); // ✅ triggers re-fetch
 
   useEffect(() => {
     async function fetchBlogsAndDrafts() {
       const blogsMap: Record<string, BlogsType> = {};
-      const draftsMap: Record<string, draftsType> = {};
+      const draftsMap: Record<string, DraftsType> = {};
 
       const allTopics = await getAllTopics();
       setTopics(allTopics);

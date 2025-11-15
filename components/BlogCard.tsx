@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Blog, BlogsType } from "@lib/types";
+import { Blog } from "@lib/types";
 import { getLinkFromTopic, getTopicFromLink } from "@utils/conversions";
 import { getImgUrl } from "@services/FirestoreStorage";
 
@@ -21,7 +21,7 @@ export default function BlogCards({
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    getImgUrl(`blogImg/${image}`).then(setImageUrl);
+    getImgUrl(`blog/images/${image}`).then(setImageUrl);
   }, []);
 
   return (

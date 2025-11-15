@@ -49,7 +49,7 @@ export default function BlogsList({
 
   return (
     <div className="h-[200px] flex gap-[10px] border rounded-[10px] flex-1 p-5">
-      <Link className="flex-1" href={`${location}/${id}`}>
+      <Link className="flex-1" href={`${location}/${id}blogs`}>
         <div className="flex-1 flex flex-col gap-[15px]">
           <div className="sub-title">{title}</div>
           <div className="flex-1 blog-font">{subtitle}</div>

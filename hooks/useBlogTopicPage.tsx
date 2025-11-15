@@ -7,24 +7,25 @@ import { getImgUrl } from "@services/FirestoreStorage";
 
 import { cleanUpLink, getBlogMatchingPage } from "@utils/conversions";
 
-import { BlogsType, BlogTopicsType, topic } from "@lib/types";
+import { BlogsType, BlogTopicsType, Topic } from "@lib/types";
 
 export const useBlogTopicPage = (blogTopicPage: string) => {
   const [targetBlogs, setTargetBlogs] = useState<BlogsType | undefined>(
     undefined
   );
   const [loaded, setLoaded] = useState(false);
-  const [topicPage, setTopicPage] = useState<topic | undefined>(undefined);
+  const [topicPage, setTopicPage] = useState<Topic | undefined>(undefined);
   const [allTopics, setAllTopics] = useState<BlogTopicsType | undefined>(
     undefined
   );
   const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {
-    if (topicPage)
-      getImgUrl(`blogTopicImg/${topicPage?.image}`)
-        .then(setImage)
-        .then((img) => console.log(img));
+    if (topicPage?.image) {
+      getImgUrl(`blogTopicImg/${topicPage.image}`).then((img) => {
+        setImage(img);
+      });
+    }
   }, [topicPage]);
 
   const page = cleanUpLink(blogTopicPage);

@@ -17,7 +17,7 @@ export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
     const id = url.searchParams.get("id");
-    const matchId = url.searchParams.get("matchId"); // 👈 new query param
+    const matchId = url.searchParams.get("matchId");
 
     // ✅ Case 1: Fetch comments with specific internal ID
     if (matchId) {
@@ -97,8 +97,7 @@ export async function PUT(req: Request) {
 // DELETE: delete comment by ID
 export async function DELETE(req: Request) {
   try {
-    const data = await req.json();
-    const { id } = data;
+    const id = await req.json();
 
     if (!id) return new Response("Missing comment ID", { status: 400 });
 

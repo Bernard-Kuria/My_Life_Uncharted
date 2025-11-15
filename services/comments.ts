@@ -1,3 +1,4 @@
+import { Comment } from "@lib/types";
 import { API_BASE } from "@utils/constants";
 
 export async function getAllComments() {
@@ -44,3 +45,51 @@ export const getSpecificBlog = async (blog: string, id: string) => {
     throw err;
   }
 };
+
+export async function addComment(data: Comment) {
+  try {
+    const res = await fetch(`/api/comments`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) throw new Error(`Failed to add content`);
+    return await res.json();
+  } catch (err) {
+    console.error("Error in adding content:", err);
+    throw err;
+  }
+}
+
+export async function updateBlogMeta({ id, comment, likes }: Comment) {
+  try {
+    const res = await fetch(`/api/comments`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, comment, likes }),
+    });
+
+    if (!res.ok) throw new Error("Failed to update comment");
+    return await res.json();
+  } catch (err) {
+    console.error("Error in comment update:", err);
+    throw err;
+  }
+}
+
+export async function deleteBlogMeta(id: string) {
+  try {
+    const res = await fetch(`/api/comments`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(id),
+    });
+
+    if (!res.ok) throw new Error(`Failed to delete comment`);
+    return await res.json();
+  } catch (err) {
+    console.error("Error in comment delete:", err);
+    throw err;
+  }
+}

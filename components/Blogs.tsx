@@ -16,7 +16,7 @@ export default function Blogs({ link, imageUrl, topic, timeStamp }: BlogProps) {
 
   useEffect(() => {
     getImgUrl(imageUrl).then(setImage);
-  }, []);
+  }, [imageUrl]);
 
   return (
     <div className="">
@@ -44,6 +44,7 @@ export default function Blogs({ link, imageUrl, topic, timeStamp }: BlogProps) {
                   src={`${image}`}
                   alt="image"
                   fill
+                  style={{ objectFit: "cover" }}
                   className="object-cover"
                 />
               )}
