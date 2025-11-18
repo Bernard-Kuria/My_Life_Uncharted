@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { draft } from "@lib/types";
+import { Draft } from "@lib/types";
 
-export default function BlogsList({ blog }: { blog: draft }) {
+export default function BlogsList({ blog }: { blog: Draft }) {
   const location = usePathname();
 
   return (

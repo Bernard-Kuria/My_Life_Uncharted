@@ -11,7 +11,7 @@ import { applyToggleStyles } from "@hooks/useTheme";
 
 import { getLinkFromTopic } from "@utils/conversions";
 import { getAllTopics } from "@services/topics";
-import { topic } from "@lib/types";
+import { Topic } from "@lib/types";
 
 export default function Header() {
   const router = useRouter();
@@ -62,7 +62,7 @@ export default function Header() {
   useEffect(() => {
     async function fetchTopics() {
       const topics = await getAllTopics();
-      setTopicNames(topics.map((b: topic) => b.title));
+      setTopicNames(topics.map((b: Topic) => b.title));
     }
     fetchTopics();
   }, []);

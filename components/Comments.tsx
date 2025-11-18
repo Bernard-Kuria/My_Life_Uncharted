@@ -43,7 +43,7 @@ export default function Comments({
         {!comments ? (
           <div>Loading comments</div>
         ) : (
-          comments.map((c: FetchedComment, id: number) => (
+          comments.map((c: FetchedComment) => (
             <Comment
               key={c.docId}
               id={c.docId}
