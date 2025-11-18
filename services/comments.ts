@@ -54,20 +54,24 @@ export async function addComment(data: Comment) {
       body: JSON.stringify(data),
     });
 
-    if (!res.ok) throw new Error(`Failed to add content`);
+    if (!res.ok) throw new Error(`Failed to add comment`);
     return await res.json();
   } catch (err) {
-    console.error("Error in adding content:", err);
+    console.error("Error in adding comment:", err);
     throw err;
   }
 }
 
-export async function updateBlogMeta({ id, comment, likes }: Comment) {
+export async function updateComment(data: {
+  docId: string;
+  comment?: string;
+  likes?: number;
+}) {
   try {
     const res = await fetch(`/api/comments`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, comment, likes }),
+      body: JSON.stringify(data),
     });
 
     if (!res.ok) throw new Error("Failed to update comment");

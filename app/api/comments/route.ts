@@ -61,12 +61,17 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const data = await req.json();
+    const { id, comment, likes } = data;
 
     // Reference the collection. `addDoc` will create a new document within it.
     const commentCollection = collection(db, "comments");
 
     // Save comment metadata
-    const docRef = await addDoc(commentCollection, data);
+    const docRef = await addDoc(commentCollection, {
+      internalId: id,
+      comment: comment,
+      likes: likes,
+    });
 
     return NextResponse.json({ id: docRef.id, message: "comment created!" });
   } catch (error) {
@@ -79,15 +84,15 @@ export async function POST(req: Request) {
 export async function PUT(req: Request) {
   try {
     const data = await req.json();
-    const { id, ...commentdata } = data;
+    const { docId, ...commentdata } = data;
 
-    if (!id) return new Response("Missing comment ID", { status: 400 });
+    if (!docId) return new Response("Missing comment ID", { status: 400 });
 
-    const commentRef = doc(db, "comments", id);
+    const commentRef = doc(db, "comments", docId);
 
-    await updateDoc(commentRef, { id: id, ...commentdata });
+    await updateDoc(commentRef, commentdata, { merge: true });
 
-    return NextResponse.json({ id, message: "comment updated!" });
+    return NextResponse.json({ docId, message: "comment updated!" });
   } catch (error) {
     console.error("Error updating comment:", error);
     return new Response("Failed to update comment", { status: 500 });

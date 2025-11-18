@@ -19,7 +19,17 @@ export default function Page({
   const param = useParams();
   const topicPage = param.blogTopicPage?.toString();
 
-  const { blogs, loaded, topic, backLink } = useBlogPage(topicPage || "");
+  const {
+    blogs,
+    loaded,
+    topic,
+    backLink,
+    handleAddComment,
+    handleAddCommentLike,
+    commentAddStatus,
+    addCommentCheck,
+    setAddCommentCheck,
+  } = useBlogPage(topicPage || "");
 
   if (!loaded) return <div>Loading Blogs</div>;
 
@@ -32,7 +42,14 @@ export default function Page({
         &larr; Back
       </button>
       <BlogReading blogId={blogpage} />
-      <Comments blogId={blogpage} />
+      <Comments
+        blogId={blogpage}
+        handleAddComment={handleAddComment}
+        handleAddCommentLike={handleAddCommentLike}
+        commentAddStatus={commentAddStatus}
+        addCommentCheck={addCommentCheck}
+        setAddCommentCheck={setAddCommentCheck}
+      />
       <strong>More on this topic:</strong>
       <div className="page-layout flex flex-wrap gap-[20px]">
         {blogs

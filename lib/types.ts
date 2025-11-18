@@ -106,6 +106,15 @@ export type Comment = {
   likes: number;
 };
 
+export type FetchedComment = {
+  id: string;
+  docId: string;
+  comment: string;
+  likes: number;
+};
+
+export type FetchedCommentsType = FetchedComment[];
+
 export type CommentsType = Comment[];
 
 export type Tag = {
