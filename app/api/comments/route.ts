@@ -10,6 +10,8 @@ import {
   getDoc,
   where,
   query,
+  serverTimestamp,
+  orderBy,
 } from "firebase/firestore";
 
 // GET: fetch all comments or one by ID
@@ -19,37 +21,55 @@ export async function GET(req: Request) {
     const id = url.searchParams.get("id");
     const matchId = url.searchParams.get("matchId");
 
-    // ✅ Case 1: Fetch comments with specific internal ID
+    // Case 1: Fetch comments with specific internal ID
     if (matchId) {
       const commentsRef = collection(db, "comments");
-      const q = query(commentsRef, where("id", "==", matchId));
+
+      const q = query(
+        commentsRef,
+        where("id", "==", matchId),
+        orderBy("createdAt", "asc") // <---- ADDED ORDERING
+      );
+
       const querySnapshot = await getDocs(q);
 
       const comments = querySnapshot.docs.map((doc) => ({
-        docId: doc.id, // Firebase doc ID (optional)
+        docId: doc.id,
         ...doc.data(),
       }));
 
-      if (comments.length === 0)
+      if (comments.length === 0) {
         return new Response("No comments found for this ID", { status: 404 });
+      }
 
       return NextResponse.json(comments);
     }
 
-    // ✅ Case 2: Fetch specific comment document
+    // Case 2: Fetch specific comment document
     if (id) {
-      const commentsRef = doc(db, "comments", id);
-      const commentsSnap = await getDoc(commentsRef);
+      const commentRef = doc(db, "comments", id);
+      const commentSnap = await getDoc(commentRef);
 
-      if (!commentsSnap.exists())
+      if (!commentSnap.exists()) {
         return new Response("Comment not found", { status: 404 });
+      }
 
-      return NextResponse.json(commentsSnap.data());
+      return NextResponse.json(commentSnap.data());
     }
 
-    // ✅ Case 3: Fetch all comments
-    const commentSnapshot = await getDocs(collection(db, "comments"));
-    const comments = commentSnapshot.docs.map((doc) => doc.data());
+    // Case 3: Fetch all comments
+    const q = query(
+      collection(db, "comments"),
+      orderBy("createdAt", "asc") // <---- ADDED ORDERING
+    );
+
+    const snapshot = await getDocs(q);
+
+    const comments = snapshot.docs.map((doc) => ({
+      docId: doc.id,
+      ...doc.data(),
+    }));
+
     return NextResponse.json(comments);
   } catch (error) {
     console.error("Error fetching comments:", error);
@@ -71,6 +91,7 @@ export async function POST(req: Request) {
       internalId: id,
       comment: comment,
       likes: likes,
+      createdAt: serverTimestamp(),
     });
 
     return NextResponse.json({ id: docRef.id, message: "comment created!" });

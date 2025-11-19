@@ -135,3 +135,23 @@ body {
 .media {
   @apply object-cover w-full h-full;
 }
+
+/* Like Bounce */
+.like-bounce {
+  animation: likeBounce 200ms ease-out;
+}
+
+@keyframes likeBounce {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.25);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

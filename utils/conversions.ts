@@ -1,7 +1,7 @@
 import { BlogTopicsType, Content } from "../lib/types";
 import { getAllTopics } from "@services/topics";
 
-// converts ASCII value & back to &
+// converts ASCII value "%26" back to normal string "&"
 export const cleanUpLink = (link: string) =>
   link
     .split("-")
@@ -10,7 +10,7 @@ export const cleanUpLink = (link: string) =>
 
 // converts link to a topic string
 export const getTopicFromLink = (link: string) =>
-  link
+  cleanUpLink(link)
     .split("-")
     .map((p) => (p === "%26" ? "&" : p))
     .map((t) => t.charAt(0).toUpperCase() + t.slice(1))
@@ -67,4 +67,13 @@ export const mediaType = (url?: string) => {
   }
 
   return "unknown";
+};
+
+// Camel Case Converter
+export const toCamelCase = (str: string) => {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 };

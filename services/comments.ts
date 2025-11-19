@@ -21,10 +21,12 @@ export const getSpecificBlogComments = async (id: string) => {
     const res = await fetch(`${API_BASE}/api/comments/${id}`, {
       cache: "no-store",
     });
-    if (!res.ok)
-      throw new Error(`Failed to fetch featured blogs: ${res.status}`);
-    const data = await res.json();
-    return data;
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch comments: ${res.status}`);
+    }
+
+    return await res.json();
   } catch (err) {
     console.error("Error in getSpecificBlogComments:", err);
     throw err;
@@ -36,12 +38,14 @@ export const getSpecificBlog = async (blog: string, id: string) => {
     const res = await fetch(`${API_BASE}/api/comments/${blog}/${id}`, {
       cache: "no-store",
     });
-    if (!res.ok)
-      throw new Error(`Failed to fetch featured blogs: ${res.status}`);
-    const data = await res.json();
-    return data;
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch blog comments: ${res.status}`);
+    }
+
+    return await res.json();
   } catch (err) {
-    console.error("Error in getAllFeaturedBlogs:", err);
+    console.error("Error in getSpecificBlog:", err);
     throw err;
   }
 };

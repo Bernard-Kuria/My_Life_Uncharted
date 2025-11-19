@@ -7,6 +7,7 @@ import Draftify from "@c/Draftify";
 import SectionTitle from "@c/SectionTitle";
 
 import { useCreateModify } from "@hooks/useCreateModify";
+import { toCamelCase } from "@utils/conversions";
 
 export default function CreateModifyBlog({
   params,
@@ -92,7 +93,7 @@ export default function CreateModifyBlog({
               <option value="">Select a topic</option>
               {topicList.map((t, idx) => (
                 <option key={idx} value={t}>
-                  {t}
+                  {toCamelCase(t)}
                 </option>
               ))}
             </select>

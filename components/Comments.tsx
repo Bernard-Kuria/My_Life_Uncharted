@@ -2,10 +2,16 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import type { Comment, FetchedComment, FetchedCommentsType } from "@lib/types";
+import type {
+  Blog,
+  Comment,
+  FetchedComment,
+  FetchedCommentsType,
+} from "@lib/types";
 import { useEffect, useState } from "react";
 
 import { getSpecificBlogComments } from "@services/comments";
+import { getBlogMetaById } from "@services/blogs";
 
 export default function Comments({
   blogId,
@@ -13,22 +19,31 @@ export default function Comments({
   handleAddCommentLike,
   commentAddStatus,
   addCommentCheck,
-  setAddCommentCheck,
 }: {
   blogId: string;
   handleAddComment: (args: {
     blogId: string;
     comment: string;
+    comments: number;
   }) => Promise<void>;
   handleAddCommentLike: (args: { docId: string; likes: number }) => void;
   commentAddStatus: boolean;
   addCommentCheck: boolean;
-  setAddCommentCheck: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const [blog, setBlog] = useState<Blog>();
   const [comments, setComments] = useState<FetchedCommentsType>();
+  const [visibleCount, setVisibleCount] = useState<number>(5);
 
   useEffect(() => {
-    getSpecificBlogComments(blogId).then(setComments);
+    async function fetchComments() {
+      const comments = await getSpecificBlogComments(blogId);
+      setComments(comments as FetchedCommentsType);
+
+      const blog = await getBlogMetaById(blogId);
+      setBlog(blog as Blog);
+    }
+
+    fetchComments();
   }, [blogId, addCommentCheck]);
 
   return (
@@ -39,32 +54,40 @@ export default function Comments({
           blogId={blogId}
           handleAddComment={handleAddComment}
           commentAddStatus={commentAddStatus}
+          comments={blog?.blogMeta.comments || 0}
         />
         {!comments ? (
           <div>Loading comments</div>
         ) : (
-          comments.map((c: FetchedComment) => (
-            <Comment
-              key={c.docId}
-              id={c.docId}
-              comment={c}
-              likes={c.likes}
-              handleAddCommentLike={handleAddCommentLike}
-              addCommentCheck={addCommentCheck}
-              setAddCommentCheck={setAddCommentCheck}
-            />
-          ))
+          comments
+            .slice(0, visibleCount)
+            .map((c: FetchedComment) => (
+              <Comment
+                key={c.docId}
+                id={c.docId}
+                comment={c}
+                likes={c.likes}
+                handleAddCommentLike={handleAddCommentLike}
+              />
+            ))
+        )}
+
+        {comments && visibleCount < comments.length && (
+          <button
+            className="text-(--primary-blue) text-left cursor-pointer w-fit"
+            onClick={() => setVisibleCount((prev) => prev + 5)}
+          >
+            view more
+          </button>
         )}
       </div>
-      <button className="text-(--primary-blue) text-left cursor-pointer w-fit">
-        view more
-      </button>
     </div>
   );
 }
 
 function EditComment({
   blogId,
+  comments,
   handleAddComment,
   commentAddStatus,
 }: {
@@ -72,15 +95,17 @@ function EditComment({
   handleAddComment: (args: {
     blogId: string;
     comment: string;
+    comments: number;
   }) => Promise<void>;
+  comments: number;
   commentAddStatus: boolean;
 }) {
   const [comment, setComment] = useState("");
 
   const submit = () => {
-    if (!comment.trim()) return; // avoid empty comments
-    handleAddComment({ blogId, comment });
-    setComment(""); // reset input
+    if (!comment.trim()) return;
+    handleAddComment({ blogId, comment, comments: comments + 1 });
+    setComment("");
   };
 
   return (
@@ -91,7 +116,7 @@ function EditComment({
         <input
           type="text"
           placeholder="Add comment here"
-          className="w-full"
+          className="w-full focus:outline-none focus:ring-0"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
@@ -114,33 +139,68 @@ function Comment({
   comment,
   likes,
   handleAddCommentLike,
-  addCommentCheck,
-  setAddCommentCheck,
 }: {
   id: string;
   comment: Comment;
   likes: number;
   handleAddCommentLike: (args: { docId: string; likes: number }) => void;
-  addCommentCheck: boolean;
-  setAddCommentCheck: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const [liked, setLiked] = useState(false);
+  const [bounce, setBounce] = useState(false);
+
+  useEffect(() => {
+    const likedComments = JSON.parse(
+      localStorage.getItem("likedComments") || "[]"
+    );
+
+    if (likedComments.includes(id)) {
+      setLiked(true);
+    }
+  }, [id]);
+
+  const triggerBounce = () => {
+    setBounce(true);
+    setTimeout(() => setBounce(false), 200);
+  };
+
   const handleLikeClick = () => {
-    const newLikes = addCommentCheck ? likes - 1 : likes + 1;
-    handleAddCommentLike({ docId: id, likes: newLikes });
-    setAddCommentCheck(!addCommentCheck);
+    const newLikes = liked ? likes - 1 : likes + 1;
+
+    setLiked(!liked);
+    handleAddCommentLike({
+      docId: id,
+      likes: newLikes,
+    });
+
+    const likedComments = JSON.parse(
+      localStorage.getItem("likedComments") || "[]"
+    );
+
+    if (!liked) {
+      const updated = [...likedComments, id];
+      localStorage.setItem("likedComments", JSON.stringify(updated));
+    } else {
+      const updated = likedComments.filter((c: string) => c !== id);
+      localStorage.setItem("likedComments", JSON.stringify(updated));
+    }
   };
 
   return (
     <div className="flex gap-[20px]">
       <div className="w-[14px] h-full bg-(--secondary-blue)"></div>
       <div className="grid gap-[10px] bg-white dark:bg-black w-full p-2">
-        <div className="">{comment.comment}</div>
+        <div>{comment.comment}</div>
         <div className="flex gap-[10px] items-center">
-          {comment.likes}{" "}
+          {comment.likes}
           <FontAwesomeIcon
-            className="icon-size cursor-pointer"
+            className={`icon-size cursor-pointer ${
+              bounce ? "like-bounce" : ""
+            } ${liked ? "text-(--secondary-blue)" : "text-black"}`}
             icon={["far", "thumbs-up"]}
-            onClick={handleLikeClick}
+            onClick={() => {
+              triggerBounce();
+              handleLikeClick();
+            }}
           />
         </div>
       </div>

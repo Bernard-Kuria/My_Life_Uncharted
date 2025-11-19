@@ -3,7 +3,7 @@
 import { nanoid } from "@node_modules/nanoid";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-import { findByType } from "@utils/conversions";
+import { findByType, toCamelCase } from "@utils/conversions";
 import { defaultBlogContent, defaultMeta } from "@utils/constants";
 
 import {
@@ -157,7 +157,7 @@ export function useCreateModify(id: string, type: string) {
     const blocks = blogContent ?? defaultBlogContent;
     return {
       image: (findByType("image", blocks) as string) ?? "image placeholder",
-      topic: selectedTopic,
+      topic: toCamelCase(selectedTopic),
       title: (findByType("heading", blocks) as string) ?? "title",
       subtitle: (findByType("subheading", blocks) as string) ?? "subtitle",
       dateCreated: getCurrentDateFormatted(),
