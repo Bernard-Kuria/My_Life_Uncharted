@@ -56,7 +56,8 @@ export default function CreateModifyBlog({
     draftify,
   } = useCreateModify(id, type);
 
-  if (loading) return <Loading data="tags, topics and blog content" />;
+  if (loading)
+    return <Loading loading="loading tags, topics and blog content" />;
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (

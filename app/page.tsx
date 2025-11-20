@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 
 import Blogs from "@c/Blogs";
 import Hero from "@c/Hero";
+import Loading from "@app/loading";
 
 import { getLinkFromTopic } from "@utils/conversions";
 
@@ -16,7 +17,7 @@ export default function Home() {
 
   const loading = loadingTopics || loadingImages;
 
-  if (loading) return <div>Loading images or topics...</div>;
+  if (loading) return <Loading loading="Loading images or topics..." />;
 
   if (error) return <div className="text-red-500">{error}</div>;
 

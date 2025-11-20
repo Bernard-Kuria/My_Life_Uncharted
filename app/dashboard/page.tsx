@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 
+import Loading from "@app/loading";
+
 import { FontAwesomeIcon } from "@node_modules/@fortawesome/react-fontawesome/dist";
 
 import SectionTitle from "@c/SectionTitle";
@@ -32,30 +34,34 @@ export default function Dashboard() {
 
         {/* BLOGS */}
         {!topics ? (
-          <div>Loading topics</div>
+          <Loading loading="loading topics" />
         ) : (
           topics.map((topic) => (
             <div key={topic.id}>
               <div className="sub-title">{topic.title}</div>
 
               <div className="grid gap-[20px]">
-                {(blogsByTopic[topic.title] || []).map((blog) => (
-                  <div
-                    key={blog.id}
-                    className="w-full flex justify-between gap-[10px] items-center"
-                  >
-                    <BlogsList
-                      blog={blog}
-                      refreshTrigger={refreshTrigger}
-                      setRefreshTrigger={setRefreshTrigger}
-                    />
-                    <FontAwesomeIcon
-                      icon={["fas", "trash"]}
-                      className="hover:text-red-500 cursor-pointer"
-                      onClick={() => handleDelete(blog.id)}
-                    />
-                  </div>
-                ))}
+                {!blogsByTopic ? (
+                  <Loading loading="loading meta data" />
+                ) : (
+                  (blogsByTopic[topic.title] || []).map((blog) => (
+                    <div
+                      key={blog.id}
+                      className="w-full flex justify-between gap-[10px] items-center"
+                    >
+                      <BlogsList
+                        blog={blog}
+                        refreshTrigger={refreshTrigger}
+                        setRefreshTrigger={setRefreshTrigger}
+                      />
+                      <FontAwesomeIcon
+                        icon={["fas", "trash"]}
+                        className="hover:text-red-500 cursor-pointer"
+                        onClick={() => handleDelete(blog.id)}
+                      />
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           ))
@@ -66,26 +72,30 @@ export default function Dashboard() {
         {/* DRAFTS */}
         <div className="sub-title">Drafts</div>
         {!topics ? (
-          <div>Loading topics</div>
+          <div className="loading topics"></div>
         ) : (
           topics.map((topic) => (
             <div key={topic.id}>
               <div className="sub-title">{topic.title}</div>
 
               <div className="grid gap-[20px]">
-                {(draftsByTopic[topic.title] || []).map((blog) => (
-                  <div
-                    key={blog.id}
-                    className="w-full flex justify-between gap-[10px] items-center"
-                  >
-                    <DraftList blog={blog} />
-                    <FontAwesomeIcon
-                      icon={["fas", "trash"]}
-                      className="hover:text-red-500 cursor-pointer"
-                      onClick={() => handleDelete(blog.id)}
-                    />
-                  </div>
-                ))}
+                {!draftsByTopic ? (
+                  <Loading loading="loading meta data" />
+                ) : (
+                  (draftsByTopic[topic.title] || []).map((blog) => (
+                    <div
+                      key={blog.id}
+                      className="w-full flex justify-between gap-[10px] items-center"
+                    >
+                      <DraftList blog={blog} />
+                      <FontAwesomeIcon
+                        icon={["fas", "trash"]}
+                        className="hover:text-red-500 cursor-pointer"
+                        onClick={() => handleDelete(blog.id)}
+                      />
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           ))
