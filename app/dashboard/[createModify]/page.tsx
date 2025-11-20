@@ -3,6 +3,8 @@
 import { use } from "react";
 import Link from "next/link";
 
+import Loading from "@app/loading";
+
 import Draftify from "@c/Draftify";
 import SectionTitle from "@c/SectionTitle";
 
@@ -54,7 +56,7 @@ export default function CreateModifyBlog({
     draftify,
   } = useCreateModify(id, type);
 
-  if (loading) return <div>Loading topics and tags...</div>;
+  if (loading) return <Loading data="tags, topics and blog content" />;
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (

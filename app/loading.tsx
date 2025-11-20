@@ -1,6 +1,12 @@
 // Loading UI
-export default function loading() {
+export default function loading({ data }: { data: string }) {
   return (
-    <div>loading</div>
-  )
+    <div className="">
+      loading {data}
+      <div className="loader">
+        {/* <div className="loader-outer"></div> */}
+        <div className="loader-inner"></div>
+      </div>
+    </div>
+  );
 }

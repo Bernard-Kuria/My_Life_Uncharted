@@ -1,7 +1,7 @@
 "use client";
-
-import { nanoid } from "@node_modules/nanoid";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+
+import { nanoid } from "nanoid";
 
 import { findByType, toCamelCase } from "@utils/conversions";
 import { defaultBlogContent, defaultMeta } from "@utils/constants";
