@@ -20,7 +20,11 @@ export default function Dashboard() {
     refreshTrigger,
     setRefreshTrigger,
     handleDelete,
+    loading,
+    deletingBlogStatus,
   } = useDashboard();
+
+  if (loading) return <Loading loading="Loading topics and blogs..." />;
 
   return (
     <div className="grid justify-center">
@@ -79,23 +83,26 @@ export default function Dashboard() {
               <div className="sub-title">{topic.title}</div>
 
               <div className="grid gap-[20px]">
-                {!draftsByTopic ? (
-                  <Loading loading="loading meta data" />
-                ) : (
-                  (draftsByTopic[topic.title] || []).map((blog) => (
-                    <div
-                      key={blog.id}
-                      className="w-full flex justify-between gap-[10px] items-center"
-                    >
-                      <DraftList blog={blog} />
+                {(draftsByTopic[topic.title] || []).map((blog) => (
+                  <div
+                    key={blog.id}
+                    className="w-full flex justify-between gap-[10px] items-center"
+                  >
+                    <DraftList blog={blog} />
+                    {deletingBlogStatus ? (
+                      <div className="relative w-[40px] h-[40px] rounded-full">
+                        <div className="absolute border-4 border-red rounded-full w-full h-full border-l-transparent animate-[rotate_1s_cubic-bezier(0.15,0.61,0.58,0.4)_infinite]"></div>
+                        <div className="absolute border-4 border-red rounded-full w-[20px] h-[20px] translate-x-[17.5px] translate-y-[17.5px] border-t-transparent animate-[rotate-reverse_1s_cubic-bezier(0.15,0.61,0.58,0.4)_infinite]"></div>
+                      </div>
+                    ) : (
                       <FontAwesomeIcon
                         icon={["fas", "trash"]}
                         className="hover:text-red-500 cursor-pointer"
                         onClick={() => handleDelete(blog.id)}
                       />
-                    </div>
-                  ))
-                )}
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           ))

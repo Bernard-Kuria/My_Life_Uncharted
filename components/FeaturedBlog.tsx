@@ -31,18 +31,23 @@ export default function FeaturedBlog({ topic }: { topic: string }) {
     }
   }, [featuredBlog]);
 
-  if (!featuredBlog) {
-    return <div>Blog not found for topic: {topic}</div>;
-  }
-
-  if (!loaded) return <div>Loading Featured blog</div>;
+  if (!featuredBlog || !loaded)
+    return (
+      <div className="text-(--secondary-blue)">
+        Loading Featured blog
+        <div className="relative w-[70px] h-[70px] rounded-full">
+          <div className="absolute border-4 border-(--secondary-blue) rounded-full w-full h-full border-l-transparent animate-[rotate_1s_cubic-bezier(0.15,0.61,0.58,0.4)_infinite]"></div>
+          <div className="absolute border-4 border-(--secondary-blue) rounded-full w-[35px] h-[35px] translate-x-[17.5px] translate-y-[17.5px] border-t-transparent animate-[rotate-reverse_1s_cubic-bezier(0.15,0.61,0.58,0.4)_infinite]"></div>
+        </div>
+      </div>
+    );
 
   return (
     <Link
       href={`/${
         getLinkFromTopic(featuredBlog.blogMeta.topic) + "/" + featuredBlog.id
       }`}
-      className="grid grid-rows-[30px_1fr] gap-[20px] p-[40px] w-full h-[400px] mt-[calc(100vh-270px)] bg-(--primary-blue)/80 z-1"
+      className="h-full grid grid-rows-[30px_1fr] gap-[20px]"
     >
       <div className="flex items-center text-white">Featured Blog</div>
       <div className="flex gap-[30px]">

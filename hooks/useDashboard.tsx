@@ -17,9 +17,13 @@ export const useDashboard = () => {
   const [draftsByTopic, setDraftsByTopic] = useState<
     Record<string, DraftsType>
   >({});
-  const [refreshTrigger, setRefreshTrigger] = useState(false); // ✅ triggers re-fetch
+  const [refreshTrigger, setRefreshTrigger] = useState(false);
+  const [reloadBlogs, setReloadBlogs] = useState(false);
+  const [deletingBlogStatus, setDeletingBlogStatus] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     async function fetchBlogsAndDrafts() {
       const blogsMap: Record<string, BlogsType> = {};
       const draftsMap: Record<string, DraftsType> = {};
@@ -43,20 +47,22 @@ export const useDashboard = () => {
 
       setBlogsByTopic(blogsMap);
       setDraftsByTopic(draftsMap);
+      setLoading(false);
     }
 
     fetchBlogsAndDrafts();
-  }, []);
+  }, [reloadBlogs]);
 
   const handleDelete = async (id: string) => {
+    setDeletingBlogStatus(true);
     try {
-      // setDeleteStatus(true);
       await deleteBlogMeta(id);
       await deleteBlogContent(id);
     } catch (error) {
       console.error(error);
     } finally {
-      // setDeleteStatus(false);
+      setReloadBlogs((prev) => !prev);
+      setDeletingBlogStatus(false);
     }
   };
 
@@ -67,5 +73,7 @@ export const useDashboard = () => {
     refreshTrigger,
     setRefreshTrigger,
     handleDelete,
+    deletingBlogStatus,
+    loading,
   };
 };

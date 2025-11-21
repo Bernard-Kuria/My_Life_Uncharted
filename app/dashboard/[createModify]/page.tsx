@@ -2,6 +2,7 @@
 
 import { use } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import Loading from "@app/loading";
 
@@ -17,6 +18,7 @@ export default function CreateModifyBlog({
   params: Promise<{ createModify: string }>;
 }) {
   const { createModify } = use(params);
+  const router = useRouter();
 
   const id = createModify !== "new" ? createModify.slice(0, -5) : "new";
   const type = createModify.slice(-5); // either blogs or draft
@@ -38,6 +40,7 @@ export default function CreateModifyBlog({
     handleDelete,
     handleUpdateBlog,
     handleUpdateDraft,
+    handleConvertDraftToBlog,
 
     // statuses
     loading,
@@ -152,20 +155,22 @@ export default function CreateModifyBlog({
               className="border p-2 text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) hover:text-white cursor-pointer"
               onClick={() => {
                 if (topicStatus && tagStatus) {
-                  return handleAddBlog();
+                  handleAddBlog();
+                  router.push("/dashboard");
                 } else {
                   setTopicStatus((prev) => (prev === true ? true : false));
                   setTagStatus((prev) => (prev === true ? true : false));
                 }
               }}
             >
-              {addBlogStatus ? "Adding" : "Add New Post"}
+              {addBlogStatus ? "Adding" : "Add New Blog"}
             </button>
             <button
               className="border p-2 text-(--secondary-blue) border-(--secondary-blue) hover:bg-(--secondary-blue) hover:text-white cursor-pointer"
               onClick={() => {
                 if (topicStatus && tagStatus) {
-                  return handleAddDraft();
+                  handleAddDraft();
+                  router.push("/dashboard");
                 } else {
                   setTopicStatus((prev) => (prev === true ? true : false));
                   setTagStatus((prev) => (prev === true ? true : false));
@@ -186,23 +191,47 @@ export default function CreateModifyBlog({
             {type === "blogs" ? (
               <button
                 className="border p-2 text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) hover:text-white cursor-pointer"
-                onClick={handleUpdateBlog}
+                onClick={() => {
+                  handleUpdateBlog();
+                  router.push("/dashboard");
+                }}
               >
-                {updateBlogStatus ? "Updating" : "Update Post"}
+                {updateBlogStatus ? "Updating" : "Update Blog"}
               </button>
             ) : (
               <button
                 className="border p-2 text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) hover:text-white cursor-pointer"
-                onClick={handleUpdateDraft}
+                onClick={() => {
+                  handleUpdateDraft();
+                  router.push("/dashboard");
+                }}
               >
                 {updateDraftStatus ? "Updating" : "Update Draft"}
               </button>
             )}
             <button
-              className="border p-2 text-red-500 border-red-500 hover:bg-red-500 hover:text-white cursor-pointer"
-              onClick={handleDelete}
+              className="border p-2 text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) hover:text-white cursor-pointer"
+              onClick={() => {
+                if (topicStatus && tagStatus) {
+                  handleAddBlog();
+                  handleConvertDraftToBlog();
+                  router.push("/dashboard");
+                } else {
+                  setTopicStatus((prev) => (prev === true ? true : false));
+                  setTagStatus((prev) => (prev === true ? true : false));
+                }
+              }}
             >
-              {deleteStatus ? "Deleting" : "Delete this post"}
+              {addBlogStatus ? "Adding" : "Save as New Blog"}
+            </button>
+            <button
+              className="border p-2 text-red-500 border-red-500 hover:bg-red-500 hover:text-white cursor-pointer"
+              onClick={() => {
+                handleDelete();
+                router.push("/dashboard");
+              }}
+            >
+              {deleteStatus ? "Deleting" : "Delete this Blog"}
             </button>
           </div>
         )}

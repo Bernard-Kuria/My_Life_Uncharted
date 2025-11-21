@@ -109,7 +109,7 @@ function EditComment({
   };
 
   return (
-    <div className="flex gap-[20px]">
+    <div className="flex gap-[10px]">
       <div className="w-[14px] h-full bg-(--secondary-blue)" />
 
       <div className="bg-white dark:bg-black w-full p-2">
@@ -186,7 +186,7 @@ function Comment({
   };
 
   return (
-    <div className="flex gap-[20px]">
+    <div className="flex gap-[10px]">
       <div className="w-[14px] h-full bg-(--secondary-blue)"></div>
       <div className="grid gap-[10px] bg-white dark:bg-black w-full p-2">
         <div>{comment.comment}</div>
