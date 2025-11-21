@@ -127,8 +127,7 @@ export async function PUT(req: Request) {
 // DELETE: delete draft by ID
 export async function DELETE(req: Request) {
   try {
-    const data = await req.json();
-    const { id } = data;
+    const id = await req.json();
 
     if (!id)
       return NextResponse.json(

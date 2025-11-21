@@ -33,6 +33,7 @@ import {
 } from "@services/blogs";
 import {
   addDraftMeta,
+  deleteDraftMeta,
   getDraftMetaById,
   updateDraftMeta,
 } from "@services/drafts";
@@ -263,6 +264,31 @@ export function useCreateModify(id: string, type: string) {
     }
   };
 
+  const handleConvertDraftToBlog = async () => {
+    if (!blogContent) {
+      console.error("No blog content found, aborting...");
+      return;
+    }
+
+    try {
+      setAddBlogStatus(true);
+      await addBlogMeta({
+        type: "blogs",
+        id: id,
+        blogMeta: {
+          ...updates(),
+          minsRead: 2,
+          likes: 0,
+          comments: 0,
+          views: 0,
+        },
+      });
+      await deleteDraftMeta(id);
+    } finally {
+      setAddBlogStatus(false);
+    }
+  };
+
   return {
     selectedTopic,
     setSelectedTopic,
@@ -282,6 +308,7 @@ export function useCreateModify(id: string, type: string) {
     handleAddDraft,
     handleDelete,
     handleUpdateBlog,
+    handleConvertDraftToBlog,
     addBlogStatus,
     addDraftStatus,
     updateBlogStatus,
