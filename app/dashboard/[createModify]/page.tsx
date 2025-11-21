@@ -38,6 +38,7 @@ export default function CreateModifyBlog({
     handleAddBlog,
     handleAddDraft,
     handleDelete,
+    handleDeleteDraft,
     handleUpdateBlog,
     handleUpdateDraft,
     handleConvertDraftToBlog,
@@ -224,15 +225,27 @@ export default function CreateModifyBlog({
             >
               {addBlogStatus ? "Adding" : "Save as New Blog"}
             </button>
-            <button
-              className="border p-2 text-red-500 border-red-500 hover:bg-red-500 hover:text-white cursor-pointer"
-              onClick={() => {
-                handleDelete();
-                router.push("/dashboard");
-              }}
-            >
-              {deleteStatus ? "Deleting" : "Delete this Blog"}
-            </button>
+            {type === "blogs" ? (
+              <button
+                className="border p-2 text-red-500 border-red-500 hover:bg-red-500 hover:text-white cursor-pointer"
+                onClick={() => {
+                  handleDelete();
+                  router.push("/dashboard");
+                }}
+              >
+                {deleteStatus ? "Deleting" : "Delete this Blog"}
+              </button>
+            ) : (
+              <button
+                className="border p-2 text-red-500 border-red-500 hover:bg-red-500 hover:text-white cursor-pointer"
+                onClick={() => {
+                  handleDeleteDraft();
+                  router.push("/dashboard");
+                }}
+              >
+                {deleteStatus ? "Deleting" : "Delete this Draft"}
+              </button>
+            )}
           </div>
         )}
       </div>

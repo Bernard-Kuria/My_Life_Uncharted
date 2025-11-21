@@ -289,6 +289,16 @@ export function useCreateModify(id: string, type: string) {
     }
   };
 
+  const handleDeleteDraft = async () => {
+    try {
+      setDeleteStatus(true);
+      await deleteDraftMeta(id);
+      await deleteBlogContent(id);
+    } finally {
+      setDeleteStatus(false);
+    }
+  };
+
   return {
     selectedTopic,
     setSelectedTopic,
@@ -307,6 +317,7 @@ export function useCreateModify(id: string, type: string) {
     handleAddBlog,
     handleAddDraft,
     handleDelete,
+    handleDeleteDraft,
     handleUpdateBlog,
     handleConvertDraftToBlog,
     addBlogStatus,
