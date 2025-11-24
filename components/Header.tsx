@@ -11,7 +11,7 @@ import { applyToggleStyles } from "@hooks/useTheme";
 
 import { getLinkFromTopic } from "@utils/conversions";
 import { getAllTopics } from "@services/topics";
-import { Topic } from "@lib/types";
+import { Topic } from "@lib/types/types";
 
 export default function Header() {
   const router = useRouter();
@@ -75,13 +75,10 @@ export default function Header() {
   }));
 
   return (
-    <div className="flex w-full h-[40px] mt-[10px] relative items-center mb-[20px]">
+    <div className="lg:page-layout flex items-center flex-col-reverse lg:flex-row lg:mt-[10px] relative lg:mb-[20px] gap-[10px]">
       {isLoggedIn ? <Login setIsLoggedIn={setIsLoggedIn} /> : ""}
-      <div
-        className={`${
-          location === "/" ? "translate-x-[250px]" : "translate-x-[165px]"
-        }`}
-      >
+
+      <div className="flex-1">
         <button
           onClick={() => {
             return location === "/"
@@ -105,7 +102,7 @@ export default function Header() {
           })()}
         </div>
       </div>
-      <div className="absolute right-0 w-[570px] h-full border-t border-b border-l rounded-tl-[10px] rounded-bl-[10px] border-(--border-color) pr-[160px] pl-[20px]">
+      <div className="min-w-[310px] max-w-[410px] h-[40px] lg:border-t border-b border-l border-r lg:border-r-0 lg:rounded-tl-[10px] rounded-br-[10px] lg:rounded-br-[0px] rounded-bl-[10px] border-(--border-color) px-[10px] lg:pl-[20px]">
         <ul className="flex w-full h-full justify-between text-[12px] items-center text-center">
           <li>
             <Link href="https://bernard-webfolio.web.app/">About Me</Link>

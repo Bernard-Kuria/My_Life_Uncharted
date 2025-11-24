@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getAllMilestones } from "@services/milestones";
-import type { Milestones } from "@lib/types";
+import type { Milestones } from "@lib/types/types";
 
 export default function Milestones({
   topic = "",
@@ -16,7 +16,7 @@ export default function Milestones({
   }, []);
   return (
     <div className="w-full grid justify-center h-[300px] text-white bg-(--primary-blue)">
-      <div className="w-[1035px] flex justify-between items-center h-full">
+      <div className="page-layout flex justify-between items-center h-full">
         {!milestones ? (
           <div>Loading Milestones</div>
         ) : (

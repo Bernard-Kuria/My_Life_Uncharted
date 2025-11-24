@@ -21,7 +21,8 @@
     "paths": {
       "@*": ["./*"],
       "@c/*": ["./components/*"],
-      "@services/*": ["./services/*"]
+      "@services/*": ["./services/*"],
+      "*": ["./types/*"]
     }
   },
   "include": [
@@ -29,7 +30,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "lib/Draftify/useDraftify.jsx"
+    "lib/Draftify/useDraftify.jsx",
+    "types"
   ],
   "exclude": ["node_modules"]
 }

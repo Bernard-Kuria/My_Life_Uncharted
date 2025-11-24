@@ -7,7 +7,7 @@ import { getBlogMetaById } from "@services/blogs";
 import { getLinkFromTopic } from "@utils/conversions";
 import Link from "@node_modules/next/link";
 import { useEffect, useState } from "react";
-import { Blog } from "@lib/types";
+import { Blog } from "@lib/types/types";
 import { getBlogImgUrl } from "@services/FirestoreStorage";
 
 export default function FeaturedBlog({ topic }: { topic: string }) {

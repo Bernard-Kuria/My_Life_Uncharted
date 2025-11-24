@@ -1,4 +1,4 @@
-import { BlogMeta, Content } from "@lib/types";
+import { BlogMeta, Content } from "@lib/types/types";
 import { nanoid } from "@node_modules/nanoid";
 
 export const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "";

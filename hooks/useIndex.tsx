@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 import { getAllTopics } from "@services/topics";
 
-import { BlogTopicsType } from "@lib/types";
+import { BlogTopicsType } from "@lib/types/types";
 
 export const useIndex = () => {
   const [topics, setTopics] = useState<BlogTopicsType>([]);

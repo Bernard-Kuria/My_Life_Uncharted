@@ -13,7 +13,7 @@ import BackGround from "./DraftifyProComponents/Background";
 
 import { useDraftify } from "../lib/Draftify/useDraftify";
 import { useGenerateGrid } from "../lib/Draftify/BackgroundHooks/backGroundEffects";
-import { BlogContent } from "@lib/types";
+import { BlogContent } from "@lib/types/types";
 
 type DraftifyProps = {
   draftify: ReturnType<typeof useDraftify>;

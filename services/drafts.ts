@@ -1,4 +1,4 @@
-import { Draft, DraftMetaParams } from "@lib/types";
+import { Draft, DraftMetaParams } from "@lib/types/types";
 import { API_BASE } from "@utils/constants";
 
 export async function getAllDrafts(filters?: { id?: string; topic?: string }) {

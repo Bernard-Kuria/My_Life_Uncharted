@@ -7,7 +7,7 @@ import type {
   Comment,
   FetchedComment,
   FetchedCommentsType,
-} from "@lib/types";
+} from "@lib/types/types";
 import { useEffect, useState } from "react";
 
 import { getSpecificBlogComments } from "@services/comments";
