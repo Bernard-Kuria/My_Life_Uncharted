@@ -1,4 +1,4 @@
-import { BlogContent } from "@lib/types";
+import { BlogContent } from "@lib/types/types";
 import { API_BASE } from "@utils/constants";
 
 export async function getAllBlogsContent() {

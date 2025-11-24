@@ -1,13 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 
-export default function Hero({
-  landingPageImages,
-}: {
+import { usePathInteractions } from "@hooks/usePathInteractions";
+
+type HeroProps = {
   landingPageImages: string[];
-}) {
+};
+
+export default function Hero({ landingPageImages }: HeroProps) {
+  const path = useRef<SVGPathElement>(null);
+  usePathInteractions(path);
+
   const lines = [
     {
       width: "200",
@@ -46,85 +51,93 @@ export default function Hero({
     },
   ];
 
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) return null;
-
-  console.log("Images url:", landingPageImages);
-
   if (!landingPageImages || landingPageImages.length === 0) {
     return <div>Loading images...</div>;
   }
 
+  const images = {
+    main: landingPageImages.find((url) => url.includes("chill")),
+    image1: landingPageImages.find((url) => url.includes("bike-riding")),
+    image2: landingPageImages.find((url) => url.includes("jkuat-hackathon")),
+  };
+
   return (
-    <div className="relative w-[1035px] h-[450px] border-[5px] rounded-[10px] border-(--border-color) flex items-center p-[30px]">
-      <div className="merriweather-font text-[80px] w-[65%] font-semibold leading-tight">
+    <div className="relative w-full rounded-[10px] border-(--border-color) flex items-center flex-col-reverse lg:flex-row lg:h-[450px] mt-[40px] p-[30px] border-[5px]">
+      <div className="merriweather-font text-[20px] lg:text-[80px] flex-1 font-semibold leading-tight">
         Miles, <span className="text-(--primary-blue)">Mindsets</span> & Making
         Stuff
       </div>
 
-      <div className="relative w-[350px] h-[350px] overflow-hidden">
-        {landingPageImages[1] && (
+      {/* Main image */}
+      <svg viewBox="0 0 300 300" width={350} height={350}>
+        <defs>
+          <clipPath id="image-edge" clipPathUnits="userSpaceOnUse">
+            <path ref={path} d=""></path>
+          </clipPath>
+        </defs>
+
+        <foreignObject width="300" height="300" clipPath="url(#image-edge)">
           <Image
-            src={landingPageImages[1]}
-            alt="chill image"
+            src={images.main || ""}
+            alt="Main Image"
             width={350}
             height={700}
             unoptimized
             className="object-cover object-[0%_30%] scale-200"
           />
-        )}
-      </div>
+        </foreignObject>
+      </svg>
 
-      <div className="absolute top-[-68px] left-[-70px]">
-        <div className="relative p-[3px]">
-          <BorderLines />
-          <div className="relative w-[143px] h-[198px] overflow-hidden">
-            {landingPageImages[0] && (
+      {window.innerWidth >= 1024 ? (
+        <div className="absolute top-[-68px] left-[-70px]">
+          <div className="relative p-[3px]">
+            <BorderLines />
+            <div className="relative w-[143px] h-[198px] overflow-hidden">
               <Image
-                src={landingPageImages[0]}
-                alt="chill image"
+                src={images.image1 || ""}
+                alt="image1 image"
                 width={286}
                 height={396}
                 unoptimized
                 className="w-full h-full object-cover object-[-0%_40%] scale-200"
               />
-            )}
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
 
-      <div className="absolute top-[360px] left-[-70px] p-[4px]">
-        <div className="relative p-[3px]">
-          <BorderLines />
-          <div className="relative w-[292px] h-[143px] overflow-hidden">
-            {landingPageImages[2] && (
+      {window.innerWidth >= 1024 ? (
+        <div className="absolute top-[360px] left-[-70px] p-[4px]">
+          <div className="relative p-[3px]">
+            <BorderLines />
+            <div className="relative w-[292px] h-[143px] overflow-hidden">
               <Image
-                src={`${landingPageImages[2]}`}
-                alt="chill image"
+                src={images.image2 || ""}
+                alt="image2 image"
                 fill
+                sizes="(max-width: 768px) 100vw, 292px"
                 unoptimized
                 className="object-cover object-[0%_40%]"
               />
-            )}
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
 
-      {lines.map((line, i) => (
-        <div
-          key={i}
-          className={`absolute ${line.color}`}
-          style={{
-            width: `${line.width}px`,
-            height: `${line.height}px`,
-            top: line.top,
-            left: line.left,
-          }}
-        />
-      ))}
+      {window.innerWidth >= 1024
+        ? lines.map((line, i) => (
+            <div
+              key={i}
+              className={`absolute ${line.color}`}
+              style={{
+                width: `${line.width}px`,
+                height: `${line.height}px`,
+                top: line.top,
+                left: line.left,
+              }}
+            />
+          ))
+        : null}
 
       <div className="absolute h-auto left-[70%] top-[-4px] flex">
         {[1, 2, 3, 4, 5].map((_, i) => (

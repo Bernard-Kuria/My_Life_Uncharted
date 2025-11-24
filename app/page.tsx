@@ -22,15 +22,15 @@ export default function Home() {
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div className="grid justify-center mt-[30px] gap-[100px]">
+    <div className="page-layout grid justify-center lg:mt-[30px] gap-[20px] lg:gap-[100px]">
       <Hero landingPageImages={landingPageImages} />
       <div
-        className={`w-[1035px] grid gap-[50px] ${
+        className={`${
           location === "/" ? "justify-center text-center" : "text-left"
         } text-(--secondary-blue) section-title hover:border-(--primary-blue)`}
       >
         {location === "/" ? "Browse" : "Other"} Topics
-        <div className="flex flex-wrap gap-[20px]">
+        <div className="grid lg:grid-cols-2 gap-[20px]">
           {topics.map((b) => {
             const link = getLinkFromTopic(b.title);
             return (

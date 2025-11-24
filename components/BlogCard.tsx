@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Blog } from "@lib/types";
+import { Blog } from "@lib/types/types";
 import { getLinkFromTopic, getTopicFromLink } from "@utils/conversions";
 import { getImgUrl } from "@services/FirestoreStorage";
 

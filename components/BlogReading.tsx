@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OutputBlock from "./DraftifyProComponents/OutputBlock";
 import Tooltip from "./DraftifyProComponents/Tooltip";
 
-import { BlogContent, Blog } from "@lib/types";
+import { BlogContent, Blog } from "@lib/types/types";
 
 export default function BlogArea({
   blogContent,

@@ -1,4 +1,4 @@
-import { BlogTopicsType, Content } from "../lib/types";
+import { BlogTopicsType, Content } from "../lib/types/types";
 import { getAllTopics } from "@services/topics";
 
 // converts ASCII value "%26" back to normal string "&"

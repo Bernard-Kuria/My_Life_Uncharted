@@ -7,7 +7,7 @@ import { getImgUrl } from "@services/FirestoreStorage";
 
 import { cleanUpLink, getBlogMatchingPage } from "@utils/conversions";
 
-import { BlogsType, BlogTopicsType, Topic } from "@lib/types";
+import { BlogsType, BlogTopicsType, Topic } from "@lib/types/types";
 
 export const useBlogTopicPage = (blogTopicPage: string) => {
   const [targetBlogs, setTargetBlogs] = useState<BlogsType | undefined>(

@@ -56,7 +56,6 @@ export async function getLandingPageImageUrls(): Promise<string[]> {
     if (landingPageImagesRef) {
       await Promise.all(
         landingPageImagesRef.items.map(async (imgRef) => {
-          console.log(imgRef);
           const url = await getDownloadURL(imgRef);
           landingPageImages.push(url);
         })

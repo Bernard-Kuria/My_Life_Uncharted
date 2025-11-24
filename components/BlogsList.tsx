@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@node_modules/@fortawesome/react-fontawesome/dist";
-import { Blog } from "@lib/types";
+import { Blog } from "@lib/types/types";
 import { checkIsFeatured, setFeatured } from "@services/featuredBlogs";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 

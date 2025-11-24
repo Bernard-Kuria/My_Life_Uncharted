@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { BlogProps } from "@lib/types";
+import { BlogProps } from "@lib/types/types";
 
 import { getImgUrl } from "@services/FirestoreStorage";
 
@@ -19,51 +19,47 @@ export default function Blogs({ link, imageUrl, topic, timeStamp }: BlogProps) {
   }, [imageUrl]);
 
   return (
-    <div className="">
-      <div className="flex flex-wrap gap-[20px]">
-        <Link
-          href={`/${link}`}
-          className={`${
-            (location ?? "").substring(1).includes(link) ? "hidden" : ""
-          }`}
+    <Link
+      href={`/${link}`}
+      className={`${
+        (location ?? "").substring(1).includes(link) ? "hidden" : ""
+      }`}
+    >
+      <div
+        className={`${
+          location === "/" ? "h-[370px]" : "h-[250px]"
+        } border border-(--border-color) p-[5px] overflow-hidden`}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <div
+          className={`relative w-full ${
+            location === "/" ? "h-[250px]" : "h-full"
+          } overflow-hidden`}
         >
-          <div
-            className={`${
-              location === "/" ? "w-[500px] h-[370px]" : "w-[400px] h-[250px]"
-            } border border-(--border-color) p-[5px] overflow-hidden`}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-          >
-            <div
-              className={`relative w-full ${
-                location === "/" ? "h-[250px]" : "h-full"
-              } overflow-hidden`}
-            >
-              {image && (
-                <Image
-                  src={`${image}`}
-                  alt="image"
-                  fill
-                  style={{ objectFit: "cover" }}
-                  className="object-cover"
-                />
-              )}
-            </div>
-            <div
-              className={`duration-300 ${
-                location === "/"
-                  ? "grid h-[108px]"
-                  : location !== "/" && hovered === true
-                  ? "opacity-100 -translate-y-[108px] h-[108px]"
-                  : "opacity-0 h-[0px]"
-              } gap-[20px] p-2 w-full bg-white text-black text-left`}
-            >
-              <div className="text-[20px] font-semibold">{topic}</div>
-              <div className="text-[12px]">{timeStamp}</div>
-            </div>
-          </div>
-        </Link>
+          {image && (
+            <Image
+              src={`${image}`}
+              alt="image"
+              fill
+              style={{ objectFit: "cover" }}
+              className="object-cover"
+            />
+          )}
+        </div>
+        <div
+          className={`duration-300 ${
+            location === "/"
+              ? "grid h-[108px]"
+              : location !== "/" && hovered === true
+              ? "opacity-100 -translate-y-[108px] h-[108px]"
+              : "opacity-0 h-[0px]"
+          } gap-[20px] p-2 w-full bg-white text-black text-left`}
+        >
+          <div className="text-[20px] font-semibold">{topic}</div>
+          <div className="text-[12px]">{timeStamp}</div>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

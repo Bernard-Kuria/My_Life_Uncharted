@@ -11,7 +11,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { DraftMetaParams } from "@lib/types";
+import { DraftMetaParams } from "@lib/types/types";
 
 // GET: fetch all drafts or one by ID
 export async function GET(req: Request) {

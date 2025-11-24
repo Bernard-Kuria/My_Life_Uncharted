@@ -1,4 +1,4 @@
-import { Blog, BlogMetaParams } from "@lib/types";
+import { Blog, BlogMetaParams } from "@lib/types/types";
 import { API_BASE } from "@utils/constants";
 
 export async function getAllBlogs(filters?: { topic?: string }) {

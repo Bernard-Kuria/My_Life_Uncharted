@@ -1,4 +1,4 @@
-import { Comment } from "@lib/types";
+import { Comment } from "@lib/types/types";
 import { API_BASE } from "@utils/constants";
 
 export async function getAllComments() {

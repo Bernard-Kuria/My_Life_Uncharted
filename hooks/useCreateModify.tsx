@@ -14,7 +14,7 @@ import {
   Content,
   Draft,
   TagsType,
-} from "@lib/types";
+} from "@lib/types/types";
 import { useDraftify } from "@lib/Draftify/useDraftify";
 import { getCurrentDateFormatted } from "@lib/utils";
 

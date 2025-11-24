@@ -5,7 +5,7 @@ import { getAllBlogs, getBlogMetaById, updateBlogMeta } from "@services/blogs";
 
 import { cleanUpLink, getTopicFromLink } from "@utils/conversions";
 
-import { Blog, BlogContent, BlogsType } from "@lib/types";
+import { Blog, BlogContent, BlogsType } from "@lib/types/types";
 import { addComment, updateComment } from "@services/comments";
 import { getBlogContentById } from "@services/blogContent";
 

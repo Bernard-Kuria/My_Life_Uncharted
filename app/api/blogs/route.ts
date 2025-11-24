@@ -11,7 +11,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { BlogMetaParams } from "@lib/types";
+import { BlogMetaParams } from "@lib/types/types";
 
 // GET: fetch all blogs or one by ID
 export async function GET(req: Request) {

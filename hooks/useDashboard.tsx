@@ -6,7 +6,7 @@ import { deleteBlogMeta, getAllBlogs } from "@services/blogs";
 import { getAllDrafts } from "@services/drafts";
 import { getAllTopics } from "@services/topics";
 
-import { BlogsType, BlogTopicsType, DraftsType } from "@lib/types";
+import { BlogsType, BlogTopicsType, DraftsType } from "@lib/types/types";
 import { deleteBlogContent } from "@services/blogContent";
 
 export const useDashboard = () => {

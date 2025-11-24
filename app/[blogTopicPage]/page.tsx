@@ -26,7 +26,7 @@ export default function Page({
   if (!loaded) return <Loading loading="Loading Blogs" />;
 
   return (
-    <div className="page-layout flex flex-col gap-[20px] w-full">
+    <div className="flex flex-col gap-[20px] w-full">
       {/* Background Image */}
       <div className="absolute w-screen left-0 h-[calc(100vh-70px)]">
         {image && image !== "undefined" && (
@@ -41,7 +41,7 @@ export default function Page({
         )}
       </div>
 
-      <div className="grid justify-center">
+      <div className="page-layout">
         <div className="grid gap-[20px]">
           <div className="border w-full h-[400px] mt-[calc(100vh-270px)] p-[40px] z-1 bg-(--primary-blue)/80">
             {topicPage && <FeaturedBlog topic={topicPage?.title || ""} />}
@@ -61,7 +61,7 @@ export default function Page({
 
       <Milestones topic={topicPage?.title} />
 
-      <div>
+      <div className="page-layout">
         <strong>Explore More Topics:</strong>
         <div className="flex flex-wrap gap-[20px]">
           {allTopics &&
