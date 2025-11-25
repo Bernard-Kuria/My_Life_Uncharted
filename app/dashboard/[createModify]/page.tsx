@@ -88,7 +88,7 @@ export default function CreateModifyBlog({
               {topicStatus === false && "*required!*"}
             </span>
             <select
-              className="border p-2"
+              className="border p-2 rounded-[10px]"
               name="topics"
               value={selectedTopic}
               required
@@ -112,7 +112,7 @@ export default function CreateModifyBlog({
             <span className="text-sm text-red-500">
               {tagStatus === false && "*atleast one tag is required!*"}
             </span>
-            <div className="flex gap-[5px] border p-1">
+            <div className="flex gap-[5px] border p-1 rounded-[10px]">
               {selectedTags &&
                 selectedTags.length > 0 &&
                 selectedTags.map((tag) => (
@@ -154,7 +154,7 @@ export default function CreateModifyBlog({
         {createModify === "new" ? (
           <div className="flex flex-col md:flex-row justify-between gap-2">
             <button
-              className=" border p-2 text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) hover:text-white cursor-pointer"
+              className="create-modify-btn text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue)"
               onClick={() => {
                 if (topicStatus && tagStatus) {
                   handleAddBlog();
@@ -168,7 +168,7 @@ export default function CreateModifyBlog({
               {addBlogStatus ? "Adding" : "Add New Blog"}
             </button>
             <button
-              className="border p-2 text-(--secondary-blue) border-(--secondary-blue) hover:bg-(--secondary-blue) hover:text-white cursor-pointer"
+              className="create-modify-btn text-(--secondary-blue) border-(--secondary-blue) hover:bg-(--secondary-blue)"
               onClick={() => {
                 if (topicStatus && tagStatus) {
                   handleAddDraft();
@@ -183,16 +183,16 @@ export default function CreateModifyBlog({
             </button>
             <Link
               href={"/dashboard"}
-              className="border p-2 text-red-500 border-red-500 hover:bg-red-500 hover:text-white cursor-pointer"
+              className="create-modify-btn text-red-500 border-red-500 hover:bg-red-500"
             >
               ignore this draft
             </Link>
           </div>
         ) : (
-          <div className="flex flex-col md:flex-row justify-between">
+          <div className="flex flex-col md:flex-row justify-between gap-2">
             {type === "blogs" ? (
               <button
-                className="border p-2 text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) hover:text-white cursor-pointer"
+                className="create-modify-btn text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue)"
                 onClick={() => {
                   handleUpdateBlog();
                   router.push("/dashboard");
@@ -202,7 +202,7 @@ export default function CreateModifyBlog({
               </button>
             ) : (
               <button
-                className="border p-2 text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) hover:text-white cursor-pointer"
+                className="create-modify-btn text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue)"
                 onClick={() => {
                   handleUpdateDraft();
                   router.push("/dashboard");
@@ -212,7 +212,7 @@ export default function CreateModifyBlog({
               </button>
             )}
             <button
-              className="border p-2 text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) hover:text-white cursor-pointer"
+              className="create-modify-btn text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue)"
               onClick={() => {
                 if (topicStatus && tagStatus) {
                   handleAddBlog();
@@ -228,7 +228,7 @@ export default function CreateModifyBlog({
             </button>
             {type === "blogs" ? (
               <button
-                className="border p-2 text-red-500 border-red-500 hover:bg-red-500 hover:text-white cursor-pointer"
+                className="create-modify-btn text-red-500 border-red-500 hover:bg-red-500"
                 onClick={() => {
                   handleDelete();
                   router.push("/dashboard");
@@ -238,7 +238,7 @@ export default function CreateModifyBlog({
               </button>
             ) : (
               <button
-                className="border p-2 text-red-500 border-red-500 hover:bg-red-500 hover:text-white cursor-pointer"
+                className="create-modify-btn text-red-500 border-red-500 hover:bg-red-500"
                 onClick={() => {
                   handleDeleteDraft();
                   router.push("/dashboard");

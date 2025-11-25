@@ -141,6 +141,10 @@ body {
   animation: likeBounce 200ms ease-out;
 }
 
+.create-modify-btn {
+  @apply border p-2 hover:text-white cursor-pointer rounded-[10px];
+}
+
 @keyframes likeBounce {
   0% {
     transform: scale(1);
