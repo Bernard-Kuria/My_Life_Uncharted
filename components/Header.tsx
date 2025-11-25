@@ -20,6 +20,7 @@ export default function Header() {
   const themeModeToggle = useRef<HTMLDivElement | null>(null);
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [topicNames, setTopicNames] = useState<string[]>([]);
+  const [topicsClick, setTopicsClick] = useState(false);
 
   const location = usePathname();
 
@@ -107,16 +108,24 @@ export default function Header() {
           <li>
             <Link href="https://bernard-webfolio.web.app/">About Me</Link>
           </li>
-          <li className="group relative">
+          <li
+            className="group relative"
+            onClick={() => setTopicsClick((prev) => !prev)}
+            onMouseEnter={() => setTopicsClick(true)}
+            onMouseLeave={() => setTopicsClick(false)}
+          >
             Topics
-            <ul className="absolute min-w-[150px] hidden gap-1 pt-[12px] -translate-x-[30px] group-hover:grid hover:grid z-1">
-              {topics.map((topic, index) => (
-                <Link href={"/" + topic.link} key={index}>
-                  <li className="border border-(--border-color) rounded-[5px] p-1 bg-(--background) hover:bg-(--secondary-blue) hover:text-black">
-                    {topic.name}
-                  </li>
-                </Link>
-              ))}
+            <ul
+              className={`absolute min-w-[150px] gap-1 pt-[12px] -translate-x-[30px] z-1`}
+            >
+              {topicsClick &&
+                topics.map((topic, index) => (
+                  <Link href={"/" + topic.link} key={index}>
+                    <li className="border border-(--border-color) rounded-[5px] p-1 bg-(--background) hover:bg-(--secondary-blue) hover:text-black">
+                      {topic.name}
+                    </li>
+                  </Link>
+                ))}
             </ul>
           </li>
           <li>
