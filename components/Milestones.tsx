@@ -12,8 +12,11 @@ export default function Milestones({
   const [milestones, setMilestones] = useState<Milestones>();
 
   useEffect(() => {
-    getAllMilestones(topic).then(setMilestones);
-  }, []);
+    if (topic) {
+      getAllMilestones(topic).then(setMilestones);
+    }
+  }, [topic]);
+
   return (
     <div className="w-full grid justify-around min-h-[300px] text-white bg-(--primary-blue) py-[20px]">
       <div className="page-layout grid md:flex gap-[40px] justify-between items-center h-full">
