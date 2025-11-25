@@ -75,10 +75,10 @@ export default function Header() {
   }));
 
   return (
-    <div className="lg:page-layout flex items-center flex-col-reverse lg:flex-row lg:mt-[10px] relative lg:mb-[20px] gap-[10px]">
+    <div className="relative w-full min-h-[40px] h-auto flex items-center flex-col-reverse justify-center lg:flex-row lg:mt-[10px] lg:mb-[20px] gap-[10px]">
       {isLoggedIn ? <Login setIsLoggedIn={setIsLoggedIn} /> : ""}
 
-      <div className="flex-1">
+      <div className="text-center lg:text-start lg:absolute page-layout top-0">
         <button
           onClick={() => {
             return location === "/"
@@ -102,8 +102,8 @@ export default function Header() {
           })()}
         </div>
       </div>
-      <div className="min-w-[310px] max-w-[410px] h-[40px] lg:border-t border-b border-l border-r lg:border-r-0 lg:rounded-tl-[10px] rounded-br-[10px] lg:rounded-br-[0px] rounded-bl-[10px] border-(--border-color) px-[10px] lg:pl-[20px]">
-        <ul className="flex w-full h-full justify-between text-[12px] items-center text-center">
+      <div className="lg:absolute right-0 top-0 sm:w-full md:w-fit lg:w-[410px] mx-[10px] lg:mx-0 px-[10px] lg:px-0 h-[40px] lg:border-t border-b border-l border-r lg:border-r-0 lg:rounded-tl-[10px] rounded-br-[10px] lg:rounded-br-[0px] rounded-bl-[10px] border-(--border-color)">
+        <ul className="flex w-full h-full gap-[10px] lg:gap-0 lg:justify-around text-[12px] items-center text-center">
           <li>
             <Link href="https://bernard-webfolio.web.app/">About Me</Link>
           </li>
