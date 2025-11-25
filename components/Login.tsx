@@ -42,7 +42,7 @@ export default function Login({ setIsLoggedIn }: LoginProps) {
     >
       <div
         ref={loginContainerRef}
-        className="grid gap-[10px] w-[400px] h-[300px] border border-(--border-color) rounded-2xl translate-x-[calc(50vw-200px)] translate-y-[50vh] bg-(--background)/80 p-5 text-(--primary-blue)"
+        className="grid gap-[10px] w-[400px] h-[300px] border border-(--border-color) rounded-2xl translate-x-[calc(50vw-200px)] translate-y-[50vh] bg-white/50 p-5 text-(--primary-blue)"
         onClick={handleContainerClick}
       >
         Login

@@ -65,7 +65,7 @@ export default function CreateModifyBlog({
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div className="grid justify-center">
+    <div className="md:flex md:flex-col md:justify-center">
       <div className="page-layout flex flex-col gap-[30px]">
         <SectionTitle
           title={
@@ -80,9 +80,9 @@ export default function CreateModifyBlog({
 
         {blogContent && <Draftify draftify={draftify} />}
 
-        <div className="flex gap-[100px]">
+        <div className="grid md:flex gap-[20px] md:gap-[100px]">
           {/* Topic Selector */}
-          <div className="grid gap-[20px]">
+          <div className="grid gap-[10px]">
             Select Topic{" "}
             <span className="text-sm text-red-500">
               {topicStatus === false && "*required!*"}
@@ -107,7 +107,7 @@ export default function CreateModifyBlog({
           </div>
 
           {/* Tag Selector */}
-          <div className="grid gap-[20px]">
+          <div className="grid gap-[10px]">
             Select Tag{" "}
             <span className="text-sm text-red-500">
               {tagStatus === false && "*atleast one tag is required!*"}
@@ -126,6 +126,7 @@ export default function CreateModifyBlog({
               <select
                 name="tags"
                 value=""
+                className="w-full"
                 onChange={(e) => {
                   setTagStatus(e.target.value !== "" ? true : false);
                   handleTagChange(e, selectedTags, setSelectedTags);
@@ -151,9 +152,9 @@ export default function CreateModifyBlog({
         </div>
 
         {createModify === "new" ? (
-          <div className="flex justify-between">
+          <div className="flex flex-col md:flex-row justify-between gap-2">
             <button
-              className="border p-2 text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) hover:text-white cursor-pointer"
+              className=" border p-2 text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) hover:text-white cursor-pointer"
               onClick={() => {
                 if (topicStatus && tagStatus) {
                   handleAddBlog();
@@ -188,7 +189,7 @@ export default function CreateModifyBlog({
             </Link>
           </div>
         ) : (
-          <div className="flex justify-between">
+          <div className="flex flex-col md:flex-row justify-between">
             {type === "blogs" ? (
               <button
                 className="border p-2 text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) hover:text-white cursor-pointer"

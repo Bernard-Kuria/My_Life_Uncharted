@@ -28,7 +28,7 @@ export default function BlogArea({
   if (isMetaLoading && isContentLoading) return <div>Loading Blog...</div>;
 
   return (
-    <div className="flex flex-col gap-[20px] min-h-[1170px] h-fit p-[100px] bg-white dark:bg-black blog-text">
+    <div className="flex flex-col gap-[20px] min-h-[1170px] h-fit p-[40px] lg:p-[100px] bg-white dark:bg-black blog-text">
       <div className="flex detail-text">
         <div className="flex-1 flex gap-[30px]">
           <div>{blog?.blogMeta.dateCreated}</div>
@@ -68,7 +68,7 @@ export default function BlogArea({
           <FontAwesomeIcon
             className={`icon-size cursor-pointer ${
               bounce ? "like-bounce" : ""
-            } ${liked ? "text-(--secondary-blue)" : "text-black"}`}
+            } ${liked ? "text-(--secondary-blue)" : "text-(--foreground)"}`}
             icon={["far", "heart"]}
             onClick={() => {
               triggerBounce();

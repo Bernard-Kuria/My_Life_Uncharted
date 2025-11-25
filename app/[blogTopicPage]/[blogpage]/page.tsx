@@ -44,7 +44,7 @@ export default function Page({
   return (
     <div className="page-layout grid gap-[30px]">
       <button
-        className="cursor-pointer w-fit"
+        className="cursor-pointer w-fit detail-text"
         onClick={() => router.push(`/${topicPage}`)}
       >
         &larr; Back
@@ -72,7 +72,7 @@ export default function Page({
         addCommentCheck={addCommentCheck}
       />
       <strong>More on this topic:</strong>
-      <div className="page-layout flex flex-wrap gap-[20px]">
+      <div className="page-layout grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[20px]">
         {blogs
           ? blogs.map((b) => {
               const link = topicPage + "/" + b.id;

@@ -195,7 +195,7 @@ function Comment({
           <FontAwesomeIcon
             className={`icon-size cursor-pointer ${
               bounce ? "like-bounce" : ""
-            } ${liked ? "text-(--secondary-blue)" : "text-black"}`}
+            } ${liked ? "text-(--secondary-blue)" : "text-(--foreground)"}`}
             icon={["far", "thumbs-up"]}
             onClick={() => {
               triggerBounce();
