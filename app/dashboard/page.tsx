@@ -27,9 +27,9 @@ export default function Dashboard() {
   if (loading) return <Loading loading="Loading topics and blogs..." />;
 
   return (
-    <div className="grid justify-center">
+    <div className="flex flex-col justify-center">
       <div className="page-layout flex flex-col gap-[30px]">
-        <div className="flex gap-[50px] items-center">
+        <div className="text-center lg:text-start grid lg:flex gap-[10px] lg:gap-[50px] items-center">
           <SectionTitle title="My Blogs" />
           <button className="button">
             <Link href={"/dashboard/new"}>create new blog</Link>
@@ -51,7 +51,7 @@ export default function Dashboard() {
                   (blogsByTopic[topic.title] || []).map((blog) => (
                     <div
                       key={blog.id}
-                      className="w-full flex justify-between gap-[10px] items-center"
+                      className="w-full flex justify-between gap-[5px] items-center"
                     >
                       <BlogsList
                         blog={blog}

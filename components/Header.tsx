@@ -76,10 +76,10 @@ export default function Header() {
   }));
 
   return (
-    <div className="relative w-full min-h-[40px] h-auto flex items-center flex-col-reverse justify-center lg:flex-row lg:mt-[10px] lg:mb-[20px] gap-[10px]">
+    <div className="relative w-full min-h-[40px] h-auto flex items-center flex-col-reverse justify-center md:flex-row md:mt-[10px] md:mb-[20px] gap-[10px] px-[10px] md:px-0">
       {isLoggedIn ? <Login setIsLoggedIn={setIsLoggedIn} /> : ""}
 
-      <div className="text-center lg:text-start lg:absolute page-layout top-0">
+      <div className="text-center md:text-start md:absolute page-layout top-0">
         <button
           onClick={() => {
             return location === "/"
@@ -103,49 +103,50 @@ export default function Header() {
           })()}
         </div>
       </div>
-      <div className="lg:absolute right-0 top-0 sm:w-full md:w-fit lg:w-[410px] mx-[10px] lg:mx-0 px-[10px] lg:px-0 h-[40px] lg:border-t border-b border-l border-r lg:border-r-0 lg:rounded-tl-[10px] rounded-br-[10px] lg:rounded-br-[0px] rounded-bl-[10px] border-(--border-color)">
-        <ul className="flex w-full h-full gap-[10px] lg:gap-0 lg:justify-around text-[12px] items-center text-center">
-          <li>
-            <Link href="https://bernard-webfolio.web.app/">About Me</Link>
-          </li>
-          <li
-            className="group relative"
-            onClick={() => setTopicsClick((prev) => !prev)}
-            onMouseEnter={() => setTopicsClick(true)}
-            onMouseLeave={() => setTopicsClick(false)}
+
+      <ul className="md:absolute flex items-center justify-around right-0 top-0 w-full md:w-[410px] mx-[10px] md:mx-0 h-[40px] text-[12px] text-center md:border-t border-b border-l border-r md:border-r-0 border-(--border-color) md:rounded-tl-[10px] rounded-br-[10px] md:rounded-br-[0px] rounded-bl-[10px]">
+        <li>
+          <Link href="https://bernard-webfolio.web.app/">About Me</Link>
+        </li>
+        <li
+          className="group relative"
+          onClick={() => setTopicsClick((prev) => !prev)}
+          onMouseEnter={() => setTopicsClick(true)}
+          onMouseLeave={() => setTopicsClick(false)}
+        >
+          Topics
+          <ul
+            className={
+              "absolute min-w-[150px] grid gap-1 pt-[12px] -translate-x-[30px] z-1"
+            }
           >
-            Topics
-            <ul
-              className={`absolute min-w-[150px] gap-1 pt-[12px] -translate-x-[30px] z-1`}
-            >
-              {topicsClick &&
-                topics.map((topic, index) => (
-                  <Link href={"/" + topic.link} key={index}>
-                    <li className="border border-(--border-color) rounded-[5px] p-1 bg-(--background) hover:bg-(--secondary-blue) hover:text-black">
-                      {topic.name}
-                    </li>
-                  </Link>
-                ))}
-            </ul>
-          </li>
-          <li>
-            <Link href="">Stay in touch</Link>
-          </li>
-          <li>
-            <Link href="">{"Let's talk"}</Link>
-          </li>
-          <li
-            ref={themeModeBtn}
-            className="border w-[30px] h-[16px] rounded-[16px] cursor-pointer duration-300"
-            onClick={handleThemeBtnClick}
-          >
-            <div
-              ref={themeModeToggle}
-              className="w-[12.78px] h-[12.78px] rounded-[12.78px] bg-(--foreground)  translate-y-[.5px] duration-300"
-            ></div>
-          </li>
-        </ul>
-      </div>
+            {topicsClick &&
+              topics.map((topic, index) => (
+                <Link href={"/" + topic.link} key={index}>
+                  <li className="border border-(--border-color) rounded-[5px] p-1 bg-(--background) hover:bg-(--secondary-blue) hover:text-black">
+                    {topic.name}
+                  </li>
+                </Link>
+              ))}
+          </ul>
+        </li>
+        <li>
+          <Link href="">Stay in touch</Link>
+        </li>
+        <li>
+          <Link href="">{"Let's talk"}</Link>
+        </li>
+        <li
+          ref={themeModeBtn}
+          className="border w-[30px] h-[16px] rounded-[16px] cursor-pointer duration-300"
+          onClick={handleThemeBtnClick}
+        >
+          <div
+            ref={themeModeToggle}
+            className="w-[12.78px] h-[12.78px] rounded-[12.78px] bg-(--foreground)  translate-y-[.5px] duration-300"
+          ></div>
+        </li>
+      </ul>
     </div>
   );
 }

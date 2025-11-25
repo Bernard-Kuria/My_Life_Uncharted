@@ -15,8 +15,8 @@ export default function Milestones({
     getAllMilestones(topic).then(setMilestones);
   }, []);
   return (
-    <div className="w-full grid justify-center h-[300px] text-white bg-(--primary-blue)">
-      <div className="page-layout flex justify-between items-center h-full">
+    <div className="w-full grid justify-around min-h-[300px] text-white bg-(--primary-blue) py-[20px]">
+      <div className="page-layout grid md:flex gap-[40px] justify-between items-center h-full">
         {!milestones ? (
           <div>Loading Milestones</div>
         ) : (

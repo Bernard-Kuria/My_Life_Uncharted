@@ -29,7 +29,7 @@ export default function BlogCards({
       key={blog.id}
       href={`${getLinkFromTopic(getTopicFromLink(location))}/${blog.id}`}
     >
-      <div className="border flex flex-col justify-between border-gray-400 h-fit">
+      <div className="w-full border flex flex-col justify-between border-gray-400 h-fit">
         <div className="relative h-[250px]">
           {imageUrl ? (
             <Image
@@ -44,7 +44,7 @@ export default function BlogCards({
           )}
         </div>
         <div className="grid gap-[10px] p-[20px]">
-          <div className="h-[65px] overflow-hidden sub-title text-(--primary-blue)">
+          <div className="h-[65px] overflow-hidden sub-title text-(--secondary-blue)">
             {title}
           </div>
           <div className="flex justify-between border-t border-gray-600 detail-text pt-[10px]">

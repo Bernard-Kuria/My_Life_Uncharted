@@ -62,14 +62,18 @@ export default function Hero({ landingPageImages }: HeroProps) {
   };
 
   return (
-    <div className="relative w-full rounded-[10px] border-(--border-color) flex items-center flex-col-reverse lg:flex-row lg:h-[450px] mt-[40px] p-[30px] border-[5px]">
+    <div className="relative w-full rounded-[10px] border-(--border-color) flex items-center flex-col-reverse lg:flex-row lg:h-[450px] mt-[40px] p-[10px] lg:p-[30px] border-[5px]">
       <div className="merriweather-font text-[20px] lg:text-[80px] flex-1 font-semibold leading-tight">
         Miles, <span className="text-(--primary-blue)">Mindsets</span> & Making
         Stuff
       </div>
 
       {/* Main image */}
-      <svg viewBox="0 0 300 300" width={350} height={350}>
+      <svg
+        viewBox="0 0 300 300"
+        width={window.innerWidth < 1024 ? 285 : 350}
+        height={350}
+      >
         <defs>
           <clipPath id="image-edge" clipPathUnits="userSpaceOnUse">
             <path ref={path} d=""></path>
@@ -83,6 +87,7 @@ export default function Hero({ landingPageImages }: HeroProps) {
             width={350}
             height={700}
             unoptimized
+            priority
             className="object-cover object-[0%_30%] scale-200"
           />
         </foreignObject>

@@ -9,7 +9,7 @@ export default function BlogsList({ blog }: { blog: Draft }) {
   const location = usePathname();
 
   return (
-    <div className="h-[200px] flex gap-[10px] border rounded-[10px] flex-1 p-5">
+    <div className="h-[200px] border rounded-[10px] flex-1 p-5">
       <Link className="flex-1" href={`${location}/${blog.id}draft`}>
         <div className="flex-1 flex flex-col gap-[15px]">
           <div className="sub-title">{blog.draftMeta.title}</div>

@@ -22,7 +22,7 @@ export default function Home() {
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div className="page-layout grid justify-center lg:mt-[30px] gap-[20px] lg:gap-[100px]">
+    <div className="page-layout flex flex-col justify-center lg:mt-[30px] gap-[20px] lg:gap-[100px]">
       <Hero landingPageImages={landingPageImages} />
       <div
         className={`${
