@@ -106,10 +106,10 @@ export default function Header() {
 
       <ul className="md:absolute flex items-center justify-around right-0 top-0 w-full md:w-[410px] mx-[10px] md:mx-0 h-[40px] text-[12px] text-center md:border-t border-b border-l border-r md:border-r-0 border-(--border-color) md:rounded-tl-[10px] rounded-br-[10px] md:rounded-br-[0px] rounded-bl-[10px]">
         <li>
-          <Link href="https://bernard-webfolio.web.app/">About Me</Link>
+          <Link href={"/"}>Home</Link>
         </li>
         <li
-          className="group relative"
+          className="group relative cursor-pointer"
           onClick={() => setTopicsClick((prev) => !prev)}
           onMouseEnter={() => setTopicsClick(true)}
           onMouseLeave={() => setTopicsClick(false)}
@@ -131,10 +131,13 @@ export default function Header() {
           </ul>
         </li>
         <li>
-          <Link href="">Stay in touch</Link>
+          <Link href="https://bernard-webfolio.web.app/">About Me</Link>
         </li>
         <li>
-          <Link href="">{"Let's talk"}</Link>
+          <Link href="/subscription">Stay in touch</Link>
+        </li>
+        <li>
+          <Link href="/contact">{"Let's talk"}</Link>
         </li>
         <li
           ref={themeModeBtn}
