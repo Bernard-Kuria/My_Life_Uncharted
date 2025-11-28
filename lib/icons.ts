@@ -31,6 +31,7 @@ import {
   faImage,
   faComment,
   faEye,
+  faPaperPlane,
 } from "@fortawesome/free-regular-svg-icons";
 
 import {
@@ -75,5 +76,6 @@ library.add(
   faCopy,
   faCheck,
   faComment,
-  faEye
+  faEye,
+  faPaperPlane
 );

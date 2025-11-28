@@ -47,10 +47,10 @@ export default function Contact() {
   return (
     <div className="flex flex-col justify-center items-center page-layout">
       <form className="flex flex-col gap-5 w-full md:w-[400px]">
-        <SectionTitle title="Reach Out" />
+        <SectionTitle title="Let's talk" />
         <div>
           Feel free to follow me on my socials :)
-          <div className="flex items-center justify-around h-[40px] border-[3px] border-(--secondary-blue) rounded-2xl">
+          <div className="flex items-center justify-around h-[40px] border-[3px] border-(--secondary-blue) rounded-[10px]">
             {socials.map((social, idx) => (
               <Link key={idx} href={social.socialHandle}>
                 <span
@@ -74,19 +74,29 @@ export default function Contact() {
           <div>
             <textarea
               placeholder="share your thoughts..."
-              className="px-4 py-2 border border-(--secondary-blue) w-full h-[200px] rounded-2xl text-foreground"
+              className="px-4 py-2 border border-(--secondary-blue) w-full h-[200px] rounded-[10px] text-foreground"
             />
             <div>Your email:</div>
-            <input
-              type="email"
-              placeholder="example@test.com"
-              className="border border-(--secondary-blue) w-full rounded-2xl px-4 py-2 text-foreground"
-            />
+            <div className="flex items-center gap-[10px]">
+              <input
+                type="email"
+                placeholder="example@test.com"
+                className="flex-1 border border-(--secondary-blue) w-full rounded-[10px] px-4 py-2 text-foreground"
+              />
+              <div className="w-[50px] h-full">
+                <button
+                  className="w-full button"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  <FontAwesomeIcon
+                    icon={["far", "paper-plane"]}
+                    className={`text-[15px]`}
+                  />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-        <button className="button" onClick={(e) => e.preventDefault()}>
-          Submit
-        </button>
       </form>
     </div>
   );
