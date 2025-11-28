@@ -62,7 +62,7 @@ export const useBlogPage = (blogpage: string, topicPage: string) => {
     }
 
     addView();
-  }, [blogpage]);
+  }, [blogpage, viewed]);
 
   useEffect(() => {
     let mounted = true;
