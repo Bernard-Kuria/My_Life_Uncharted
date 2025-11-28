@@ -144,6 +144,7 @@ export type BlogProps = {
 };
 
 export type Subscription = {
+  id: string;
   email: string;
   topics: string[];
 };

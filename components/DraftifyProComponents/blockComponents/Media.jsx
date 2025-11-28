@@ -214,7 +214,7 @@ export default function MediaEditor({ block, onChange }) {
             <div className="normal-title">
               Drop your{" "}
               {block.type === "image" ? (
-                <strong>image</strong>
+                <strong>image/GIF</strong>
               ) : (
                 <strong>video</strong>
               )}{" "}
