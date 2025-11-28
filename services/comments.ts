@@ -52,7 +52,7 @@ export const getSpecificBlog = async (blog: string, id: string) => {
 
 export async function addComment(data: Comment) {
   try {
-    const res = await fetch(`/api/comments`, {
+    const res = await fetch(`${API_BASE}/api/comments`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -72,7 +72,7 @@ export async function updateComment(data: {
   likes?: number;
 }) {
   try {
-    const res = await fetch(`/api/comments`, {
+    const res = await fetch(`${API_BASE}/api/comments`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -88,7 +88,7 @@ export async function updateComment(data: {
 
 export async function deleteBlogMeta(id: string) {
   try {
-    const res = await fetch(`/api/comments`, {
+    const res = await fetch(`${API_BASE}/api/comments`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(id),
