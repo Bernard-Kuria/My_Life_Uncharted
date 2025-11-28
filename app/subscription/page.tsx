@@ -41,7 +41,7 @@ export default function Subscription() {
       >
         <SectionTitle title="Stay in touch" />
 
-        <div className="border border-(--secondary-blue) dark:border-(--primary-blue) rounded-2xl p-2 md:p-5 grid gap-5">
+        <div className="border border-(--secondary-blue) dark:border-(--primary-blue) rounded-[10px] p-2 md:p-5 grid gap-5">
           <div className="grid gap-5">
             {`Get connected so you don't miss a content on the topics you love.`}
             <div>
@@ -49,7 +49,7 @@ export default function Subscription() {
               <input
                 type="email"
                 placeholder="example@test.com"
-                className="border border-(--secondary-blue) w-full rounded-2xl px-4 py-2 text-foreground"
+                className="border border-(--secondary-blue) w-full rounded-[10px] px-4 py-2 text-foreground"
               />
             </div>
             <div>
@@ -101,7 +101,7 @@ export default function Subscription() {
           <input
             type="email"
             placeholder="example@test.com"
-            className="border border-(--secondary-blue) w-full rounded-2xl px-4 py-2 text-foreground"
+            className="border border-(--secondary-blue) w-full rounded-[10px] px-4 py-2 text-foreground"
           />
         </div>
         <button type="submit" className="button">
