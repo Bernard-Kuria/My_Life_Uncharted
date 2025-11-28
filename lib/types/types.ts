@@ -143,8 +143,9 @@ export type BlogProps = {
   timeStamp: string;
 };
 
-// Draftify Types
-export type tableContent = {
-  head: { id: number; content: string }[];
-  body: { id: number[]; content: string }[];
+export type Subscription = {
+  email: string;
+  topics: string[];
 };
+
+export type Subscriptions = Subscription[];

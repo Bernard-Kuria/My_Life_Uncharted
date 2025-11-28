@@ -62,7 +62,7 @@ export default function Contact() {
                 >
                   <FontAwesomeIcon
                     icon={social.icon as [IconPrefix, IconName]}
-                    className={`${social.iconColor} h-5 w-5`}
+                    className={`${social.iconColor} text-[20px]`}
                   />
                 </span>
               </Link>
