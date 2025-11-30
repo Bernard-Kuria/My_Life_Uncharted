@@ -5,6 +5,7 @@ import { IconPrefix, IconName } from "@fortawesome/fontawesome-common-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, FormEvent, useRef, useCallback } from "react";
 import Link from "next/link";
+import Notification from "@components/Notification";
 
 const socials = [
   // ... (socials array remains the same as your original code) ...
@@ -75,10 +76,6 @@ export default function Contact() {
     }
 
     setNotification(message);
-
-    setTimeout(() => {
-      setNotification(undefined);
-    }, 2000);
   }, []);
 
   return (
@@ -139,21 +136,11 @@ export default function Contact() {
         </div>
       </form>
 
-      <div
-        className={`
-          pointer-events-none absolute mt-4 p-3 bg-green-500 text-white rounded-lg shadow-lg
-          transition-all duration-1000 ease-in-out
-          ${
-            notification !== undefined
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-[-20px]"
-          }
-        `}
-        role="status"
-        aria-live="polite"
-      >
-        {notification}
-      </div>
+      <Notification
+        notification={notification}
+        setNotification={setNotification}
+        status="good"
+      />
     </div>
   );
 }
