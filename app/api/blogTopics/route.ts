@@ -53,7 +53,7 @@ export async function PUT(req: Request) {
 
     const topicRef = doc(db, "blogTopics", id);
 
-    await updateDoc(topicRef, { id: id, ...topicdata });
+    await updateDoc(topicRef, { ...topicdata }, { merge: true });
 
     return NextResponse.json({ id, message: "Topic updated!" });
   } catch (error) {

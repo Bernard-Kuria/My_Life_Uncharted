@@ -73,16 +73,14 @@ export async function PUT(req: Request) {
 export async function DELETE(req: Request) {
   try {
     const data = await req.json();
-    const { email } = data;
+    const email = data;
 
     if (!email) {
       return new Response("Missing email", { status: 400 });
     }
 
-    // Reference the subscriptions collection
     const subscriptionsRef = collection(db, "subscriptions");
 
-    // Query for documents with matching email
     const q = query(subscriptionsRef, where("email", "==", email));
     const querySnapshot = await getDocs(q);
 
@@ -92,7 +90,6 @@ export async function DELETE(req: Request) {
       });
     }
 
-    // Delete all matching subscriptions (usually only one)
     const deletedIds: string[] = [];
     for (const docSnap of querySnapshot.docs) {
       await deleteDoc(doc(db, "subscriptions", docSnap.id));

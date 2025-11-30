@@ -22,7 +22,6 @@ import { mediaType } from "@utils/conversions";
 
 export default function MediaEditor({ block, onChange }) {
   const output = useRef(null);
-  console.log(block.content);
 
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");

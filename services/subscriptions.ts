@@ -60,10 +60,9 @@ export async function deleteSubscription(email: string) {
       body: JSON.stringify(email),
     });
 
-    if (!res.ok) throw new Error(`Failed to delete subscription`);
+    if (!res.ok) throw new Error(`No email found`);
     return await res.json();
   } catch (err) {
-    console.error("Error in deleteSubscription:", err);
-    throw err;
+    throw "Error disconnecting; either email doesn't exist or network problems.";
   }
 }
