@@ -23,39 +23,98 @@ export async function getImgUrl(imageName: string) {
       return null;
     }
   }
-  return "undefined";
+  return "undefined image name";
+}
+
+export async function getImgName(imageName: string) {
+  const undefinedCheck = imageName.split("/").includes("undefined");
+
+  if (!undefinedCheck) {
+    const topicImgRef = ref(storage, imageName);
+    try {
+      return topicImgRef.name;
+    } catch (error) {
+      console.error("Error fetching topic image URL:", error);
+      return null;
+    }
+  }
+  return "undefined image name";
 }
 
 /**************** Landing Page Images CRUD*****************/
 
-export async function getLandingPageImageUrls(): Promise<string[]> {
-  const landingPageImages: string[] = [];
+async function getSingleImageFromFolder(folderName: string) {
   try {
-    const landingPageImagesRef = await listAll(
-      ref(storage, "landingPageImages")
-    );
+    const folderRef = ref(storage, folderName);
+    const items = await listAll(folderRef);
 
-    if (landingPageImagesRef) {
-      await Promise.all(
-        landingPageImagesRef.items.map(async (imgRef) => {
-          const url = await getDownloadURL(imgRef);
-          landingPageImages.push(url);
-        })
-      );
+    if (items.items.length === 0) {
+      console.error(`No files found in folder: ${folderName}`);
+      return null;
     }
 
-    return landingPageImages;
-  } catch (error) {
-    console.error("Error listing files:", error);
-    return [];
+    // Take the first (and only) image inside the folder
+    const fileRef = items.items[0];
+    return await getDownloadURL(fileRef);
+  } catch (err) {
+    console.error(`Error fetching image from folder ${folderName}:`, err);
+    return null;
   }
 }
 
-export async function uploadLandingPageImage(
-  file: File | Blob
-): Promise<string | null> {
+async function getSingleImageNameFromFolder(folderName: string) {
   try {
-    const storageRef = ref(storage, `landingPageImages/${(file as File).name}`);
+    const folderRef = ref(storage, folderName);
+    const items = await listAll(folderRef);
+
+    if (items.items.length === 0) {
+      console.error(`No files found in folder: ${folderName}`);
+      return null;
+    }
+
+    // Take the first (and only) image inside the folder
+    const fileRef = items.items[0];
+    return fileRef.name;
+  } catch (err) {
+    console.error(`Error fetching image from folder ${folderName}:`, err);
+    return null;
+  }
+}
+
+export async function getMainImgUrl() {
+  return getSingleImageFromFolder("landingPageImages/main-image");
+}
+
+export async function getSecondaryTopImgUrl() {
+  return getSingleImageFromFolder("landingPageImages/secondary-top-image");
+}
+
+export async function getSecondaryBottomImgUrl() {
+  return getSingleImageFromFolder("landingPageImages/secondary-bottom-image");
+}
+export async function getMainImgName() {
+  return getSingleImageNameFromFolder("landingPageImages/main-image");
+}
+
+export async function getSecondaryTopImgName() {
+  return getSingleImageNameFromFolder("landingPageImages/secondary-top-image");
+}
+
+export async function getSecondaryBottomImgName() {
+  return getSingleImageNameFromFolder(
+    "landingPageImages/secondary-bottom-image"
+  );
+}
+
+export async function uploadLandingPageImage({
+  file,
+  path,
+}: {
+  file: File | Blob;
+  path: string;
+}): Promise<string | null> {
+  try {
+    const storageRef = ref(storage, `landingPageImages/${path}`);
     await uploadBytes(storageRef, file);
     return await getDownloadURL(storageRef);
   } catch (error) {
@@ -64,11 +123,9 @@ export async function uploadLandingPageImage(
   }
 }
 
-export async function deleteLandingPageImage(
-  ImageName: string
-): Promise<boolean> {
+export async function deleteLandingPageImage(path: string): Promise<boolean> {
   try {
-    const storageRef = ref(storage, `landingPageImages/${ImageName}`);
+    const storageRef = ref(storage, `landingPageImages/${path}`);
     await deleteObject(storageRef);
     return true;
   } catch (err) {

@@ -1,42 +1,163 @@
 "use client";
 
-import { getAllTopics, updateTopic } from "@services/topics";
-
-import { BlogTopicsType, Topic } from "@lib/types/types";
-
 import { useState, useRef, useEffect } from "react";
-import { mediaType } from "@utils/conversions";
+
+import { BlogTopicsType, ObjectType, Topic } from "@lib/types/types";
+
 import {
-  deleteBlogImage,
+  convertColonToSlash,
+  getWordAfterColon,
+  getWordBeforeColon,
+  mediaType,
+  toCamelCase,
+} from "@utils/conversions";
+
+import {
+  addTopic,
+  deleteTopic,
+  getAllTopics,
+  updateTopic,
+} from "@services/topics";
+import {
   deleteBlogTopicImage,
+  deleteLandingPageImage,
+  getMainImgName,
+  getSecondaryBottomImgName,
+  getSecondaryTopImgName,
   uploadBlogTopicImage,
+  uploadLandingPageImage,
 } from "@services/FirestoreStorage";
 
-const sendDataToDatabase = async (mediaUrl: string | null) => {
-  console.log("Simulating sending data to database:", mediaUrl);
+const milestones = {
+  "Life On Wheels": [
+    { title: "Towns Visited", value: "8" },
+    { title: "Longest Ride in KM", value: "58" },
+    { title: "Punctured Tyres", value: "2" },
+    { title: "Accidents", value: "2" },
+  ],
+  "Startups & Ideas": [
+    { title: "Startups I own", value: "2" },
+    { title: "Startups I share ownership", value: "3" },
+    { title: "Hackathons won", value: "2" },
+    { title: "Hackathons participated", value: "7" },
+  ],
+  "Projects & Tech": [
+    { title: "Total projects yet", value: "50" },
+    { title: "Award winning projects", value: "3" },
+    { title: "Biggest failed attempts", value: "52" },
+    { title: "Accidents", value: "30" },
+  ],
 };
 
 export const useSettings = () => {
-  const [topics, setTopics] = useState<Record<string, string> | undefined>();
-  const [blogTopics, setBlogTopics] = useState<BlogTopicsType | undefined>();
-  const [refreshTopics, setRefreshTopics] = useState(false);
-  const [section, setSection] = useState<"blogs" | "settings">("settings");
+  // elements
   const outputRef = useRef<HTMLDivElement>(null);
 
+  //   data
   const [file, setFile] = useState<File | null>(null);
   const [imageName, setImageName] = useState<string | null>("");
   const [fileName, setFileName] = useState("");
   const [url, setUrl] = useState<string | null>(null);
-  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
 
+  //   statuses
+  const [topics, setTopics] = useState<ObjectType | undefined>();
+  const [newTopic, setNewTopic] = useState<string>("");
+  const [topicModify, setTopicModify] = useState<Topic | undefined>();
+  const [modifyTopicStatus, setModifyTopicStatus] = useState<string>("");
+  const [landingPageImages, setLandingPageImages] = useState<ObjectType>({});
+  const [blogTopics, setBlogTopics] = useState<BlogTopicsType | undefined>();
   const [refreshTrigger, setRefreshTrigger] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [mergingTopicAndImage, setMergingTopicAndImage] = useState(false);
+  const [refreshTopics, setRefreshTopics] = useState(false);
+  const [topicType, setTopicType] = useState<"modify" | "new" | "delete">(
+    "modify"
+  );
+  const [milestoneTopic, setMilestoneTopic] = useState<
+    keyof typeof milestones | null
+  >(null);
+  const [editableMilestones, setEditableMilestones] = useState<
+    { title: string; value: string }[]
+  >([]);
 
-  const type = mediaType(fileName || url || "");
-  type TopicsMapType = Record<string, string>;
+  const type = mediaType(fileName);
+
+  // useEffect(() => {
+  //   console.log(toCamelCase(newTopic));
+  // }, [newTopic]);
+
+  async function handleTopicUpdate() {
+    try {
+      if (topicType === "modify") {
+        if (!topicModify) {
+          setModifyTopicStatus("select the topic to modify");
+          return;
+        }
+
+        if (!newTopic) {
+          setModifyTopicStatus("type in the new name of the topic");
+          return;
+        }
+
+        setModifyTopicStatus("updating topic");
+
+        await updateTopic({
+          id: topicModify?.id,
+          title: toCamelCase(newTopic),
+        });
+
+        setModifyTopicStatus("");
+      } else if (topicType === "new") {
+        if (!newTopic) {
+          setModifyTopicStatus("type in the new name of the topic");
+          return;
+        }
+
+        setModifyTopicStatus("updating topic");
+        await addTopic(toCamelCase(newTopic));
+        setModifyTopicStatus("");
+      }
+    } catch (error) {
+      if (error instanceof Error)
+        setModifyTopicStatus(
+          "and error has occured during update:" + error.message
+        );
+    } finally {
+      setRefreshTopics((prev) => !prev);
+      setNewTopic("");
+      setTopicModify(undefined);
+    }
+  }
+
+  async function handleTopicRemove() {
+    try {
+      if (topicType === "delete") {
+        if (!topicModify) {
+          setModifyTopicStatus("select the topic you want to delete");
+          return;
+        }
+
+        setModifyTopicStatus("deleting topic");
+        await deleteTopic(topicModify?.id);
+
+        if (topicModify.image !== "") {
+          setModifyTopicStatus("deleting associated image as well");
+          await deleteBlogTopicImage(topicModify?.image);
+        }
+
+        setModifyTopicStatus("");
+      }
+    } catch (error) {
+      if (error instanceof Error)
+        setModifyTopicStatus(
+          "and error has occured during delete:" + error.message
+        );
+    } finally {
+      setRefreshTopics((prev) => !prev);
+    }
+  }
 
   useEffect(() => {
     const handleDrag = (e: Event) => e.preventDefault();
@@ -49,33 +170,56 @@ export const useSettings = () => {
   }, []);
 
   useEffect(() => {
-    getAllTopics().then((fetchedTopicsArray: BlogTopicsType) => {
-      setBlogTopics(fetchedTopicsArray);
+    async function fetchData() {
+      try {
+        const allTopics = await getAllTopics();
 
-      const topicsMap: TopicsMapType = fetchedTopicsArray.reduce(
-        (acc: TopicsMapType, topic: Topic) => {
-          acc[topic.title] = topic.image;
-          return acc;
-        },
-        {} as TopicsMapType // Initialize accumulator as an empty object
-      );
+        if (allTopics) {
+          setBlogTopics(allTopics);
 
-      setTopics(topicsMap);
-    });
+          const topicsMap: ObjectType = allTopics.reduce(
+            (acc: ObjectType, topic: Topic) => {
+              acc[topic.title] = topic.image;
+              return acc;
+            },
+            {} as ObjectType // Initialize accumulator as an empty object
+          );
+
+          setTopics(topicsMap);
+        }
+
+        const mainImg = await getMainImgName();
+        const secondaryTopImg = await getSecondaryTopImgName();
+        const secondaryBottomImg = await getSecondaryBottomImgName();
+
+        setLandingPageImages((prev) => ({
+          ...prev,
+          ...(mainImg ? { "main-image": mainImg } : {}),
+          ...(secondaryTopImg
+            ? { "secondary-top-image": secondaryTopImg }
+            : {}),
+          ...(secondaryBottomImg
+            ? { "secondary-bottom-image": secondaryBottomImg }
+            : {}),
+        }));
+      } catch (error) {
+        if (error instanceof Error)
+          setError(error.message + ":" + "try refreshing the page");
+      }
+    }
+
+    fetchData();
   }, [refreshTopics]);
 
-  const handleSettingsImageUpload = async ({
+  const handleTopicImageUpload = async ({
     imageName,
     id,
   }: {
     imageName: string;
-    id: string;
+    id?: string;
   }) => {
-    console.log("id:", id);
-    console.log("imageName:", imageName);
-    console.log("uploaded file name:", fileName);
-
-    if (!id || !imageName) {
+    // Check if image to change has been selected
+    if (!imageName) {
       setError("Please select or reselect the image to replace");
       return;
     }
@@ -87,54 +231,66 @@ export const useSettings = () => {
     }
 
     // Validate file type
-    const currentType = mediaType(file.name);
-    if (mediaType(file.name) === "unknown") {
+    if (type === "unknown") {
       setError("File type not supported");
       setFile(null);
       return;
     }
 
-    setError(null);
-
     try {
       let newImageName: string | null = null;
 
-      //  If image, upload to images
-      if (currentType === "image") {
+      if (id) {
         setUploading(true);
         newImageName = await uploadBlogTopicImage(file);
+        setUploading(false);
+      } else {
+        setUploading(true);
+        await uploadLandingPageImage({
+          file: file,
+          path: getWordBeforeColon(imageName) + "/" + fileName,
+        });
         setUploading(false);
       }
 
       //   Confirm uploaded image
-      if (!newImageName) {
+      if (!newImageName && id) {
         setError("Upload failed");
         setUploading(false);
         return;
       }
 
-      console.log("new image name:", newImageName);
+      const previousImage = id
+        ? getWordAfterColon(imageName)
+        : convertColonToSlash(imageName);
 
-      //   If prev image and new image don't match name, delete prev image
-      if (imageName !== fileName) {
-        setDeleting(true);
-        if (currentType === "image") await deleteBlogTopicImage(imageName);
-        setDeleting(false);
+      // If there exists a previous image and it's not the current image delete the previous image
+      if (previousImage && previousImage !== fileName) {
+        if (id) {
+          setDeleting(true);
+          await deleteBlogTopicImage(previousImage);
+          setDeleting(false);
+        } else {
+          setDeleting(true);
+          await deleteLandingPageImage(previousImage);
+          setDeleting(false);
+        }
       }
 
       //   Set new url for state checking
       setUrl(newImageName);
-      setUploadedFileName(file.name);
 
       //   Confirm topics database has the correct image reference
-      setMergingTopicAndImage(true);
-      await updateTopic({ id: id, image: newImageName });
-      setMergingTopicAndImage(false);
+      if (id && newImageName) {
+        setMergingTopicAndImage(true);
+        await updateTopic({ id: id, image: newImageName });
+        setMergingTopicAndImage(false);
+      }
 
       //   Resetting the image and image section inputs
       setImageName("");
       setFile(null);
-      setUrl("");
+      setUrl(null);
       setFileName("");
     } catch (err) {
       if (err instanceof Error)
@@ -145,66 +301,51 @@ export const useSettings = () => {
     }
   };
 
-  // Define a localized refresh handler
   const handleRemove = async () => {
-    const targetFileName = uploadedFileName;
-    if (!targetFileName) {
-      setFile(null);
-      setFileName("");
-      if (url) {
-        setUrl(null);
-        await sendDataToDatabase(null);
-      }
-      return;
-    }
-
-    setDeleting(true);
-    try {
-      const currentType = mediaType(targetFileName || undefined);
-      if (currentType === "image") await deleteBlogImage(targetFileName);
-
-      await sendDataToDatabase(null);
-
+    if (fileName || file || url) {
       setFile(null);
       setFileName("");
       setUrl(null);
-      setUploadedFileName(null);
-    } catch (err) {
-      console.error("Error deleting file on refresh:", err);
-    } finally {
-      setDeleting(false);
     }
-  };
-
-  const handleSetSection = () => {
-    setSection((prev) => (prev === "blogs" ? "settings" : "blogs"));
   };
 
   return {
     blogTopics,
     imageName,
     setImageName,
+    landingPageImages,
     topics,
     refreshTrigger,
     setRefreshTrigger,
-    section,
-    handleSetSection,
     outputRef,
     file,
     fileName,
     url,
-    uploadedFileName,
     uploading,
     deleting,
+    type,
     error,
     setError,
-    type,
     setFile,
     setFileName,
     setUrl,
-    setUploadedFileName,
     handleRemove,
-    handleSettingsImageUpload,
+    handleTopicImageUpload,
     mergingTopicAndImage,
+    topicType,
+    setTopicType,
+    newTopic,
+    setNewTopic,
+    topicModify,
+    setTopicModify,
+    modifyTopicStatus,
+    setModifyTopicStatus,
+    handleTopicUpdate,
+    handleTopicRemove,
+    milestoneTopic,
+    setMilestoneTopic,
+    milestones,
+    editableMilestones,
+    setEditableMilestones,
   };
 };

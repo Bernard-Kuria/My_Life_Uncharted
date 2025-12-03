@@ -6,10 +6,16 @@ import Image from "next/image";
 import { usePathInteractions } from "@hooks/usePathInteractions";
 
 type HeroProps = {
-  landingPageImages: string[];
+  mainImg: string | undefined;
+  secondaryTopImg: string | undefined;
+  secondaryBottomImg: string | undefined;
 };
 
-export default function Hero({ landingPageImages }: HeroProps) {
+export default function Hero({
+  mainImg,
+  secondaryTopImg,
+  secondaryBottomImg,
+}: HeroProps) {
   const path = useRef<SVGPathElement>(null);
   usePathInteractions(path);
 
@@ -51,16 +57,6 @@ export default function Hero({ landingPageImages }: HeroProps) {
     },
   ];
 
-  if (!landingPageImages || landingPageImages.length === 0) {
-    return <div>Loading images...</div>;
-  }
-
-  const images = {
-    main: landingPageImages.find((url) => url.includes("chill")),
-    image1: landingPageImages.find((url) => url.includes("bike-riding")),
-    image2: landingPageImages.find((url) => url.includes("jkuat-hackathon")),
-  };
-
   return (
     <div className="relative w-full rounded-[10px] border-(--border-color) flex items-center flex-col-reverse lg:flex-row lg:h-[450px] mt-[40px] p-[10px] lg:p-[30px] border-[5px]">
       <div className="merriweather-font text-[20px] lg:text-[80px] flex-1 font-semibold leading-tight">
@@ -82,7 +78,7 @@ export default function Hero({ landingPageImages }: HeroProps) {
 
         <foreignObject width="300" height="300" clipPath="url(#image-edge)">
           <Image
-            src={images.main || ""}
+            src={mainImg || ""}
             alt="Main Image"
             width={350}
             height={700}
@@ -99,7 +95,7 @@ export default function Hero({ landingPageImages }: HeroProps) {
             <BorderLines />
             <div className="relative w-[143px] h-[198px] overflow-hidden">
               <Image
-                src={images.image1 || ""}
+                src={secondaryTopImg || ""}
                 alt="image1 image"
                 width={286}
                 height={396}
@@ -117,7 +113,7 @@ export default function Hero({ landingPageImages }: HeroProps) {
             <BorderLines />
             <div className="relative w-[292px] h-[143px] overflow-hidden">
               <Image
-                src={images.image2 || ""}
+                src={secondaryBottomImg || ""}
                 alt="image2 image"
                 fill
                 sizes="(max-width: 768px) 100vw, 292px"

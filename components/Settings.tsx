@@ -1,22 +1,21 @@
-"use client";
+import Image from "next/image";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowUpFromBracket,
-  faFile,
-} from "@fortawesome/free-solid-svg-icons";
 
 import { useSettings } from "@hooks/useSettings";
+
 import {
   dragHandler,
   dragLeaveHandler,
   dropHandler,
   onFileChange,
 } from "@lib/Draftify/mediaHooks/mediaInteractions";
+import { getWordAfterColon, getWordBeforeColon } from "@utils/conversions";
 
 export default function MediaUploader() {
   const {
     blogTopics,
+    landingPageImages,
     topics,
     imageName,
     setImageName,
@@ -32,15 +31,31 @@ export default function MediaUploader() {
     setFile,
     setFileName,
     handleRemove,
-    handleSettingsImageUpload,
+    handleTopicImageUpload,
     mergingTopicAndImage,
+    topicType,
+    setTopicType,
+    newTopic,
+    setNewTopic,
+    topicModify,
+    setTopicModify,
+    modifyTopicStatus,
+    setModifyTopicStatus,
+    handleTopicUpdate,
+    handleTopicRemove,
+    milestoneTopic,
+    setMilestoneTopic,
+    milestones,
+    editableMilestones,
+    setEditableMilestones,
   } = useSettings();
 
   return (
-    <div className="w-full h-[250px] relative">
-      <div className="flex flex-col gap-[10px] h-[400px]">
+    <div className="flex flex-col gap-[10px] w-full">
+      {/* changing the images */}
+      <div className="flex flex-col gap-[10px]">
         <div className="flex gap-[10px] items-center">
-          Change main page and blog topic images
+          <strong>Change main page and blog topic images</strong>
           {uploading && (
             <div className="text-sm text-(--primary-blue)">Uploading...</div>
           )}
@@ -61,19 +76,20 @@ export default function MediaUploader() {
               {`*`}
             </div>
           )}
-          {!blogTopics && (
-            <div className="text-sm text-(--primary-blue)">
-              loading blog topics...
-            </div>
-          )}
+          {!blogTopics ||
+            (Object.keys(landingPageImages).length === 0 && (
+              <div className="text-sm text-(--primary-blue)">
+                loading blog topics...
+              </div>
+            ))}
         </div>
 
         {blogTopics && (
-          <div className="flex flex-col gap-[10px] h-[400px]">
+          <div className="border border-(--secondary-blue) p-2 rounded-[10px] flex flex-col gap-[10px] h-[400px]">
             <div className="grid">
               Select the image to replace:
               <select
-                className="border"
+                className="border border-(--secondary-blue) p-1"
                 onChange={(e) => {
                   setImageName(e.target.value);
                   setError(null);
@@ -81,11 +97,17 @@ export default function MediaUploader() {
                 required
               >
                 <option value="">select image</option>
+                {landingPageImages &&
+                  Object.entries(landingPageImages).map(([path, imageName]) => (
+                    <option key={path} value={path + ":" + imageName}>
+                      {path}
+                    </option>
+                  ))}
                 {topics &&
-                  Object.entries(topics).map(([topic, image]) => (
+                  Object.entries(topics).map(([topic, imageName]) => (
                     <option
                       key={topic}
-                      value={image}
+                      value={"topic:" + imageName}
                     >{`image for topic: ${topic}`}</option>
                   ))}
               </select>
@@ -93,20 +115,36 @@ export default function MediaUploader() {
 
             {file || url ? (
               type === "image" ? (
-                <div className="w-full h-[250px] flex text-blue-600 font-medium border-blue-200">
-                  <img
+                <div className="relative w-full h-[250px] flex text-blue-600 font-medium border-blue-200">
+                  <Image
                     src={
                       file instanceof File
                         ? URL.createObjectURL(file)
                         : url || ""
                     }
-                    alt=""
-                    className="media"
+                    alt="preview"
+                    fill
+                    sizes="250px"
+                    className="media object-contain"
+                    unoptimized
                   />
+                </div>
+              ) : type === "video" ? (
+                <div className="w-full h-[250px] flex text-blue-600 font-medium border-blue-200">
+                  <video autoPlay muted controls className="media">
+                    <source
+                      src={
+                        file instanceof File
+                          ? URL.createObjectURL(file)
+                          : url || ""
+                      }
+                      type="video/mp4"
+                    />
+                  </video>
                 </div>
               ) : (
                 <div className="flex flex-col items-center justify-center h-full gap-4 p-4 text-gray-500 text-center">
-                  <FontAwesomeIcon icon={faFile} size="2x" />
+                  <FontAwesomeIcon icon={["fas", "file"]} size="2x" />
                   <p className="text-sm font-medium">
                     wrong format: {fileName}
                   </p>
@@ -141,7 +179,7 @@ export default function MediaUploader() {
                   className="flex flex-col justify-center items-center text-center gap-[20px] btn-theme-color px-4 py-2 rounded-[10px] cursor-pointer"
                 >
                   <div className="border rounded-[50%] flex justify-center items-center w-[60px] h-[60px] text-[20px] cursor-pointer">
-                    <FontAwesomeIcon icon={faArrowUpFromBracket} />
+                    <FontAwesomeIcon icon={["fas", "arrow-up-from-bracket"]} />
                   </div>
                   <div className="normal-title">
                     Drop your image here
@@ -156,10 +194,15 @@ export default function MediaUploader() {
               <button
                 className="button flex-1"
                 onClick={() =>
-                  handleSettingsImageUpload({
+                  handleTopicImageUpload({
                     id:
-                      blogTopics.find((topic) => topic.image === imageName)
-                        ?.id || "",
+                      (imageName &&
+                        getWordBeforeColon(imageName) === "topic" &&
+                        blogTopics.find(
+                          (topic) =>
+                            topic.image === getWordAfterColon(imageName)
+                        )?.id) ||
+                      "",
                     imageName: imageName || "",
                   })
                 }
@@ -172,11 +215,197 @@ export default function MediaUploader() {
                 disabled={!file && !url}
                 title="Clear file/URL"
               >
-                Remove
+                Reselect Image
               </button>
             </div>
           </div>
         )}
+      </div>
+
+      {/* modifying adding topic section */}
+      <div className="flex flex-col gap-[10px]">
+        <strong>Add, remove or modify topics</strong>
+        <div className="flex flex-col gap-[10px] border border-(--secondary-blue) rounded-[10px] p-2">
+          <div>{`Select "modify existing topic" or "new topic" topic`}</div>
+          {modifyTopicStatus && (
+            <div className="text-(--primary-blue)">{modifyTopicStatus}</div>
+          )}
+          <div className="grid md:flex gap-[10px] w-full">
+            <button
+              className={`border rounded-[10px] p-2 w-full ${
+                topicType === "modify"
+                  ? "bg-(--primary-blue) text-(--secondary-blue) border-(--primary-blue)"
+                  : "border-(--secondary-blue) text-(--primary-blue)"
+              }`}
+              onClick={() => setTopicType("modify")}
+            >
+              Modify existing topic
+            </button>
+            <button
+              className={`border rounded-[10px] p-2 w-full ${
+                topicType === "new"
+                  ? "bg-(--secondary-blue) text-(--primary-blue) border-(--secondary-blue)"
+                  : "border-(--secondary-blue) text-(--secondary-blue)"
+              }`}
+              onClick={() => setTopicType("new")}
+            >
+              New topic
+            </button>
+            <button
+              className={`border rounded-[10px] p-2 w-full ${
+                topicType === "delete"
+                  ? "bg-red-500 text-white border-red-500"
+                  : "border-(--secondary-blue) text-red-500"
+              }`}
+              onClick={() => setTopicType("delete")}
+            >
+              Delete topic
+            </button>
+          </div>
+
+          {(topicType == "modify" || topicType === "delete") && (
+            <select
+              className="border border-(--secondary-blue) w-full p-1"
+              onChange={(e) => {
+                setTopicModify(
+                  blogTopics?.find((topic) => topic.title === e.target.value)
+                );
+                setModifyTopicStatus("");
+              }}
+              required
+            >
+              <option value="">select topic</option>
+              {blogTopics &&
+                blogTopics.map((topic) => (
+                  <option key={topic.id} value={topic.title}>
+                    {topic.title}
+                  </option>
+                ))}
+            </select>
+          )}
+
+          {(topicType === "modify" || topicType === "new") && (
+            <input
+              type="text"
+              className="p-1 w-full border border-(--secondary-blue) rounded-[10px]"
+              placeholder="new topic name"
+              value={newTopic}
+              onChange={(e) => setNewTopic(e.target.value)}
+            />
+          )}
+
+          <div className="flex gap-[10px] w-full">
+            {(topicType === "modify" || topicType === "new") && (
+              <button
+                className="border rounded-[10px] p-2 h-fit cursor-pointer w-full text-(--primary-blue)"
+                onClick={handleTopicUpdate}
+              >
+                {topicType === "modify" ? "Update" : "Create"} topic
+              </button>
+            )}
+            {topicType === "delete" && (
+              <button
+                className="border rounded-[10px] p-2 h-fit cursor-pointer w-full text-red-500"
+                onClick={handleTopicRemove}
+              >
+                Remove topic
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Modifying and creating milestiones */}
+      <div className="flex flex-col gap-[10px]">
+        <strong>Modify milestones</strong>
+        <div className="flex flex-col gap-[10px] border border-(--secondary-blue) rounded-[10px] p-2">
+          <select
+            className="border border-(--secondary-blue) w-full p-1"
+            onChange={(e) => {
+              const topic = e.target.value as keyof typeof milestones;
+              setMilestoneTopic(topic);
+              setEditableMilestones([...milestones[topic]]); // shallow clone
+              setError(null);
+            }}
+            required
+          >
+            <option value="">select topic</option>
+            {topics &&
+              Object.entries(topics).map(([topic, imageName]) => (
+                <option key={imageName} value={topic}>
+                  {topic}
+                </option>
+              ))}
+          </select>
+
+          <div className="grid gap-[10px] border-style">
+            {milestoneTopic
+              ? "milestones for: " + milestoneTopic
+              : "Please select topic first"}
+            {milestoneTopic ? (
+              editableMilestones.map((milestone, idx) => (
+                <div key={idx} className="grid grid-cols-2 gap-[10px]">
+                  <input
+                    className="border-style"
+                    value={milestone.title}
+                    onChange={(e) => {
+                      const newArr = [...editableMilestones];
+                      newArr[idx] = { ...newArr[idx], title: e.target.value };
+                      setEditableMilestones(newArr);
+                    }}
+                  />
+
+                  <input
+                    className="border-style"
+                    value={milestone.value}
+                    onChange={(e) => {
+                      const newArr = [...editableMilestones];
+                      newArr[idx] = { ...newArr[idx], value: e.target.value };
+                      setEditableMilestones(newArr);
+                    }}
+                  />
+                </div>
+              ))
+            ) : (
+              <div className="grid grid-cols-2 gap-[10px]">
+                <input className="border-style" />
+                <input className="border-style" />
+                <input className="border-style" />
+                <input className="border-style" />
+                <input className="border-style" />
+                <input className="border-style" />
+                <input className="border-style" />
+                <input className="border-style" />
+              </div>
+            )}
+          </div>
+
+          <button className="border-style cursor-pointer hover:bg-(--secondary-blue) hover:text-(--primary-blue)">
+            Update milestones
+          </button>
+        </div>
+      </div>
+
+      {/* Edit Password */}
+      <div className="grid gap-[10px]">
+        <strong>Edit password</strong>
+        <div className="border-style grid gap-[10px]">
+          Enter old password
+          <input
+            type="text"
+            placeholder="old password"
+            className="border-style"
+          />
+          Enter new password
+          <input
+            type="text"
+            placeholder="new password"
+            className="border-style"
+          />
+          <button className="border-style cursor-pointer hover:bg-(--secondary-blue) hover:text-(--primary-blue)">
+            Save password
+          </button>
+        </div>
       </div>
     </div>
   );
