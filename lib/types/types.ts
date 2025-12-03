@@ -126,7 +126,7 @@ export type TagsType = Tag[];
 
 export type Milestone = {
   title: string;
-  value: number;
+  value: string;
 };
 
 export type Milestones = {
