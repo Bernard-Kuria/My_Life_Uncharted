@@ -3,11 +3,15 @@ import { useEffect, useState } from "react";
 
 import { getAllBlogs } from "@services/blogs";
 import { getAllTopics } from "@services/topics";
-import { getImgUrl } from "@services/FirestoreStorage";
+import { getImgName, getImgUrl } from "@services/FirestoreStorage";
 
-import { cleanUpLink, getBlogMatchingPage } from "@utils/conversions";
+import {
+  cleanUpLink,
+  getBlogMatchingPage,
+  mediaType,
+} from "@utils/conversions";
 
-import { BlogsType, BlogTopicsType, Topic } from "@lib/types/types";
+import { BlogsType, BlogTopicsType, MediaType, Topic } from "@lib/types/types";
 
 export const useBlogTopicPage = (blogTopicPage: string) => {
   const [targetBlogs, setTargetBlogs] = useState<BlogsType | undefined>(
@@ -19,14 +23,7 @@ export const useBlogTopicPage = (blogTopicPage: string) => {
     undefined
   );
   const [image, setImage] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (topicPage?.image) {
-      getImgUrl(`blogTopicImg/${topicPage.image}`).then((img) => {
-        setImage(img);
-      });
-    }
-  }, [topicPage]);
+  const [imageType, setImageType] = useState<MediaType | null>(null);
 
   const page = cleanUpLink(blogTopicPage);
 
@@ -35,12 +32,31 @@ export const useBlogTopicPage = (blogTopicPage: string) => {
   }, [page]);
 
   useEffect(() => {
-    getAllBlogs({ topic: topicPage?.title || "" })
-      ?.then(setTargetBlogs)
-      .finally(() => setLoaded(true));
+    async function fetchData() {
+      try {
+        // fetch and save topics
+        const allTopics = await getAllTopics();
+        if (allTopics) setAllTopics(allTopics);
 
-    getAllTopics().then(setAllTopics);
+        // fetch and save blogs
+        const allBlogs = await getAllBlogs({ topic: topicPage?.title || "" });
+        if (allBlogs) setTargetBlogs(allBlogs);
+
+        // fetch and save image
+        const imageUrl = await getImgUrl(`blogTopicImg/${topicPage?.image}`);
+        if (imageUrl) setImage(imageUrl);
+
+        // fetch image name
+        const imageName = await getImgName(`blogTopicImg/${topicPage?.image}`);
+        if (imageName) setImageType(mediaType(imageName));
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoaded(true);
+      }
+    }
+    fetchData();
   }, [topicPage]);
 
-  return { loaded, topicPage, page, targetBlogs, allTopics, image };
+  return { loaded, topicPage, page, targetBlogs, allTopics, image, imageType };
 };

@@ -16,9 +16,11 @@ export default function Dashboard() {
       <div className="page-layout flex flex-col gap-[30px]">
         <div className="text-center lg:text-start grid lg:flex gap-[10px] lg:gap-[50px] items-center">
           <SectionTitle title={section === "blogs" ? "My Blogs" : "Settings"} />
-          <button className="button">
-            <Link href={"/dashboard/new"}>create new blog</Link>
-          </button>
+          {section === "blogs" ? (
+            <button className="button">
+              <Link href={"/dashboard/new"}>create new blog</Link>
+            </button>
+          ) : null}
         </div>
 
         <div className="grid grid-cols-2 gap-[10px]">

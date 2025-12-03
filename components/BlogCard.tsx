@@ -12,9 +12,11 @@ import { getImgUrl } from "@services/FirestoreStorage";
 export default function BlogCards({
   location,
   blog,
+  imageType,
 }: {
   location: string;
   blog: Blog;
+  imageType: "image" | "video" | "unknown" | null;
 }) {
   const { image, title, views, likes, comments } = blog.blogMeta;
 
@@ -30,18 +32,24 @@ export default function BlogCards({
       href={`${getLinkFromTopic(getTopicFromLink(location))}/${blog.id}`}
     >
       <div className="w-full border flex flex-col justify-between border-gray-400 h-fit">
-        <div className="relative h-[250px]">
-          {imageUrl ? (
-            <Image
-              src={imageUrl}
-              alt=""
-              fill
-              style={{ objectFit: "cover" }}
-              unoptimized
-            />
-          ) : (
-            ""
-          )}
+        <div className="relative h-[250px] overflow-hidden">
+          {imageUrl && imageType ? (
+            imageType === "image" ? (
+              <Image
+                src={imageUrl}
+                alt=""
+                fill
+                style={{ objectFit: "cover" }}
+                unoptimized
+              />
+            ) : imageType === "video" ? (
+              <div className="w-full h-[250px] flex text-blue-600 font-medium border-blue-200">
+                <video autoPlay muted className="media">
+                  <source src={imageUrl} type="video/mp4" />
+                </video>
+              </div>
+            ) : null
+          ) : null}
         </div>
         <div className="grid gap-[10px] p-[20px]">
           <div className="h-[65px] overflow-hidden sub-title text-(--secondary-blue)">

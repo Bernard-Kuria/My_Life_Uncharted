@@ -20,6 +20,7 @@ import {
   faGlobe,
   faCopy,
   faCheck,
+  faFile,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -77,5 +78,6 @@ library.add(
   faCheck,
   faComment,
   faEye,
-  faPaperPlane
+  faPaperPlane,
+  faFile
 );

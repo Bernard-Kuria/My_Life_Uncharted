@@ -6,14 +6,21 @@ import Blogs from "@c/Blogs";
 import Hero from "@c/Hero";
 import Loading from "@app/loading";
 
-import { getLinkFromTopic } from "@utils/conversions";
+import { getLinkFromTopic, mediaType } from "@utils/conversions";
 
 import { useIndex } from "@hooks/useIndex";
 
 export default function Home() {
   const location = usePathname();
-  const { landingPageImages, topics, loadingTopics, loadingImages, error } =
-    useIndex();
+  const {
+    mainImg,
+    secondaryTopImg,
+    secondaryBottomImg,
+    topics,
+    loadingTopics,
+    loadingImages,
+    error,
+  } = useIndex();
 
   const loading = loadingTopics || loadingImages;
 
@@ -23,7 +30,11 @@ export default function Home() {
 
   return (
     <div className="page-layout flex flex-col justify-center lg:mt-[30px] gap-[20px] lg:gap-[100px]">
-      <Hero landingPageImages={landingPageImages} />
+      <Hero
+        mainImg={mainImg}
+        secondaryTopImg={secondaryTopImg}
+        secondaryBottomImg={secondaryBottomImg}
+      />
       <div
         className={`${
           location === "/" ? "justify-center text-center" : "text-left"
@@ -38,6 +49,7 @@ export default function Home() {
                 key={b.id}
                 link={link}
                 imageUrl={`blogTopicImg/${b.image}`}
+                imageType={mediaType(b.image)}
                 topic={b.title}
                 timeStamp={b.timeStamp}
               />

@@ -29,9 +29,18 @@ export const useBlogPage = (blogpage: string, topicPage: string) => {
   const blogId = blogpage;
 
   useEffect(() => {
-    getAllBlogs()
-      .then(setBlogs)
-      .finally(() => setLoaded(true));
+    async function fetchData() {
+      try {
+        const allBlogs = await getAllBlogs();
+
+        if (allBlogs) setBlogs(allBlogs);
+      } catch (error) {
+        console.log("Error fetching blogs:", error);
+      } finally {
+        setLoaded(true);
+      }
+    }
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -126,7 +135,6 @@ export const useBlogPage = (blogpage: string, topicPage: string) => {
       }
 
       await navigator.clipboard.writeText(shareUrl);
-      console.log("Link copied to clipboard!");
     } catch (err) {
       console.error("Sharing failed:", err);
     }

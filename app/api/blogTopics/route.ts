@@ -65,8 +65,7 @@ export async function PUT(req: Request) {
 // DELETE: delete topic by ID
 export async function DELETE(req: Request) {
   try {
-    const data = await req.json();
-    const { id } = data;
+    const id = await req.json();
 
     if (!id) return new Response("Missing topic ID", { status: 400 });
 

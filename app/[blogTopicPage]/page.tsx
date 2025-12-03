@@ -9,7 +9,7 @@ import Blogs from "@c/Blogs";
 import BlogCards from "@c/BlogCard";
 import Loading from "@app/loading";
 
-import { getLinkFromTopic } from "@utils/conversions";
+import { getLinkFromTopic, mediaType } from "@utils/conversions";
 
 import { useBlogTopicPage } from "@hooks/useBlogTopicPage";
 
@@ -20,7 +20,7 @@ export default function Page({
 }) {
   const { blogTopicPage } = use(params);
 
-  const { loaded, topicPage, page, targetBlogs, allTopics, image } =
+  const { loaded, topicPage, page, targetBlogs, allTopics, image, imageType } =
     useBlogTopicPage(blogTopicPage);
 
   if (!loaded) return <Loading loading="Loading Blogs" />;
@@ -29,16 +29,21 @@ export default function Page({
     <div className="flex flex-col gap-[20px] w-full">
       {/* Background Image */}
       <div className="absolute w-screen left-0 h-[400px] lg:h-[calc(100vh-70px)]">
-        {image && image !== "undefined" && (
-          <Image
-            src={image}
-            alt={topicPage?.title || "Topic Image"}
-            fill
-            priority
-            style={{ objectFit: "cover" }}
-            unoptimized
-          />
-        )}
+        {image &&
+          (imageType === "image" ? (
+            <Image
+              src={image}
+              alt={topicPage?.title || "Topic Image"}
+              fill
+              priority
+              style={{ objectFit: "cover" }}
+              unoptimized
+            />
+          ) : imageType === "video" ? (
+            <video autoPlay muted className="media w-full h-full">
+              <source src={image} type="video/mp4" />
+            </video>
+          ) : null)}
       </div>
 
       <div className="page-layout">
@@ -52,7 +57,12 @@ export default function Page({
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[20px]">
               {targetBlogs &&
                 targetBlogs.map((blog) => (
-                  <BlogCards key={blog.id} location={page} blog={blog} />
+                  <BlogCards
+                    key={blog.id}
+                    location={page}
+                    blog={blog}
+                    imageType={imageType}
+                  />
                 ))}
             </div>
           </div>
@@ -72,6 +82,7 @@ export default function Page({
                   key={b.id}
                   link={link}
                   imageUrl={`blogTopicImg/${b.image}`}
+                  imageType={mediaType(b.image)}
                   topic={b.title}
                   timeStamp={b.timeStamp}
                 />

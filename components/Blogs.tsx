@@ -9,13 +9,26 @@ import { BlogProps } from "@lib/types/types";
 
 import { getImgUrl } from "@services/FirestoreStorage";
 
-export default function Blogs({ link, imageUrl, topic, timeStamp }: BlogProps) {
+export default function Blogs({
+  link,
+  imageUrl,
+  imageType,
+  topic,
+  timeStamp,
+}: BlogProps) {
   const location = usePathname();
   const [hovered, setHovered] = useState(false);
   const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {
-    getImgUrl(imageUrl).then(setImage);
+    // only get the images for non-empty image names
+    if (
+      imageUrl !== "landingPageImages/" &&
+      imageUrl !== "blogTopicImg/" &&
+      imageUrl !== "blog/images/" &&
+      imageUrl !== "blog/videos/"
+    )
+      getImgUrl(imageUrl).then(setImage);
   }, [imageUrl]);
 
   return (
@@ -37,15 +50,21 @@ export default function Blogs({ link, imageUrl, topic, timeStamp }: BlogProps) {
             location === "/" ? "h-[250px]" : "h-full"
           } overflow-hidden`}
         >
-          {image && (
-            <Image
-              src={`${image}`}
-              alt="image"
-              fill
-              style={{ objectFit: "cover" }}
-              className="object-cover"
-            />
-          )}
+          {image &&
+            image !== "" &&
+            (imageType === "image" ? (
+              <Image
+                src={`${image}`}
+                alt="image"
+                fill
+                style={{ objectFit: "cover" }}
+                className="object-cover"
+              />
+            ) : imageType === "video" ? (
+              <video autoPlay muted className="media w-full h-full">
+                <source src={image} type="video/mp4" />
+              </video>
+            ) : null)}
         </div>
         <div
           className={`duration-300 ${

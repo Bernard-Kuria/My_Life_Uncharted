@@ -9,6 +9,7 @@ import Blogs from "@c/Blogs";
 import Loading from "@app/loading";
 
 import { useBlogPage } from "@hooks/useBlogPage";
+import { mediaType } from "@utils/conversions";
 
 export default function Page({
   params,
@@ -81,6 +82,7 @@ export default function Page({
                   key={b.id}
                   link={link}
                   imageUrl={`blog/images/${b.blogMeta.image}`}
+                  imageType={mediaType(b.blogMeta.image)}
                   topic={b.blogMeta.title}
                   timeStamp={b.blogMeta.dateCreated}
                 />

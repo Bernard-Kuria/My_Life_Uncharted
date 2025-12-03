@@ -1,6 +1,10 @@
 "use client";
 
-import { getLandingPageImageUrls } from "@services/FirestoreStorage";
+import {
+  getMainImgUrl,
+  getSecondaryBottomImgUrl,
+  getSecondaryTopImgUrl,
+} from "@services/FirestoreStorage";
 
 import { useEffect, useState } from "react";
 
@@ -10,47 +14,47 @@ import { BlogTopicsType } from "@lib/types/types";
 
 export const useIndex = () => {
   const [topics, setTopics] = useState<BlogTopicsType>([]);
-  const [landingPageImages, setLandingPageImages] = useState<string[]>([]);
   const [loadingTopics, setLoadingTopics] = useState(true);
+  const [mainImg, setMainImg] = useState<string | undefined>();
+  const [secondaryTopImg, setSecondaryTopImg] = useState<string | undefined>();
+  const [secondaryBottomImg, setSecondaryBottomImg] = useState<
+    string | undefined
+  >();
   const [loadingImages, setLoadingImages] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchTopics() {
+    async function fetchData() {
       try {
+        // fetch blog topics
         const data: BlogTopicsType = await getAllTopics();
-
         setTopics(data);
+
+        // fetch images
+        const mainImg: string | null = await getMainImgUrl();
+        const secondaryTopImg: string | null = await getSecondaryTopImgUrl();
+        const secondaryBottomImg: string | null =
+          await getSecondaryBottomImgUrl();
+
+        if (mainImg) setMainImg(mainImg);
+        if (secondaryTopImg) setSecondaryTopImg(secondaryTopImg);
+        if (secondaryBottomImg) setSecondaryBottomImg(secondaryBottomImg);
       } catch (err) {
-        console.error("Failed to fetch topics:", err);
-        setError("Failed to load topics");
+        console.error("Failed to fetch topics or images:", err);
+        setError("Failed to load topics or images");
       } finally {
         setLoadingTopics(false);
-      }
-    }
-
-    fetchTopics();
-  }, []);
-
-  useEffect(() => {
-    async function fetchImages() {
-      try {
-        const imageUrls: string[] | null = await getLandingPageImageUrls();
-
-        if (imageUrls) setLandingPageImages(imageUrls || []);
-      } catch (err) {
-        console.error("Failed to fetch images:", err);
-        setError("Failed to load images");
-      } finally {
         setLoadingImages(false);
       }
     }
 
-    fetchImages();
+    fetchData();
   }, []);
 
   return {
-    landingPageImages,
+    mainImg,
+    secondaryTopImg,
+    secondaryBottomImg,
     topics,
     loadingTopics,
     loadingImages,

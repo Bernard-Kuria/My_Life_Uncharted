@@ -77,3 +77,29 @@ export const toCamelCase = (str: string) => {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 };
+
+// get string after colon. E.g. "someWord:anotherWord" gives "anotherWord".
+export function getWordAfterColon(inputString: string) {
+  const colonIndex = inputString.indexOf(":");
+
+  if (colonIndex !== -1) {
+    return inputString.substring(colonIndex + 1).trim();
+  } else {
+    return inputString.trim();
+  }
+}
+
+// gets string before colon
+export function getWordBeforeColon(inputString: string) {
+  const colonIndex = inputString.indexOf(":");
+
+  if (colonIndex !== -1) {
+    return inputString.substring(0, colonIndex).trim();
+  } else {
+    return inputString.trim();
+  }
+}
+
+// convert colon to slash in a string
+export const convertColonToSlash = (inputString: string) =>
+  inputString.replace(":", "/");

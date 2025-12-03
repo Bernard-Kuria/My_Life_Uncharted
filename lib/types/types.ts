@@ -136,9 +136,12 @@ export type Milestones = {
 
 export type HandleFeaturedType = (id: string, topic: string) => Promise<void>;
 
+export type MediaType = "image" | "video" | "unknown";
+
 export type BlogProps = {
   link: string;
   imageUrl: string;
+  imageType: MediaType;
   topic: string;
   timeStamp: string;
 };
@@ -150,3 +153,5 @@ export type Subscription = {
 };
 
 export type Subscriptions = Subscription[];
+
+export type ObjectType = Record<string, string>;
