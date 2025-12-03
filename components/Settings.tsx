@@ -37,7 +37,6 @@ export default function MediaUploader() {
     setTopicType,
     newTopic,
     setNewTopic,
-    topicModify,
     setTopicModify,
     modifyTopicStatus,
     setModifyTopicStatus,
@@ -48,6 +47,9 @@ export default function MediaUploader() {
     milestones,
     editableMilestones,
     setEditableMilestones,
+    handleMilestoneUpdate,
+    updateMilestoneStatus,
+    setUpdateMilestoneStatus,
   } = useSettings();
 
   return (
@@ -322,14 +324,16 @@ export default function MediaUploader() {
           <select
             className="border border-(--secondary-blue) w-full p-1"
             onChange={(e) => {
-              const topic = e.target.value as keyof typeof milestones;
-              setMilestoneTopic(topic);
-              setEditableMilestones([...milestones[topic]]); // shallow clone
-              setError(null);
+              const topic = e.target.value as keyof typeof milestones | "null";
+              setMilestoneTopic(topic !== "null" ? topic : null);
+              setEditableMilestones(
+                topic !== "null" ? [...milestones[topic]] : []
+              );
+              setUpdateMilestoneStatus("");
             }}
             required
           >
-            <option value="">select topic</option>
+            <option value="null">select topic</option>
             {topics &&
               Object.entries(topics).map(([topic, imageName]) => (
                 <option key={imageName} value={topic}>
@@ -339,10 +343,17 @@ export default function MediaUploader() {
           </select>
 
           <div className="grid gap-[10px] border-style">
-            {milestoneTopic
-              ? "milestones for: " + milestoneTopic
-              : "Please select topic first"}
-            {milestoneTopic ? (
+            <div className="flex gap-[10px]">
+              {milestoneTopic
+                ? "milestones for: " + milestoneTopic
+                : "Please select topic first"}
+
+              <div className="text-(--primary-blue)">
+                {updateMilestoneStatus}
+              </div>
+            </div>
+
+            {milestoneTopic && milestoneTopic !== null ? (
               editableMilestones.map((milestone, idx) => (
                 <div key={idx} className="grid grid-cols-2 gap-[10px]">
                   <input
@@ -380,7 +391,10 @@ export default function MediaUploader() {
             )}
           </div>
 
-          <button className="border-style cursor-pointer hover:bg-(--secondary-blue) hover:text-(--primary-blue)">
+          <button
+            className="border-style cursor-pointer hover:bg-(--secondary-blue) hover:text-(--primary-blue)"
+            onClick={handleMilestoneUpdate}
+          >
             Update milestones
           </button>
         </div>

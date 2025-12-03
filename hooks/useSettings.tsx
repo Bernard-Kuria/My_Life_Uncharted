@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 
-import { BlogTopicsType, ObjectType, Topic } from "@lib/types/types";
+import { BlogTopicsType, Milestone, ObjectType, Topic } from "@lib/types/types";
 
 import {
   convertColonToSlash,
@@ -27,6 +27,7 @@ import {
   uploadBlogTopicImage,
   uploadLandingPageImage,
 } from "@services/FirestoreStorage";
+import { updateMilestone } from "@services/milestones";
 
 const milestones = {
   "Life On Wheels": [
@@ -78,15 +79,15 @@ export const useSettings = () => {
   const [milestoneTopic, setMilestoneTopic] = useState<
     keyof typeof milestones | null
   >(null);
-  const [editableMilestones, setEditableMilestones] = useState<
-    { title: string; value: string }[]
-  >([]);
+  const [editableMilestones, setEditableMilestones] = useState<Milestone[]>([]);
+  const [updateMilestoneStatus, setUpdateMilestoneStatus] =
+    useState<string>("");
 
   const type = mediaType(fileName);
 
   // useEffect(() => {
-  //   console.log(toCamelCase(newTopic));
-  // }, [newTopic]);
+  //   console.log(milestoneTopic);
+  // }, [milestoneTopic]);
 
   async function handleTopicUpdate() {
     try {
@@ -309,6 +310,30 @@ export const useSettings = () => {
     }
   };
 
+  const handleMilestoneUpdate = async () => {
+    try {
+      if (!milestoneTopic) {
+        setUpdateMilestoneStatus("Please select topic first");
+        return;
+      }
+
+      if (milestoneTopic) {
+        setUpdateMilestoneStatus("updating milestone");
+        updateMilestone({
+          topic: milestoneTopic,
+          milestones: editableMilestones,
+        });
+        setTimeout(() => {
+          setUpdateMilestoneStatus("update successful");
+        }, 1000);
+        setUpdateMilestoneStatus("");
+      }
+    } catch (error) {
+      if (error instanceof Error) setUpdateMilestoneStatus(error.message);
+    } finally {
+    }
+  };
+
   return {
     blogTopics,
     imageName,
@@ -347,5 +372,8 @@ export const useSettings = () => {
     milestones,
     editableMilestones,
     setEditableMilestones,
+    handleMilestoneUpdate,
+    updateMilestoneStatus,
+    setUpdateMilestoneStatus,
   };
 };
