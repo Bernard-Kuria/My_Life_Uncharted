@@ -2,7 +2,14 @@
 
 import { useState, useRef, useEffect } from "react";
 
-import { BlogTopicsType, Milestone, ObjectType, Topic } from "@lib/types/types";
+import {
+  BlogTopicsType,
+  Milestone,
+  Milestones,
+  MilestonesMap,
+  ObjectType,
+  Topic,
+} from "@lib/types/types";
 
 import {
   convertColonToSlash,
@@ -11,6 +18,7 @@ import {
   mediaType,
   toCamelCase,
 } from "@utils/conversions";
+import { defaultMilestones } from "@utils/constants";
 
 import {
   addTopic,
@@ -27,46 +35,35 @@ import {
   uploadBlogTopicImage,
   uploadLandingPageImage,
 } from "@services/FirestoreStorage";
-import { updateMilestone } from "@services/milestones";
-
-const milestones = {
-  "Life On Wheels": [
-    { title: "Towns Visited", value: "8" },
-    { title: "Longest Ride in KM", value: "58" },
-    { title: "Punctured Tyres", value: "2" },
-    { title: "Accidents", value: "2" },
-  ],
-  "Startups & Ideas": [
-    { title: "Startups I own", value: "2" },
-    { title: "Startups I share ownership", value: "3" },
-    { title: "Hackathons won", value: "2" },
-    { title: "Hackathons participated", value: "7" },
-  ],
-  "Projects & Tech": [
-    { title: "Total projects yet", value: "50" },
-    { title: "Award winning projects", value: "3" },
-    { title: "Biggest failed attempts", value: "52" },
-    { title: "Accidents", value: "30" },
-  ],
-};
+import {
+  addMilestones,
+  deleteMilestones,
+  getAllMilestones,
+  updateMilestone,
+} from "@services/milestones";
 
 export const useSettings = () => {
   // elements
   const outputRef = useRef<HTMLDivElement>(null);
 
   //   data
+  const [topics, setTopics] = useState<ObjectType | undefined>();
+  const [newTopic, setNewTopic] = useState<string>("");
+  const [topicModify, setTopicModify] = useState<Topic | undefined>();
+  const [landingPageImages, setLandingPageImages] = useState<ObjectType>({});
+  const [blogTopics, setBlogTopics] = useState<BlogTopicsType | undefined>();
   const [file, setFile] = useState<File | null>(null);
   const [imageName, setImageName] = useState<string | null>("");
   const [fileName, setFileName] = useState("");
   const [url, setUrl] = useState<string | null>(null);
+  const [milestones, setMilestones] = useState<MilestonesMap>({});
+  const [editableMilestones, setEditableMilestones] = useState<Milestone[]>([]);
+  const [milestoneTopic, setMilestoneTopic] = useState<
+    keyof typeof milestones | null
+  >(null);
 
   //   statuses
-  const [topics, setTopics] = useState<ObjectType | undefined>();
-  const [newTopic, setNewTopic] = useState<string>("");
-  const [topicModify, setTopicModify] = useState<Topic | undefined>();
   const [modifyTopicStatus, setModifyTopicStatus] = useState<string>("");
-  const [landingPageImages, setLandingPageImages] = useState<ObjectType>({});
-  const [blogTopics, setBlogTopics] = useState<BlogTopicsType | undefined>();
   const [refreshTrigger, setRefreshTrigger] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -76,18 +73,32 @@ export const useSettings = () => {
   const [topicType, setTopicType] = useState<"modify" | "new" | "delete">(
     "modify"
   );
-  const [milestoneTopic, setMilestoneTopic] = useState<
-    keyof typeof milestones | null
-  >(null);
-  const [editableMilestones, setEditableMilestones] = useState<Milestone[]>([]);
   const [updateMilestoneStatus, setUpdateMilestoneStatus] =
     useState<string>("");
 
   const type = mediaType(fileName);
 
-  // useEffect(() => {
-  //   console.log(milestoneTopic);
-  // }, [milestoneTopic]);
+  useEffect(() => {
+    async function fetchMilestones() {
+      try {
+        const milestonesArray = await getAllMilestones();
+
+        const milestonesMap: MilestonesMap = milestonesArray.reduce(
+          (acc: MilestonesMap, item: Milestones) => {
+            acc[item.topic] = item.milestones;
+            return acc;
+          },
+          {}
+        );
+
+        setMilestones(milestonesMap);
+      } catch (error) {
+        if (error instanceof Error) console.error(error.message);
+      }
+    }
+
+    fetchMilestones();
+  }, []);
 
   async function handleTopicUpdate() {
     try {
@@ -118,6 +129,13 @@ export const useSettings = () => {
 
         setModifyTopicStatus("updating topic");
         await addTopic(toCamelCase(newTopic));
+
+        setModifyTopicStatus("adding default milestones");
+        await addMilestones({
+          topic: toCamelCase(newTopic),
+          milestones: defaultMilestones,
+        });
+
         setModifyTopicStatus("");
       }
     } catch (error) {
@@ -147,6 +165,9 @@ export const useSettings = () => {
           setModifyTopicStatus("deleting associated image as well");
           await deleteBlogTopicImage(topicModify?.image);
         }
+
+        setModifyTopicStatus("deleting associated milestones");
+        await deleteMilestones(topicModify.title);
 
         setModifyTopicStatus("");
       }
@@ -183,7 +204,7 @@ export const useSettings = () => {
               acc[topic.title] = topic.image;
               return acc;
             },
-            {} as ObjectType // Initialize accumulator as an empty object
+            {} as ObjectType
           );
 
           setTopics(topicsMap);
@@ -319,14 +340,14 @@ export const useSettings = () => {
 
       if (milestoneTopic) {
         setUpdateMilestoneStatus("updating milestone");
-        updateMilestone({
+        await updateMilestone({
           topic: milestoneTopic,
           milestones: editableMilestones,
         });
+        setUpdateMilestoneStatus("update successful");
         setTimeout(() => {
-          setUpdateMilestoneStatus("update successful");
+          setUpdateMilestoneStatus("");
         }, 1000);
-        setUpdateMilestoneStatus("");
       }
     } catch (error) {
       if (error instanceof Error) setUpdateMilestoneStatus(error.message);
