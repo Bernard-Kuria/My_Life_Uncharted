@@ -1,4 +1,4 @@
-import { BlogMeta, Content } from "@lib/types/types";
+import { BlogMeta, Content, Milestone } from "@lib/types/types";
 import { nanoid } from "@node_modules/nanoid";
 
 export const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "";
@@ -24,3 +24,22 @@ export const defaultMeta: BlogMeta = {
   views: 0,
   minsRead: 0,
 };
+
+export const defaultMilestones: Milestone[] = [
+  {
+    title: "",
+    value: "",
+  },
+  {
+    title: "",
+    value: "",
+  },
+  {
+    title: "",
+    value: "",
+  },
+  {
+    title: "",
+    value: "",
+  },
+];

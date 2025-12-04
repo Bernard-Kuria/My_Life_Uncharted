@@ -61,13 +61,13 @@ export async function POST(req: Request) {
 export async function PUT(req: Request) {
   try {
     const data = await req.json();
-    const { topic, milestones } = data;
+    const { topic } = data;
 
     if (!topic) return new Response("Missing milestone ID", { status: 400 });
 
     const milestoneRef = doc(db, "milestones", topic);
 
-    await updateDoc(milestoneRef, { id: topic, milestones: milestones });
+    await updateDoc(milestoneRef, data);
 
     return NextResponse.json({ topic, message: "milestone updated!" });
   } catch (error) {
@@ -79,8 +79,7 @@ export async function PUT(req: Request) {
 // DELETE: delete milestone by topic
 export async function DELETE(req: Request) {
   try {
-    const data = await req.json();
-    const { topic } = data;
+    const topic = await req.json();
 
     if (!topic) return new Response("Missing milestone topic", { status: 400 });
 

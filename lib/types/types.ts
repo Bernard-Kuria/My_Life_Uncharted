@@ -126,7 +126,7 @@ export type TagsType = Tag[];
 
 export type Milestone = {
   title: string;
-  value: string;
+  value: string | number;
 };
 
 export type Milestones = {
@@ -155,3 +155,5 @@ export type Subscription = {
 export type Subscriptions = Subscription[];
 
 export type ObjectType = Record<string, string>;
+
+export type MilestonesMap = Record<string, Milestone[]>;

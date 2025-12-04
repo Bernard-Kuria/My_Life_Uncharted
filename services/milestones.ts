@@ -1,4 +1,4 @@
-import { Milestones } from "@lib/types/types";
+import { Milestone, Milestones } from "@lib/types/types";
 import { API_BASE } from "@utils/constants";
 
 export async function getAllMilestones(topic?: string) {
@@ -21,6 +21,25 @@ export async function getAllMilestones(topic?: string) {
   }
 }
 
+export async function addMilestones(data: {
+  topic: string;
+  milestones: Milestone[];
+}) {
+  try {
+    const res = await fetch(`${API_BASE}/api/milestones`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) throw new Error("Failed to add milestone");
+    return await res.json();
+  } catch (err) {
+    console.error("Error in milestone add:", err);
+    throw err;
+  }
+}
+
 export async function updateMilestone(data: Milestones) {
   try {
     const res = await fetch(`${API_BASE}/api/milestones`, {
@@ -33,6 +52,22 @@ export async function updateMilestone(data: Milestones) {
     return await res.json();
   } catch (err) {
     console.error("Error in milestone update:", err);
+    throw err;
+  }
+}
+
+export async function deleteMilestones(topic: string) {
+  try {
+    const res = await fetch(`${API_BASE}/api/milestones`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(topic),
+    });
+
+    if (!res.ok) throw new Error("Failed to delete milestones");
+    return await res.json();
+  } catch (err) {
+    console.error("Error in milestones delete:", err);
     throw err;
   }
 }
