@@ -11,6 +11,7 @@ import {
   onFileChange,
 } from "@lib/Draftify/mediaHooks/mediaInteractions";
 import { getWordAfterColon, getWordBeforeColon } from "@utils/conversions";
+import { useRequireAuth } from "@hooks/useRequireAuth";
 
 export default function MediaUploader() {
   const {
@@ -51,6 +52,15 @@ export default function MediaUploader() {
     updateMilestoneStatus,
     setUpdateMilestoneStatus,
   } = useSettings();
+
+  const {
+    handleSavePassword,
+    message,
+    oldPassword,
+    setOldPassword,
+    newPassword,
+    setNewPassword,
+  } = useRequireAuth();
 
   return (
     <div className="flex flex-col gap-[10px] w-full">
@@ -406,19 +416,27 @@ export default function MediaUploader() {
         <div className="border-style grid gap-[10px]">
           Enter old password
           <input
-            type="text"
+            type="password"
             placeholder="old password"
             className="border-style"
+            value={oldPassword}
+            onChange={(e) => setOldPassword(e.target.value)}
           />
           Enter new password
           <input
-            type="text"
+            type="password"
             placeholder="new password"
             className="border-style"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
           />
-          <button className="border-style cursor-pointer hover:bg-(--secondary-blue) hover:text-(--primary-blue)">
+          <button
+            className="border-style cursor-pointer hover:bg-(--secondary-blue) hover:text-(--primary-blue)"
+            onClick={handleSavePassword}
+          >
             Save password
           </button>
+          {message && <div className="text-(--primary-blue)">{message}</div>}
         </div>
       </div>
     </div>

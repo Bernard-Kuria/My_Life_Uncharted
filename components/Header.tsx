@@ -1,21 +1,21 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 
-import Login from "./Login";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import { applyToggleStyles } from "@hooks/useTheme";
 
 import { getLinkFromTopic } from "@utils/conversions";
+
 import { getAllTopics } from "@services/topics";
+
 import { Topic } from "@lib/types/types";
 
 export default function Header() {
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const themeModeBtn = useRef<HTMLLIElement | null>(null);
   const themeModeToggle = useRef<HTMLDivElement | null>(null);
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -76,14 +76,12 @@ export default function Header() {
   }));
 
   return (
-    <div className="relative w-full min-h-[40px] h-auto flex items-center flex-col-reverse justify-center md:flex-row md:mt-[10px] md:mb-[20px] gap-[10px] px-[10px] md:px-0">
-      {isLoggedIn ? <Login setIsLoggedIn={setIsLoggedIn} /> : ""}
-
-      <div className="text-center md:text-start md:absolute page-layout top-0">
+    <div className="w-full min-h-[40px] h-auto flex items-center flex-col-reverse justify-center md:flex-row md:mt-[10px] md:mb-[20px] gap-[10px] px-[10px] md:pr-0">
+      <div className="flex-1 text-center md:text-start">
         <button
           onClick={() => {
             return location === "/"
-              ? setIsLoggedIn((prev) => !prev)
+              ? router.push("/dashboard")
               : router.push("/");
           }}
           className="section-title cursor-pointer"
@@ -104,7 +102,7 @@ export default function Header() {
         </div>
       </div>
 
-      <ul className="md:absolute flex items-center justify-around right-0 top-0 w-full md:w-[410px] mx-[10px] md:mx-0 h-[40px] text-[12px] text-center md:border-t border-b border-l border-r md:border-r-0 border-(--border-color) md:rounded-tl-[10px] rounded-br-[10px] md:rounded-br-[0px] rounded-bl-[10px]">
+      <ul className="flex items-center justify-around right-0 top-0 w-full md:w-[410px] mx-[10px] md:mx-0 h-[40px] text-[12px] text-center md:border-t border-b border-l border-r md:border-r-0 border-(--border-color) md:rounded-tl-[10px] rounded-br-[10px] md:rounded-br-[0px] rounded-bl-[10px]">
         <li>
           <Link href={"/"}>Home</Link>
         </li>
