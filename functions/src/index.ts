@@ -1,4 +1,5 @@
 import * as functions from "firebase-functions/v2";
+
 import * as admin from "firebase-admin";
 
 import { BlogType, ContactType } from "../utils/types";
