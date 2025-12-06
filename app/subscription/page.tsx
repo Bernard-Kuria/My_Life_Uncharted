@@ -21,6 +21,7 @@ export default function Subscription() {
     notification,
     setNotification,
     notificationStatus,
+    setNotificationStatus,
   } = useSubscription();
 
   return (
@@ -110,7 +111,8 @@ export default function Subscription() {
       <Notification
         notification={notification}
         setNotification={setNotification}
-        status={notificationStatus}
+        notificationStatus={notificationStatus}
+        setNotificationStatus={setNotificationStatus}
       />
     </div>
   );

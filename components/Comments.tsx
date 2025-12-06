@@ -112,22 +112,21 @@ function EditComment({
     <div className="flex gap-[10px]">
       <div className="w-[14px] h-full bg-(--secondary-blue)" />
 
-      <div className="bg-white dark:bg-black w-full p-2">
+      <div className="bg-white rounded-[10px] dark:bg-black w-full p-2 flex gap-[10px] items-center">
         <input
           type="text"
           placeholder="Add comment here"
-          className="w-full focus:outline-none focus:ring-0"
+          className="flex-1 w-full focus:outline-none focus:ring-0"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
 
-        <hr />
-
         <button
-          className="text-(--primary-blue) cursor-pointer"
+          className="text-(--primary-blue) cursor-pointer rounded-[10px] p-1 h-7 bg-(--secondary-blue) hover:bg-(--primary-blue) hover:text-(--secondary-blue)"
           onClick={submit}
         >
-          {commentAddStatus ? "Adding Comment..." : "Add comment"}
+          {commentAddStatus ? "Adding Comment..." : "Add comment"}{" "}
+          <FontAwesomeIcon icon={["far", "paper-plane"]} />
         </button>
       </div>
     </div>
@@ -188,7 +187,7 @@ function Comment({
   return (
     <div className="flex gap-[10px]">
       <div className="w-[14px] h-full bg-(--secondary-blue)"></div>
-      <div className="grid gap-[10px] bg-white dark:bg-black w-full p-2">
+      <div className="grid gap-[10px] bg-white rounded-[10px] dark:bg-black w-full p-2">
         <div>{comment.comment}</div>
         <div className="flex gap-[10px] items-center">
           {comment.likes}

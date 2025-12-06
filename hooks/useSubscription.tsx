@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, FormEvent } from "react";
 
 import { getAllTopics } from "@services/topics";
 import { BlogTopicsType } from "@lib/types/types";
-import { addSubscription, deleteSubscription } from "@services/subscriptions";
+import { addSubscriber, deleteSubscriber } from "@services/subscribers";
 
 interface TopicStatus {
   [key: string]: boolean;
@@ -13,7 +13,7 @@ interface TopicStatus {
 export default function useSubscription() {
   const [notification, setNotification] = useState<string | undefined>();
   const [notificationStatus, setNotificationStatus] = useState<
-    "good" | "bad" | "info"
+    "ok" | "error" | "info" | null
   >("info");
   const [topics, setTopics] = useState<BlogTopicsType>([]);
   const [checkedTopics, setCheckedTopics] = useState<TopicStatus>({});
@@ -64,21 +64,19 @@ export default function useSubscription() {
     setConnecting(true);
 
     try {
-      await addSubscription({
+      await addSubscriber({
         email: connectEmail,
         topics: selectedTopics,
       });
       setNotification("Connection successful!");
-      setNotificationStatus("good");
+      setNotificationStatus("ok");
     } catch (error) {
       setNotification(error as string);
-      setNotificationStatus("bad");
+      setNotificationStatus("error");
     } finally {
       setConnectEmail("");
       setConnecting(false);
     }
-
-    console.log("Form submitted:", { connectEmail, selectedTopics });
   };
 
   // 6. Handle Delete Subscription
@@ -87,18 +85,16 @@ export default function useSubscription() {
     setDisconnecting(true);
 
     try {
-      await deleteSubscription(disconnectEmail);
+      await deleteSubscriber(disconnectEmail);
       setNotification("disconnected successfully!");
-      setNotificationStatus("good");
+      setNotificationStatus("ok");
     } catch (error) {
       setNotification(error as string);
-      setNotificationStatus("bad");
+      setNotificationStatus("error");
     } finally {
       setDisconnectEmail("");
       setDisconnecting(false);
     }
-
-    console.log("Subscription disconnected!");
   };
 
   return {
@@ -116,5 +112,6 @@ export default function useSubscription() {
     notification,
     setNotification,
     notificationStatus,
+    setNotificationStatus,
   };
 }

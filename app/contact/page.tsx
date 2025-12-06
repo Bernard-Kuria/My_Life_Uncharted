@@ -3,9 +3,9 @@
 import SectionTitle from "@components/SectionTitle";
 import { IconPrefix, IconName } from "@fortawesome/fontawesome-common-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState, FormEvent, useRef, useCallback } from "react";
 import Link from "next/link";
 import Notification from "@components/Notification";
+import { useContacts } from "@hooks/useContacts";
 
 const socials = [
   // ... (socials array remains the same as your original code) ...
@@ -47,42 +47,24 @@ const socials = [
 ];
 
 export default function Contact() {
-  const [notification, setNotification] = useState<string | undefined>();
-  const thoughtRef = useRef<HTMLTextAreaElement | null>(null);
-  const emailRef = useRef<HTMLInputElement | null>(null);
-
-  const handleSubmit = useCallback((e: FormEvent) => {
-    e.preventDefault();
-
-    const thoughtValue = thoughtRef.current?.value.trim();
-    const emailValue = emailRef.current?.value.trim();
-
-    let message = "";
-
-    if (!thoughtValue) {
-      message = "Tell me something";
-      thoughtRef.current?.focus();
-    } else if (!emailValue) {
-      message = "Add an email";
-      emailRef.current?.focus();
-    } else {
-      message = "Submitted successfully";
-
-      if (thoughtRef.current) thoughtRef.current.value = "";
-      if (emailRef.current) emailRef.current.value = "";
-
-      thoughtRef.current?.blur();
-      emailRef.current?.blur();
-    }
-
-    setNotification(message);
-  }, []);
+  const {
+    handleSubmit,
+    notification,
+    setNotification,
+    notificationStatus,
+    setNotificationStatus,
+    thoughtRef,
+    emailRef,
+  } = useContacts();
 
   return (
     <div className="flex flex-col justify-center items-center page-layout">
       <form
         className="flex flex-col gap-5 w-full md:w-[400px]"
-        onSubmit={handleSubmit}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
       >
         <SectionTitle title="Let's talk" />
         <div>
@@ -139,7 +121,8 @@ export default function Contact() {
       <Notification
         notification={notification}
         setNotification={setNotification}
-        status="good"
+        notificationStatus={notificationStatus}
+        setNotificationStatus={setNotificationStatus}
       />
     </div>
   );
