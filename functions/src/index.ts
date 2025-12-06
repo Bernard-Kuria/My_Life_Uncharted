@@ -1,6 +1,8 @@
 import * as functions from "firebase-functions/v2";
 import * as admin from "firebase-admin";
 
+import { BlogType, ContactType } from "../utils/types";
+
 admin.initializeApp();
 const EMAIL_COLLECTION = "email";
 const BASE_URL = "https://my-life-uncharted.vercel.app";
@@ -10,11 +12,7 @@ export const notifySubscribersOnNewBlog = functions.firestore.onDocumentCreated(
   async (event) => {
     const snap = event.data;
     if (!snap || !snap.exists) return;
-    const blog = snap.data() as {
-      type: "blogs";
-      id: string;
-      blogMeta: { topic: string; title: string };
-    };
+    const blog = snap.data() as BlogType;
     const id = snap.id;
     const { blogMeta } = blog;
     const { topic, title } = blogMeta;
@@ -70,8 +68,6 @@ export const notifySubscribersOnNewBlog = functions.firestore.onDocumentCreated(
   }
 );
 
-type ContactForm = { message: string; email: string };
-
 export const sendContactMessage = functions.https.onCall(
   async (data: unknown) => {
     const payload =
@@ -91,7 +87,7 @@ export const sendContactMessage = functions.https.onCall(
       );
     }
 
-    const { message, email } = payload as ContactForm;
+    const { message, email } = payload as ContactType;
 
     console.log("sendContactMessage invoked", message, email);
 
