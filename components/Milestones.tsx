@@ -18,14 +18,14 @@ export default function Milestones({
   }, [topic]);
 
   return (
-    <div className="w-full grid justify-around min-h-[300px] text-white bg-(--primary-blue) py-[20px]">
-      <div className="page-layout grid md:flex gap-[40px] justify-between items-center h-full">
+    <div className="w-full grid justify-around min-h-[250px] text-white bg-(--primary-blue) py-[20px]">
+      <div className="page-layout grid md:flex gap-[40px] justify-between h-full">
         {!milestones ? (
           <div>Loading Milestones</div>
         ) : (
           milestones?.milestones.map((milestone, idx) => (
             <div key={idx} className="sub-title text-center">
-              <div className="values">{milestone.value}</div>
+              <div className="values min-h-[120px]">{milestone.value}</div>
               {milestone.title}
             </div>
           ))

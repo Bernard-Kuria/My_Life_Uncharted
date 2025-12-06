@@ -27,7 +27,7 @@ export const useDashboard = () => {
   const [reloadBlogs, setReloadBlogs] = useState(false);
   const [deletingBlogStatus, setDeletingBlogStatus] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [section, setSection] = useState<"blogs" | "settings">("settings");
+  const [section, setSection] = useState<"blogs" | "settings">("blogs");
   const outputRef = useRef<HTMLDivElement>(null);
 
   const [file, setFile] = useState<File | null>(null);

@@ -3,14 +3,14 @@
 import { Dispatch, SetStateAction, useEffect, useReducer } from "react";
 
 const BG: Record<ColourType, string> = {
-  red: "rgba(255, 0, 0, 0.8)",
-  green: "rgba(0, 255, 0, 0.8)",
-  blue: "rgba(0, 0, 255, 0.8)",
+  red: "rgba(255, 0, 0, 0.6)",
+  green: "rgba(0, 255, 0, 0.6)",
+  blue: "rgba(0, 0, 255, 0.6)",
 };
 
 const ACTIONS = {
-  GOOD: "good",
-  BAD: "bad",
+  GOOD: "ok",
+  BAD: "error",
   INFO: "info",
 } as const;
 
@@ -34,24 +34,33 @@ function reducer(state: ColourType, action: Action): ColourType {
 export default function Notification({
   notification,
   setNotification,
-  status,
+  notificationStatus,
+  setNotificationStatus,
 }: {
   notification: string | undefined;
   setNotification: Dispatch<SetStateAction<string | undefined>>;
-  status: StatusType;
+  notificationStatus: StatusType | null;
+  setNotificationStatus: Dispatch<SetStateAction<StatusType | null>>;
 }) {
   const [colour, dispatch] = useReducer(reducer, "blue");
 
   useEffect(() => {
-    dispatch({ type: status });
-  }, [status]);
+    if (!notificationStatus) {
+      dispatch({ type: "info" });
+    } else {
+      dispatch({ type: notificationStatus });
+    }
+  }, [notificationStatus]);
 
   useEffect(() => {
     if (!notification) return;
 
-    const timer = setTimeout(() => setNotification(undefined), 2000);
+    const timer = setTimeout(() => {
+      setNotification(undefined);
+      setNotificationStatus(null);
+    }, 2000);
     return () => clearTimeout(timer);
-  }, [notification, setNotification]);
+  }, [notification, setNotification, setNotificationStatus]);
 
   return (
     <div className={`top-1/3 absolute w-[250px] grid justify-center`}>

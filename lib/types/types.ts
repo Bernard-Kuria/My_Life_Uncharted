@@ -146,13 +146,13 @@ export type BlogProps = {
   timeStamp: string;
 };
 
-export type Subscription = {
+export type Subscriber = {
   id: string;
   email: string;
   topics: string[];
 };
 
-export type Subscriptions = Subscription[];
+export type Subscribers = Subscriber[];
 
 export type ObjectType = Record<string, string>;
 

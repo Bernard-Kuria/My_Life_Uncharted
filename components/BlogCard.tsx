@@ -24,7 +24,7 @@ export default function BlogCards({
 
   useEffect(() => {
     getImgUrl(`blog/images/${image}`).then(setImageUrl);
-  }, []);
+  }, [image]);
 
   return (
     <Link
