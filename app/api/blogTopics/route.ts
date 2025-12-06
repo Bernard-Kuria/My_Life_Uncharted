@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 
 // GET: fetch all topic or one by ID
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const topicsSnapshot = await getDocs(collection(db, "blogTopics"));
 

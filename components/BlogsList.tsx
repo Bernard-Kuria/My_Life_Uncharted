@@ -31,7 +31,7 @@ export default function BlogsList({
       setIsFeatured(featured);
     }
     fetchFeaturedStatus();
-  }, [refreshTrigger]);
+  }, [refreshTrigger, id]);
 
   // ✅ Handles the toggle logic
   const handleFeatured = async () => {

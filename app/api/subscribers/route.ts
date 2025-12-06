@@ -12,7 +12,7 @@ import {
 } from "firebase/firestore";
 
 // GET: fetch all subscribers
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const subscribersSnapshot = await getDocs(collection(db, "subscribers"));
 
