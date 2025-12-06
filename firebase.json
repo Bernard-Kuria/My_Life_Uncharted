@@ -2,18 +2,7 @@
   "apphosting": [
     {
       "backendId": "my-blog-backend",
-      "rootDir": "my_life_uncharted",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "functions"
-      ]
-    },
-    {
-      "backendId": "my-blog-backend",
-      "rootDir": "app",
+      "rootDir": ".",
       "ignore": [
         "node_modules",
         ".git",
@@ -24,12 +13,8 @@
     }
   ],
   "hosting": {
-    "public": ".next",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
   },
   "storage": {
     "rules": "storage.rules"
@@ -46,9 +31,7 @@
         "firebase-debug.*.log",
         "*.local"
       ],
-      "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run build"
-      ]
+      "predeploy": ["npm --prefix \"$RESOURCE_DIR\" run build"]
     }
   ]
 }
