@@ -1,8 +1,0 @@
-{
-  "/api/blogTopics/route": "app/api/blogTopics/route.js",
-  "/api/milestones/route": "app/api/milestones/route.js",
-  "/contact/page": "app/contact/page.js",
-  "/dashboard/[createModify]/page": "app/dashboard/[createModify]/page.js",
-  "/page": "app/page.js",
-  "/subscription/page": "app/subscription/page.js"
-}

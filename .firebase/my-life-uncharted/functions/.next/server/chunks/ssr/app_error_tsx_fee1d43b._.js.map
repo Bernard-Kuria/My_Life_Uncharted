@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../../app/error.tsx"],"sourcesContent":["\"use client\";\r\n// Error UI\r\nexport default function error() {\r\n  return <div>An error has occured. Try refreshing the page.</div>;\r\n}\r\n"],"names":[],"mappings":"wDAEe,SAAS,IACtB,MAAO,CAAA,EAAA,EAAA,GAAA,EAAC,MAAA,UAAI,kDACd"}
