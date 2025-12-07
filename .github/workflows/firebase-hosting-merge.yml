@@ -15,9 +15,11 @@ jobs:
       # Add a step to navigate into the correct directory before running build
       - name: Install dependencies in project directory
         run: npm install
+        working-directory: ./temp_hosting_output # Run 'npm install' here
 
       - name: Run Next.js Build Script
         run: npm run build
+        working-directory: ./temp_hosting_output # Run 'npm run build' here
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

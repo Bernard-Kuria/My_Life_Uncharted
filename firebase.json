@@ -12,6 +12,16 @@
       ]
     }
   ],
+  "hosting": {
+    "public": "temp_hosting_output",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "my-blog-backend"
+      }
+    ]
+  },
   "storage": {
     "rules": "storage.rules"
   },
