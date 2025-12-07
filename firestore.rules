@@ -20,7 +20,8 @@ service cloud.firestore {
     }
 
     match /drafts/{id} {
-      allow read, write: if isAdmin();
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
     // COMMENTS (public write allowed?)

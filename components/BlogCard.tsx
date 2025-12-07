@@ -23,7 +23,7 @@ export default function BlogCards({
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    getImgUrl(`blog/images/${image}`).then(setImageUrl);
+    if (image !== "") getImgUrl(`blog/images/${image}`).then(setImageUrl);
   }, [image]);
 
   return (
