@@ -13,7 +13,7 @@
     }
   ],
   "hosting": {
-    "public": "temp_hosting_output",
+    "public": "public",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
