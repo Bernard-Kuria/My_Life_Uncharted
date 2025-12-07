@@ -12,12 +12,15 @@
     "alwaysDeployFromSource": true
   },
   "hosting": {
-    "public": "public",
+    "source": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
+    ],
+    "frameworksBackend": {
+      "region": "us-central1"
+    }
   },
   "firestore": {
     "database": "(default)",

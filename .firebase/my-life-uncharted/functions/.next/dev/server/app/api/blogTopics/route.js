@@ -1,0 +1,12 @@
+var R=require("../../../chunks/[turbopack]_runtime.js")("server/app/api/blogTopics/route.js")
+R.c("server/chunks/node_modules_next_8e01e1d2._.js")
+R.c("server/chunks/node_modules_@opentelemetry_api_build_esm_7e8f41ca._.js")
+R.c("server/chunks/94568_@firebase_auth_dist_node-esm_15ba19fa._.js")
+R.c("server/chunks/node_modules_@grpc_grpc-js_503239a0._.js")
+R.c("server/chunks/node_modules_protobufjs_d7c441d2._.js")
+R.c("server/chunks/node_modules_@firebase_firestore_dist_index_node_mjs_ae4421f5._.js")
+R.c("server/chunks/node_modules_003d6da4._.js")
+R.c("server/chunks/[root-of-the-server]__573d5bdf._.js")
+R.c("server/chunks/_next-internal_server_app_api_blogTopics_route_actions_d10c73d8.js")
+R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/app/api/blogTopics/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
+module.exports=R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/app/api/blogTopics/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports

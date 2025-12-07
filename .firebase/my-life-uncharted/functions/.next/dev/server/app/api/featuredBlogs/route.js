@@ -1,0 +1,12 @@
+var R=require("../../../chunks/[turbopack]_runtime.js")("server/app/api/featuredBlogs/route.js")
+R.c("server/chunks/f45ba_next_cd53b106._.js")
+R.c("server/chunks/f45ba_@opentelemetry_api_build_esm_d3bcd04a._.js")
+R.c("server/chunks/d280e_@firebase_auth_dist_node-esm_d7793019._.js")
+R.c("server/chunks/f45ba_@grpc_grpc-js_4448e133._.js")
+R.c("server/chunks/f45ba_protobufjs_1d147099._.js")
+R.c("server/chunks/f45ba_@firebase_firestore_dist_index_node_mjs_3733e0d6._.js")
+R.c("server/chunks/f45ba_81b81215._.js")
+R.c("server/chunks/[root-of-the-server]__d27dde52._.js")
+R.c("server/chunks/5878f_Uncharted__next-internal_server_app_api_featuredBlogs_route_actions_894c6fd2.js")
+R.m("[project]/My_Life_Uncharted/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/My_Life_Uncharted/app/api/featuredBlogs/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
+module.exports=R.m("[project]/My_Life_Uncharted/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/My_Life_Uncharted/app/api/featuredBlogs/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports

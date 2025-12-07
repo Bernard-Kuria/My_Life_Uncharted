@@ -1,0 +1,191 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/api/blogs/[id]",
+      "regex": "^/api/blogs/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/blogs/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/comments/[blogCommentId]",
+      "regex": "^/api/comments/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPblogCommentId": "nxtPblogCommentId"
+      },
+      "namedRegex": "^/api/comments/(?<nxtPblogCommentId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/comments/[blogCommentId]/[commentId]",
+      "regex": "^/api/comments/([^/]+?)/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPblogCommentId": "nxtPblogCommentId",
+        "nxtPcommentId": "nxtPcommentId"
+      },
+      "namedRegex": "^/api/comments/(?<nxtPblogCommentId>[^/]+?)/(?<nxtPcommentId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/dashboard/[createModify]",
+      "regex": "^/dashboard/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcreateModify": "nxtPcreateModify"
+      },
+      "namedRegex": "^/dashboard/(?<nxtPcreateModify>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/[blogTopicPage]",
+      "regex": "^/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPblogTopicPage": "nxtPblogTopicPage"
+      },
+      "namedRegex": "^/(?<nxtPblogTopicPage>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/[blogTopicPage]/[blogpage]",
+      "regex": "^/([^/]+?)/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPblogTopicPage": "nxtPblogTopicPage",
+        "nxtPblogpage": "nxtPblogpage"
+      },
+      "namedRegex": "^/(?<nxtPblogTopicPage>[^/]+?)/(?<nxtPblogpage>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/api/blogs",
+      "regex": "^/api/blogs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/blogs(?:/)?$"
+    },
+    {
+      "page": "/api/blogTopics",
+      "regex": "^/api/blogTopics(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/blogTopics(?:/)?$"
+    },
+    {
+      "page": "/api/comments",
+      "regex": "^/api/comments(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/comments(?:/)?$"
+    },
+    {
+      "page": "/api/drafts",
+      "regex": "^/api/drafts(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/drafts(?:/)?$"
+    },
+    {
+      "page": "/api/featuredBlogs",
+      "regex": "^/api/featuredBlogs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/featuredBlogs(?:/)?$"
+    },
+    {
+      "page": "/api/milestones",
+      "regex": "^/api/milestones(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/milestones(?:/)?$"
+    },
+    {
+      "page": "/api/subscribers",
+      "regex": "^/api/subscribers(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/subscribers(?:/)?$"
+    },
+    {
+      "page": "/api/tags",
+      "regex": "^/api/tags(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/tags(?:/)?$"
+    },
+    {
+      "page": "/contact",
+      "regex": "^/contact(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/contact(?:/)?$"
+    },
+    {
+      "page": "/dashboard",
+      "regex": "^/dashboard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard(?:/)?$"
+    },
+    {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/login",
+      "regex": "^/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/login(?:/)?$"
+    },
+    {
+      "page": "/subscription",
+      "regex": "^/subscription(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/subscription(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}
