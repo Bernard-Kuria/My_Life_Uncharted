@@ -2,17 +2,7 @@ import * as functions from "firebase-functions/v2";
 
 import * as admin from "firebase-admin";
 
-import next from "next";
-
 import { BlogType, ContactType } from "../utils/types";
-import config from "../../next.config.js";
-
-const app = next({ dev: false, conf: config });
-const handle = app.getRequestHandler();
-
-export const nextServer = functions.https.onRequest((req, res) => {
-  app.prepare().then(() => handle(req, res));
-});
 
 admin.initializeApp();
 const EMAIL_COLLECTION = "email";
