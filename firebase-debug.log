@@ -1,0 +1,337 @@
+[debug] [2025-12-09T12:04:15.964Z] ----------------------------------------------------------------------
+[debug] [2025-12-09T12:04:15.966Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\HomePC\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2025-12-09T12:04:15.967Z] CLI Version:   14.27.0
+[debug] [2025-12-09T12:04:15.967Z] Platform:      win32
+[debug] [2025-12-09T12:04:15.967Z] Node Version:  v24.11.0
+[debug] [2025-12-09T12:04:15.967Z] Time:          Tue Dec 09 2025 15:04:15 GMT+0300 (East Africa Time)
+[debug] [2025-12-09T12:04:15.967Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-12-09T12:04:16.092Z] Object "/storage" in "firebase.json" has unknown property: {"additionalProperty":"bucket"}
+[debug] [2025-12-09T12:04:16.093Z] Field "/storage" in "firebase.json" is possibly invalid: must be array
+[debug] [2025-12-09T12:04:16.093Z] Field "/storage" in "firebase.json" is possibly invalid: must match a schema in anyOf
+[debug] [2025-12-09T12:04:16.096Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-12-09T12:04:16.096Z] > authorizing via signed-in user (bernard.i.kuria@gmail.com)
+[debug] [2025-12-09T12:04:16.096Z] [iam] checking project my-life-uncharted for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2025-12-09T12:04:16.097Z] Checked if tokens are valid: false, expires at: 1765282702488
+[debug] [2025-12-09T12:04:16.097Z] Checked if tokens are valid: false, expires at: 1765282702488
+[debug] [2025-12-09T12:04:16.097Z] > refreshing access token with scopes: []
+[debug] [2025-12-09T12:04:16.098Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-12-09T12:04:16.098Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-12-09T12:04:16.441Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-12-09T12:04:16.441Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-12-09T12:04:16.452Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions [none]
+[debug] [2025-12-09T12:04:16.452Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions x-goog-quota-user=projects/my-life-uncharted
+[debug] [2025-12-09T12:04:16.452Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-12-09T12:04:18.310Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions 200
+[debug] [2025-12-09T12:04:18.310Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-12-09T12:04:18.311Z] Checked if tokens are valid: true, expires at: 1765285455442
+[debug] [2025-12-09T12:04:18.311Z] Checked if tokens are valid: true, expires at: 1765285455442
+[debug] [2025-12-09T12:04:18.311Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/my-life-uncharted [none]
+[debug] [2025-12-09T12:04:18.795Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/my-life-uncharted 200
+[debug] [2025-12-09T12:04:18.795Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/my-life-uncharted {"projectId":"my-life-uncharted","projectNumber":"913164628777","displayName":"My Life Uncharted","name":"projects/my-life-uncharted","resources":{"hostingSite":"my-life-uncharted"},"state":"ACTIVE","etag":"1_e593c9b7-a4b8-42cc-9f08-ee1e44d60950"}
+[debug] [2025-12-09T12:04:20.400Z] defaultcredentials: writing to file C:\Users\HomePC\AppData\Roaming\firebase\bernard_i.kuria_gmail.com_application_default_credentials.json
+[debug] [2025-12-09T12:04:20.401Z] Checked if tokens are valid: true, expires at: 1765285455442
+[debug] [2025-12-09T12:04:20.401Z] Checked if tokens are valid: true, expires at: 1765285455442
+[debug] [2025-12-09T12:04:20.401Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites pageToken=&pageSize=10
+[debug] [2025-12-09T12:04:22.239Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites 200
+[debug] [2025-12-09T12:04:22.239Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites {"sites":[{"name":"projects/my-life-uncharted/sites/my-life-uncharted","defaultUrl":"https://my-life-uncharted.web.app","appId":"1:913164628777:web:e80fdf57f47786ba093d38","type":"DEFAULT_SITE"}]}
+[debug] [2025-12-09T12:04:22.240Z] Checked if tokens are valid: true, expires at: 1765285455442
+[debug] [2025-12-09T12:04:22.240Z] Checked if tokens are valid: true, expires at: 1765285455442
+[debug] [2025-12-09T12:04:22.240Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:913164628777:web:e80fdf57f47786ba093d38/config [none]
+[debug] [2025-12-09T12:04:22.901Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:913164628777:web:e80fdf57f47786ba093d38/config 200
+[debug] [2025-12-09T12:04:22.901Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:913164628777:web:e80fdf57f47786ba093d38/config {"projectId":"my-life-uncharted","appId":"1:913164628777:web:e80fdf57f47786ba093d38","storageBucket":"my-life-uncharted.firebasestorage.app","apiKey":"AIzaSyDdOf3yF2LlmKBLKe0Eqn7hIfErBs-R7Xc","authDomain":"my-life-uncharted.firebaseapp.com","messagingSenderId":"913164628777","measurementId":"G-SNKCNCZMYL","projectNumber":"913164628777","version":"2"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 15.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2025-12-09T12:04:26.682Z] Checked if tokens are valid: true, expires at: 1765285455442
+[debug] [2025-12-09T12:04:26.682Z] Checked if tokens are valid: true, expires at: 1765285455442
+[debug] [2025-12-09T12:04:26.682Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted [none]
+[debug] [2025-12-09T12:04:26.978Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted 200
+[debug] [2025-12-09T12:04:26.978Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted {"name":"projects/my-life-uncharted/sites/my-life-uncharted","defaultUrl":"https://my-life-uncharted.web.app","appId":"1:913164628777:web:e80fdf57f47786ba093d38","type":"DEFAULT_SITE"}
+[info]    ▲ Next.js 16.0.7 (Turbopack)
+
+[info] 
+
+[info]    Creating an optimized production build ...
+
+[info]  ✓ Compiled successfully in 4.5s
+
+[info]    Running TypeScript ...
+
+[info]    Collecting page data using 15 workers ...
+
+[info]    Generating static pages using 15 workers (0/16) ...
+
+[info]    Generating static pages using 15 workers (4/16) 
+
+[info]    Generating static pages using 15 workers (8/16) 
+
+[info]    Generating static pages using 15 workers (12/16) 
+
+[info]  ✓ Generating static pages using 15 workers (16/16) in 786.0ms
+
+[info]    Finalizing page optimization ...
+
+[info] 
+
+[info] Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /[blogTopicPage]
+├ ƒ /[blogTopicPage]/[blogpage]
+├ ƒ /api/blogs
+├ ƒ /api/blogs/[id]
+├ ƒ /api/blogTopics
+├ ƒ /api/comments
+├ ƒ /api/comments/[blogCommentId]
+├ ƒ /api/comments/[blogCommentId]/[commentId]
+├ ƒ /api/drafts
+├ ƒ /api/featuredBlogs
+├ ƒ /api/milestones
+├ ƒ /api/subscribers
+├ ƒ /api/tags
+├ ○ /contact
+├ ○ /dashboard
+├ ƒ /dashboard/[createModify]
+├ ○ /login
+└ ○ /subscription
+
+
+[info] 
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+[info] Building a Cloud Function to run this application. This is needed due to:
+[info]  • non-static component /[blogTopicPage]/[blogpage]/page
+[info]  • non-static component /[blogTopicPage]/page
+[info]  • non-static component /api/blogTopics/route
+[info]  • non-static component /api/blogs/[id]/route
+[info]  • non-static component /api/blogs/route
+[debug] [2025-12-09T12:04:38.734Z]  • non-static component /api/comments/[blogCommentId]/[commentId]/route
+[debug] [2025-12-09T12:04:38.734Z]  • non-static component /api/comments/[blogCommentId]/route
+[debug] [2025-12-09T12:04:38.734Z]  • non-static component /api/comments/route
+[debug] [2025-12-09T12:04:38.734Z]  • non-static component /api/drafts/route
+[debug] [2025-12-09T12:04:38.734Z]  • non-static component /api/featuredBlogs/route
+[debug] [2025-12-09T12:04:38.734Z]  • non-static component /api/milestones/route
+[debug] [2025-12-09T12:04:38.734Z]  • non-static component /api/subscribers/route
+[debug] [2025-12-09T12:04:38.734Z]  • non-static component /api/tags/route
+[debug] [2025-12-09T12:04:38.734Z]  • non-static component /dashboard/[createModify]/page
+[info]  • and 9 other reasons, use --debug to see more
+[info] 
+[debug] [2025-12-09T12:04:38.928Z] Checked if tokens are valid: true, expires at: 1765285455442
+[debug] [2025-12-09T12:04:38.929Z] Checked if tokens are valid: true, expires at: 1765285455442
+[debug] [2025-12-09T12:04:38.929Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted [none]
+[debug] [2025-12-09T12:04:40.435Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted 200
+[debug] [2025-12-09T12:04:40.436Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted {"name":"projects/my-life-uncharted/sites/my-life-uncharted","defaultUrl":"https://my-life-uncharted.web.app","appId":"1:913164628777:web:e80fdf57f47786ba093d38","type":"DEFAULT_SITE"}
+[warn] !  This integration expects Node version 16, 18, or 20. You're running version 24, problems may be encountered. 
+[debug] [2025-12-09T12:04:45.663Z] [web frameworks] effective firebase.json:  {
+  "hosting": [
+    {
+      "source": ".",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "frameworksBackend": {
+        "region": "us-central1"
+      },
+      "rewrites": [
+        {
+          "source": "/_next/image",
+          "function": {
+            "functionId": "nextServer"
+          }
+        },
+        {
+          "source": "**",
+          "function": {
+            "functionId": "nextServer"
+          }
+        },
+        {
+          "source": "/**",
+          "function": {
+            "functionId": "ssrmylifeuncharted",
+            "region": "us-central1",
+            "pinTag": true
+          }
+        }
+      ],
+      "site": "my-life-uncharted",
+      "redirects": [],
+      "headers": [
+        {
+          "source": "/contact",
+          "headers": [
+            {
+              "key": "x-nextjs-stale-time",
+              "value": "300"
+            },
+            {
+              "key": "x-nextjs-prerender",
+              "value": "1"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/contact/layout,_N_T_/contact/page,_N_T_/contact"
+            }
+          ]
+        },
+        {
+          "source": "/_global-error",
+          "headers": [
+            {
+              "key": "x-nextjs-stale-time",
+              "value": "300"
+            },
+            {
+              "key": "x-nextjs-prerender",
+              "value": "1"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/_global-error/layout,_N_T_/_global-error/page,_N_T_/_global-error"
+            }
+          ]
+        },
+        {
+          "source": "/dashboard",
+          "headers": [
+            {
+              "key": "x-nextjs-stale-time",
+              "value": "300"
+            },
+            {
+              "key": "x-nextjs-prerender",
+              "value": "1"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/dashboard/layout,_N_T_/dashboard/page,_N_T_/dashboard"
+            }
+          ]
+        },
+        {
+          "source": "/_not-found",
+          "headers": [
+            {
+              "key": "x-nextjs-stale-time",
+              "value": "300"
+            },
+            {
+              "key": "x-nextjs-prerender",
+              "value": "1"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/_not-found/layout,_N_T_/_not-found/page,_N_T_/_not-found"
+            }
+          ]
+        },
+        {
+          "source": "/subscription",
+          "headers": [
+            {
+              "key": "x-nextjs-stale-time",
+              "value": "300"
+            },
+            {
+              "key": "x-nextjs-prerender",
+              "value": "1"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/subscription/layout,_N_T_/subscription/page,_N_T_/subscription"
+            }
+          ]
+        },
+        {
+          "source": "/favicon.ico",
+          "headers": [
+            {
+              "key": "cache-control",
+              "value": "public, max-age=0, must-revalidate"
+            },
+            {
+              "key": "content-type",
+              "value": "image/x-icon"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/favicon.ico/layout,_N_T_/favicon.ico/route,_N_T_/favicon.ico"
+            }
+          ]
+        },
+        {
+          "source": "/login",
+          "headers": [
+            {
+              "key": "x-nextjs-stale-time",
+              "value": "300"
+            },
+            {
+              "key": "x-nextjs-prerender",
+              "value": "1"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/login/layout,_N_T_/login/page,_N_T_/login"
+            }
+          ]
+        },
+        {
+          "source": "/**/*.[jt]s",
+          "headers": [
+            {
+              "key": "Set-Cookie",
+              "value": "__FIREBASE_DEFAULTS__=eyJjb25maWciOnsicHJvamVjdElkIjoibXktbGlmZS11bmNoYXJ0ZWQiLCJhcHBJZCI6IjE6OTEzMTY0NjI4Nzc3OndlYjplODBmZGY1N2Y0Nzc4NmJhMDkzZDM4Iiwic3RvcmFnZUJ1Y2tldCI6Im15LWxpZmUtdW5jaGFydGVkLmZpcmViYXNlc3RvcmFnZS5hcHAiLCJhcGlLZXkiOiJBSXphU3lEZE9mM3lGMkxsbUtCTEtlMEVxbjdoSWZFckJzLVI3WGMiLCJhdXRoRG9tYWluIjoibXktbGlmZS11bmNoYXJ0ZWQuZmlyZWJhc2VhcHAuY29tIiwibWVzc2FnaW5nU2VuZGVySWQiOiI5MTMxNjQ2Mjg3NzciLCJtZWFzdXJlbWVudElkIjoiRy1TTktDTkNaTVlMIiwicHJvamVjdE51bWJlciI6IjkxMzE2NDYyODc3NyIsInZlcnNpb24iOiIyIn0sIl9hdXRoVG9rZW5TeW5jVVJMIjoiL19fc2Vzc2lvbiJ9; SameSite=Strict; Expires=2027-11-03T22:44:45.663Z; Path=/;"
+            }
+          ]
+        }
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false,
+      "public": ".firebase\\my-life-uncharted\\hosting",
+      "webFramework": "next_ssr"
+    }
+  ],
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        ".runtimeconfig.json"
+      ]
+    },
+    {
+      "source": ".firebase\\my-life-uncharted\\functions",
+      "codebase": "firebase-frameworks-my-life-uncharted"
+    }
+  ]
+}
+[debug] [2025-12-09T12:04:45.664Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-12-09T12:04:45.664Z] > authorizing via signed-in user (bernard.i.kuria@gmail.com)
+[debug] [2025-12-09T12:04:45.664Z] [iam] checking project my-life-uncharted for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2025-12-09T12:04:45.665Z] Checked if tokens are valid: true, expires at: 1765285455442
+[debug] [2025-12-09T12:04:45.665Z] Checked if tokens are valid: true, expires at: 1765285455442
+[debug] [2025-12-09T12:04:45.665Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions [none]
+[debug] [2025-12-09T12:04:45.665Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions x-goog-quota-user=projects/my-life-uncharted
+[debug] [2025-12-09T12:04:45.665Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
