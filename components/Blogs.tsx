@@ -72,8 +72,8 @@ export default function Blogs({
               ? "grid h-[108px]"
               : location !== "/" && hovered === true
               ? "opacity-100 -translate-y-[108px] h-[108px]"
-              : "opacity-0 h-[0px]"
-          } gap-[20px] p-2 w-full bg-white text-black text-left`}
+              : "opacity-0 h-0"
+          } gap-5 p-2 w-full bg-white text-black text-left`}
         >
           <div className="text-[20px] font-semibold">{topic}</div>
           <div className="text-[12px]">{timeStamp}</div>
