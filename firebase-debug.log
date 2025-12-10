@@ -71,3 +71,74 @@
 
 [info]    Creating an optimized production build ...
 
+[info]  ✓ Compiled successfully in 7.0s
+
+[info]    Running TypeScript ...
+
+[info]    Collecting page data using 15 workers ...
+
+[info]    Generating static pages using 15 workers (0/16) ...
+
+[info]    Generating static pages using 15 workers (4/16) 
+
+[info]    Generating static pages using 15 workers (8/16) 
+
+[info]    Generating static pages using 15 workers (12/16) 
+
+[info]  ✓ Generating static pages using 15 workers (16/16) in 732.1ms
+
+[info]    Finalizing page optimization ...
+
+[info] 
+
+[info] Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /[blogTopicPage]
+├ ƒ /[blogTopicPage]/[blogpage]
+├ ƒ /api/blogs
+├ ƒ /api/blogs/[id]
+├ ƒ /api/blogTopics
+├ ƒ /api/comments
+├ ƒ /api/comments/[blogCommentId]
+├ ƒ /api/comments/[blogCommentId]/[commentId]
+├ ƒ /api/drafts
+├ ƒ /api/featuredBlogs
+├ ƒ /api/milestones
+├ ƒ /api/subscribers
+├ ƒ /api/tags
+├ ○ /contact
+├ ○ /dashboard
+├ ƒ /dashboard/[createModify]
+├ ○ /login
+└ ○ /subscription
+
+
+[info] 
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+[info] Building a Cloud Function to run this application. This is needed due to:
+[info]  • non-static component /[blogTopicPage]/[blogpage]/page
+[info]  • non-static component /[blogTopicPage]/page
+[info]  • non-static component /api/blogTopics/route
+[info]  • non-static component /api/blogs/[id]/route
+[info]  • non-static component /api/blogs/route
+[debug] [2025-12-10T08:20:22.755Z]  • non-static component /api/comments/[blogCommentId]/[commentId]/route
+[debug] [2025-12-10T08:20:22.755Z]  • non-static component /api/comments/[blogCommentId]/route
+[debug] [2025-12-10T08:20:22.755Z]  • non-static component /api/comments/route
+[debug] [2025-12-10T08:20:22.755Z]  • non-static component /api/drafts/route
+[debug] [2025-12-10T08:20:22.755Z]  • non-static component /api/featuredBlogs/route
+[debug] [2025-12-10T08:20:22.755Z]  • non-static component /api/milestones/route
+[debug] [2025-12-10T08:20:22.755Z]  • non-static component /api/subscribers/route
+[debug] [2025-12-10T08:20:22.755Z]  • non-static component /api/tags/route
+[debug] [2025-12-10T08:20:22.755Z]  • non-static component /dashboard/[createModify]/page
+[info]  • and 9 other reasons, use --debug to see more
+[info] 
+[debug] [2025-12-10T08:20:22.993Z] Checked if tokens are valid: true, expires at: 1765358393234
+[debug] [2025-12-10T08:20:22.993Z] Checked if tokens are valid: true, expires at: 1765358393234
+[debug] [2025-12-10T08:20:22.993Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted [none]
+[debug] [2025-12-10T08:20:26.786Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted 200
+[debug] [2025-12-10T08:20:26.786Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted {"name":"projects/my-life-uncharted/sites/my-life-uncharted","defaultUrl":"https://my-life-uncharted.web.app","appId":"1:913164628777:web:e80fdf57f47786ba093d38","type":"DEFAULT_SITE"}
+[warn] !  This integration expects Node version 16, 18, or 20. You're running version 24, problems may be encountered. 
