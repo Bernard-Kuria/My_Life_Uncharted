@@ -80,15 +80,15 @@ export default function CreateModifyBlog({
 
         {blogContent && <Draftify draftify={draftify} />}
 
-        <div className="grid md:flex gap-[20px] md:gap-[100px]">
+        <div className="grid md:flex gap-5 md:gap-[100px]">
           {/* Topic Selector */}
-          <div className="grid gap-[10px]">
+          <div className="grid gap-2.5">
             Select Topic{" "}
             <span className="text-sm text-red-500">
               {topicStatus === false && "*required!*"}
             </span>
             <select
-              className="border p-2 rounded-[10px]"
+              className="border p-2 rounded-2.5"
               name="topics"
               value={selectedTopic}
               required
@@ -107,18 +107,18 @@ export default function CreateModifyBlog({
           </div>
 
           {/* Tag Selector */}
-          <div className="grid gap-[10px]">
+          <div className="grid gap-2.5">
             Select Tag{" "}
             <span className="text-sm text-red-500">
               {tagStatus === false && "*atleast one tag is required!*"}
             </span>
-            <div className="flex gap-[5px] border p-1 rounded-[10px]">
+            <div className="flex gap-[5px] border p-1 rounded-2.5">
               {selectedTags &&
                 selectedTags.length > 0 &&
                 selectedTags.map((tag) => (
                   <div
                     key={tag}
-                    className="p-1 rounded-[10px] bg-[linear-gradient(45deg,var(--primary-blue)_0%,var(--background))]"
+                    className="p-1 rounded-2.5 bg-[linear-gradient(45deg,var(--primary-blue)_0%,var(--background))]"
                   >
                     {tag}
                   </div>

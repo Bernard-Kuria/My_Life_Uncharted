@@ -26,7 +26,7 @@ export default function Page({
   if (!loaded) return <Loading loading="Loading Blogs" />;
 
   return (
-    <div className="flex flex-col gap-[20px] w-full">
+    <div className="flex flex-col gap-5 w-full">
       {/* Background Image */}
       <div className="absolute w-screen left-0 h-[400px] lg:h-[calc(100vh-70px)]">
         {image &&
@@ -47,14 +47,14 @@ export default function Page({
       </div>
 
       <div className="page-layout">
-        <div className="grid gap-[20px]">
-          <div className="w-full h-[430px] lg:h-[400px] mt-[200px] lg:mt-[calc(100vh-270px)] p-[20px] lg:p-[40px] z-1 bg-(--primary-blue)/80">
+        <div className="grid gap-5">
+          <div className="w-full h-[430px] lg:h-[400px] mt-[200px] lg:mt-[calc(100vh-270px)] p-5 lg:p-10 z-1 bg-(--primary-blue)/80">
             {topicPage && <FeaturedBlog topic={topicPage?.title || ""} />}
           </div>
 
           <div>
             <div className="sub-title">Recent Posts</div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[20px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {targetBlogs &&
                 targetBlogs.map((blog) => (
                   <BlogCards
@@ -73,7 +73,7 @@ export default function Page({
 
       <div className="page-layout">
         <strong>Explore More Topics:</strong>
-        <div className="grid gap-[20px] grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {allTopics &&
             allTopics.map((b) => {
               const link = getLinkFromTopic(b.title);

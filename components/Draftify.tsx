@@ -51,7 +51,7 @@ export default function Draftify({ draftify }: DraftifyProps) {
   return (
     <>
       <BackGround gridDots={gridDots} />
-      <div className="flex flex-col md:gap-[10px] gap-[20px] w-full md:w-full min-h-screen h-fit border border-(--primary-blue) rounded-2xl p-2 md:p-5 bg-white">
+      <div className="flex flex-col md:gap-2.5 gap-5 w-full md:w-full min-h-screen h-fit border border-(--primary-blue) rounded-2xl p-2 md:p-5 bg-white">
         <ToolBar view={view} setView={setView} blocksData={blocksData} />
 
         {view === "editor" && (
@@ -62,7 +62,7 @@ export default function Draftify({ draftify }: DraftifyProps) {
               onSubmit={(e) => e.preventDefault()}
             >
               <motion.div
-                className="grid gap-[10px]"
+                className="grid gap-2.5"
                 variants={containerVariants}
                 animate="show"
                 exit="hidden"
@@ -110,7 +110,7 @@ export default function Draftify({ draftify }: DraftifyProps) {
 
         {view === "preview" && (
           <div
-            className="grid gap-[10px] border-t border-b border-(--primary-blue) rounded-2xl p-3 md:p-5"
+            className="grid gap-2.5 border-t border-b border-(--primary-blue) rounded-2xl p-3 md:p-5"
             onSubmit={(e) => e.preventDefault()}
           >
             <OutputBlock blocksData={blocksData} />

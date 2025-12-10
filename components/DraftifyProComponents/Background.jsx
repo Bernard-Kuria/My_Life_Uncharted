@@ -3,7 +3,7 @@ export default function BackGround({ gridDots }) {
     <div className="fixed top-0 left-0 w-full h-full -z-1">
       {gridDots.map((dot) => (
         <div
-          className="absolute w-[1px] h-[1px] bg-black"
+          className="absolute w-px h-px bg-black"
           data-x={dot.x}
           data-y={dot.y}
           key={dot.key}

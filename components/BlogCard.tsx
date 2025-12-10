@@ -51,21 +51,21 @@ export default function BlogCards({
             ) : null
           ) : null}
         </div>
-        <div className="grid gap-[10px] p-[20px]">
+        <div className="grid gap-2.5 p-5">
           <div className="h-[65px] overflow-hidden sub-title text-(--secondary-blue)">
             {title}
           </div>
-          <div className="flex justify-between border-t border-gray-600 detail-text pt-[10px]">
+          <div className="flex justify-between border-t border-gray-600 detail-text pt-2.5">
             <div>
               <FontAwesomeIcon className="icon-size" icon={["far", "eye"]} />
               {"  "}
               {views}
             </div>
-            <div className="flex gap-[10px] items-center">
+            <div className="flex gap-2.5 items-center">
               <FontAwesomeIcon className="icon-size" icon={["far", "heart"]} />{" "}
               {likes}
             </div>
-            <div className="flex gap-[10px] items-center">
+            <div className="flex gap-2.5 items-center">
               <FontAwesomeIcon
                 className="icon-size"
                 icon={["far", "message"]}

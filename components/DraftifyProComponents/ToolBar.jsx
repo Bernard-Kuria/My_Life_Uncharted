@@ -22,23 +22,23 @@ export default function ToolBar({ view, setView, blocksData }) {
   }, [copy]);
 
   return (
-    <div className="md:h-[40px]">
-      <div className="relative grid md:flex items-center text-[12px] italic gap-[10px]">
-        <div className="md:flex gap-[10px] items-center font-bold logo-text text-[20px]">
+    <div className="md:h-10">
+      <div className="relative grid md:flex items-center text-[12px] italic gap-2.5">
+        <div className="md:flex gap-2.5 items-center font-bold logo-text text-[20px]">
           DRAFTIFY PRO{" "}
           <div className="underline font-normal text-[12px]">
             Write. Create. Build your story block by block.
           </div>
         </div>
-        <div className="md:absolute right-0 flex items-center gap-[10px]">
+        <div className="md:absolute right-0 flex items-center gap-2.5">
           <button
-            className="border rounded-[10px] bg-(--secondary-blue) text-white hover:font-semibold hover:bg-(--primary-blue) p-1 cursor-pointer"
+            className="border rounded-2.5 bg-(--secondary-blue) text-white hover:font-semibold hover:bg-(--primary-blue) p-1 cursor-pointer"
             onClick={() => handleDownloadJSON(blocksData)}
           >
             Download JSON <FontAwesomeIcon icon={["fas", "download"]} />
           </button>
           <button
-            className="border rounded-[10px] bg-(--secondary-blue) text-white hover:font-semibold hover:bg-(--primary-blue) p-1 cursor-pointer"
+            className="border rounded-2.5 bg-(--secondary-blue) text-white hover:font-semibold hover:bg-(--primary-blue) p-1 cursor-pointer"
             onClick={() => exportBlocksToDocx(blocksData)}
           >
             Export .docx <FontAwesomeIcon icon={["fas", "download"]} />
@@ -55,7 +55,7 @@ export default function ToolBar({ view, setView, blocksData }) {
           </div>
           <div
             ref={themeModeBtn}
-            className="border w-[30px] h-[16px] rounded-[16px] cursor-pointer duration-300 flex items-center p-[0px]"
+            className="border w-[30px] h-4 rounded-4 cursor-pointer duration-300 flex items-center p-0"
             onClick={() => {
               setView((prev) => (prev === "editor" ? "preview" : "editor"));
               handleThemeBtnClick(
@@ -67,9 +67,9 @@ export default function ToolBar({ view, setView, blocksData }) {
           >
             <div
               ref={themeModeToggle}
-              className="w-[12px] h-[12px] rounded-[12px] bg-[#232323] duration-300 flex items-center leading-[0.5rem] justify-center translate-x-[1px]"
+              className="w-3 h-3 rounded-xl bg-[#232323] duration-300 flex items-center leading-2 justify-center translate-x-px"
             >
-              <div className="flex items-center h-full text-white -translate-y-[2px]">
+              <div className="flex items-center h-full text-white -translate-y-0.5">
                 {view === "editor" ? "e" : "p"}
               </div>
             </div>

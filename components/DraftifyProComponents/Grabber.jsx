@@ -4,7 +4,7 @@ export default function Grabber() {
       {[1, 2, 3].map((dot) => (
         <div
           key={dot}
-          className="w-1 h-1 rounded-[10px] bg-(--primary-blue) group-hover:bg-black self-center"
+          className="w-1 h-1 rounded-2.5 bg-(--primary-blue) group-hover:bg-black self-center"
         ></div>
       ))}
     </div>

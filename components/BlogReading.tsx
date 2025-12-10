@@ -28,13 +28,13 @@ export default function BlogArea({
   if (isMetaLoading && isContentLoading) return <div>Loading Blog...</div>;
 
   return (
-    <div className="flex flex-col gap-[20px] min-h-[1170px] h-fit py-[40px] px-[20px] lg:p-[100px] bg-white dark:bg-black blog-text">
+    <div className="flex flex-col gap-5 min-h-[1170px] h-fit py-10 px-5 lg:p-[100px] bg-white dark:bg-black blog-text">
       <div className="flex detail-text">
         <div className="flex-1 flex gap-[30px]">
           <div>{blog?.blogMeta.dateCreated}</div>
           <div>{blog?.blogMeta.minsRead} min read</div>
         </div>
-        <div className="flex gap-[10px] items-center cursor-pointer">
+        <div className="flex gap-2.5 items-center cursor-pointer">
           <Tooltip text="Copy link to share">
             <FontAwesomeIcon
               className="icon-size"
@@ -63,12 +63,12 @@ export default function BlogArea({
           </div>
         </div>
         <div className="flex-1"></div>
-        <div className="flex gap-[10px] items-center">
+        <div className="flex gap-2.5 items-center">
           <strong>{blog?.blogMeta.likes}</strong>
           <FontAwesomeIcon
             className={`icon-size cursor-pointer ${
               bounce ? "like-bounce" : ""
-            } ${liked ? "text-(--secondary-blue)" : "text-(--foreground)"}`}
+            } ${liked ? "text-(--secondary-blue)" : "text-foreground"}`}
             icon={["far", "heart"]}
             onClick={() => {
               triggerBounce();

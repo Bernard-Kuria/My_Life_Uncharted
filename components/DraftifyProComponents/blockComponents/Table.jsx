@@ -93,7 +93,7 @@ export function RenderHoverTable({ handleClick, block }) {
         onClick={() => setTable((prev) => !prev)}
       />
       {table ? (
-        <div className="absolute -translate-x-[40px] translate-y-[10px] bg-white flex flex-col gap-1 w-40 h-43.5 border border-gray-600 rounded-[10px] cursor-pointer p-2">
+        <div className="absolute -translate-x-10 translate-y-2.5 bg-white flex flex-col gap-1 w-40 h-43.5 border border-gray-600 rounded-2.5 cursor-pointer p-2">
           {[...Array(size)].map((_, rowIndex) => (
             <div key={rowIndex} className="flex gap-1">
               {[...Array(size)].map((_, colIndex) => (

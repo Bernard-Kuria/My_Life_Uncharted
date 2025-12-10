@@ -18,8 +18,8 @@ export default function Milestones({
   }, [topic]);
 
   return (
-    <div className="w-full grid justify-around min-h-[250px] text-white bg-(--primary-blue) py-[20px]">
-      <div className="page-layout grid md:flex gap-[40px] justify-between h-full">
+    <div className="w-full grid justify-around min-h-[250px] text-white bg-(--primary-blue) py-5">
+      <div className="page-layout grid md:flex gap-10 justify-between h-full">
         {!milestones ? (
           <div>Loading Milestones</div>
         ) : (

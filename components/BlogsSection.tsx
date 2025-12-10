@@ -33,7 +33,7 @@ export default function BlogsSection() {
           <div key={topic.id}>
             <div className="sub-title">{topic.title}</div>
 
-            <div className="grid gap-[20px]">
+            <div className="grid gap-5">
               {!blogsByTopic ? (
                 <Loading loading="loading meta data" />
               ) : (
@@ -71,17 +71,17 @@ export default function BlogsSection() {
           <div key={topic.id}>
             <div className="sub-title">{topic.title}</div>
 
-            <div className="grid gap-[20px]">
+            <div className="grid gap-5">
               {(draftsByTopic[topic.title] || []).map((blog) => (
                 <div
                   key={blog.id}
-                  className="w-full flex justify-between gap-[10px] items-center"
+                  className="w-full flex justify-between gap-2.5 items-center"
                 >
                   <DraftList blog={blog} />
                   {deletingBlogStatus ? (
-                    <div className="relative w-[40px] h-[40px] rounded-full">
+                    <div className="relative w-10 h-10 rounded-full">
                       <div className="absolute border-4 border-red rounded-full w-full h-full border-l-transparent animate-[rotate_1s_cubic-bezier(0.15,0.61,0.58,0.4)_infinite]"></div>
-                      <div className="absolute border-4 border-red rounded-full w-[20px] h-[20px] translate-x-[17.5px] translate-y-[17.5px] border-t-transparent animate-[rotate-reverse_1s_cubic-bezier(0.15,0.61,0.58,0.4)_infinite]"></div>
+                      <div className="absolute border-4 border-red rounded-full w-5 h-5 translate-x-[17.5px] translate-y-[17.5px] border-t-transparent animate-[rotate-reverse_1s_cubic-bezier(0.15,0.61,0.58,0.4)_infinite]"></div>
                     </div>
                   ) : (
                     <FontAwesomeIcon

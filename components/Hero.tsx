@@ -58,7 +58,7 @@ export default function Hero({
   ];
 
   return (
-    <div className="relative w-full rounded-[10px] border-(--border-color) flex items-center flex-col-reverse lg:flex-row lg:h-[450px] mt-[40px] p-[10px] lg:p-[30px] border-[5px]">
+    <div className="relative w-full rounded-2.5 border-(--border-color) flex items-center flex-col-reverse lg:flex-row lg:h-[450px] mt-10 p-2.5 lg:p-[30px] border-[5px]">
       <div className="merriweather-font text-[20px] lg:text-[80px] flex-1 font-semibold leading-tight">
         Miles, <span className="text-(--primary-blue)">Mindsets</span> & Making
         Stuff
@@ -108,7 +108,7 @@ export default function Hero({
       ) : null}
 
       {window.innerWidth >= 1024 ? (
-        <div className="absolute top-[360px] left-[-70px] p-[4px]">
+        <div className="absolute top-[360px] left-[-70px] p-1">
           <div className="relative p-[3px]">
             <BorderLines />
             <div className="relative w-[292px] h-[143px] overflow-hidden">
@@ -140,13 +140,13 @@ export default function Hero({
           ))
         : null}
 
-      <div className="absolute h-auto left-[70%] top-[-4px] flex">
+      <div className="absolute h-auto left-[70%] top-1 flex">
         {[1, 2, 3, 4, 5].map((_, i) => (
           <LineBreaks key={i} />
         ))}
       </div>
 
-      <div className="absolute h-auto left-[30%] bottom-[-4px] flex">
+      <div className="absolute h-auto left-[30%] bottom-1 flex">
         {[1, 2, 3, 4, 5].map((_, i) => (
           <LineBreaks key={i} />
         ))}
@@ -159,12 +159,12 @@ function BorderLines() {
   return (
     <>
       <div className="absolute top-0 left-0">
-        <div className="w-[20px] h-[1px] bg-(--secondary-blue)"></div>
-        <div className="w-[20px] h-[1px] bg-(--secondary-blue) rotate-90 -translate-x-[10px] translate-y-[9px]"></div>
+        <div className="w-5 h-px bg-(--secondary-blue)"></div>
+        <div className="w-5 h-px bg-(--secondary-blue) rotate-90 -translate-x-2.5 translate-y-[9px]"></div>
       </div>
       <div className="absolute bottom-0 right-0">
-        <div className="w-[20px] h-[1px] bg-(--secondary-blue) translate-y-[1px]"></div>
-        <div className="w-[20px] h-[1px] bg-(--secondary-blue) rotate-90 translate-x-[10px] -translate-y-[10px]"></div>
+        <div className="w-5 h-px bg-(--secondary-blue) translate-y-px"></div>
+        <div className="w-5 h-px bg-(--secondary-blue) rotate-90 translate-x-2.5 -translate-y-2.5"></div>
       </div>
     </>
   );
@@ -173,7 +173,7 @@ function BorderLines() {
 function LineBreaks() {
   return (
     <div
-      className={`bg-(--background)`}
+      className={`bg-background`}
       style={{
         width: `20px`,
         height: `6px`,

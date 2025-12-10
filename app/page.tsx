@@ -29,7 +29,7 @@ export default function Home() {
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div className="page-layout flex flex-col justify-center lg:mt-[30px] gap-[20px] lg:gap-[100px]">
+    <div className="page-layout flex flex-col justify-center lg:mt-[30px] gap-5 lg:gap-[100px]">
       <Hero
         mainImg={mainImg}
         secondaryTopImg={secondaryTopImg}
@@ -41,7 +41,7 @@ export default function Home() {
         } text-(--secondary-blue) section-title hover:border-(--primary-blue)`}
       >
         {location === "/" ? "Browse" : "Other"} Topics
-        <div className="grid lg:grid-cols-2 gap-[20px]">
+        <div className="grid lg:grid-cols-2 gap-5">
           {topics.map((b) => {
             const link = getLinkFromTopic(b.title);
             return (

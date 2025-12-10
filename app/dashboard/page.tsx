@@ -21,7 +21,7 @@ export default function Dashboard() {
   return (
     <div className="flex flex-col justify-center">
       <div className="page-layout flex flex-col gap-[30px]">
-        <div className="text-center lg:text-start grid gap-[10px] lg:flex lg:gap-[50px] items-center px-1">
+        <div className="text-center lg:text-start grid gap-2.5 lg:flex lg:gap-[50px] items-center px-1">
           <div className="flex-1 lg:flex lg:gap-[50px] items-center">
             <SectionTitle
               title={section === "blogs" ? "My Blogs" : "Settings"}
@@ -37,14 +37,14 @@ export default function Dashboard() {
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-[10px]">
+        <div className="grid grid-cols-2 gap-2.5">
           <button
             onClick={handleSetSection}
             className={`${
               section === "blogs"
                 ? "bg-(--primary-blue) dark:bg-(--secondary-blue) text-(--secondary-blue)  dark:text-(--primary-blue)"
                 : "text-(--primary-blue) dark:text-(--secondary-blue)"
-            } border border-(--secondary-blue) rounded-[10px] p-2 h-fit cursor-pointer`}
+            } border border-(--secondary-blue) rounded-2.5 p-2 h-fit cursor-pointer`}
           >
             Blogs
           </button>
@@ -55,7 +55,7 @@ export default function Dashboard() {
               section === "settings"
                 ? "bg-(--primary-blue) dark:bg-(--secondary-blue) text-(--secondary-blue)  dark:text-(--primary-blue)"
                 : "text-(--primary-blue) dark:text-(--secondary-blue)"
-            } border border-(--secondary-blue) rounded-[10px] p-2 h-fit cursor-pointer`}
+            } border border-(--secondary-blue) rounded-2.5 p-2 h-fit cursor-pointer`}
           >
             Other settings
           </button>

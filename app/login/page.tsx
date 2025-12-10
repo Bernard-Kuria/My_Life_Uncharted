@@ -67,7 +67,7 @@ export default function Login() {
       </button>
       <div
         ref={loginContainerRef}
-        className="grid gap-[10px] w-full md:w-[400px] min-h-[300px] border border-(--border-color) rounded-2xl bg-white/50 p-5 text-(--primary-blue)"
+        className="grid gap-2.5 w-full md:w-[400px] min-h-[300px] border border-(--border-color) rounded-2xl bg-white/50 p-5 text-(--primary-blue)"
         onClick={handleContainerClick}
         onKeyDown={(e) => {
           if (e.key === "Enter") {

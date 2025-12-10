@@ -76,7 +76,7 @@ export default function Header() {
   }));
 
   return (
-    <div className="w-full min-h-[40px] h-auto flex items-center flex-col-reverse justify-center md:flex-row md:mt-[10px] md:mb-[20px] gap-[10px] px-[10px] md:pr-0">
+    <div className="w-full min-h-10 h-auto flex items-center flex-col-reverse justify-center md:flex-row md:mt-2.5 md:mb-5 gap-2.5 px-2.5 md:pr-0">
       <div className="flex-1 text-center md:text-start">
         <button
           onClick={() => {
@@ -102,7 +102,7 @@ export default function Header() {
         </div>
       </div>
 
-      <ul className="flex items-center justify-around right-0 top-0 w-full md:w-[410px] mx-[10px] md:mx-0 h-[40px] text-[12px] text-center md:border-t border-b border-l border-r md:border-r-0 border-(--border-color) md:rounded-tl-[10px] rounded-br-[10px] md:rounded-br-[0px] rounded-bl-[10px]">
+      <ul className="flex items-center justify-around right-0 top-0 w-full md:w-[410px] mx-2.5 md:mx-0 h-10 text-[12px] text-center md:border-t border-b border-l border-r md:border-r-0 border-(--border-color) md:rounded-tl-2.5 rounded-br-2.5 md:rounded-br-none rounded-bl-2.5">
         <li>
           <Link href={"/"}>Home</Link>
         </li>
@@ -115,13 +115,13 @@ export default function Header() {
           Topics
           <ul
             className={
-              "absolute min-w-[150px] grid gap-1 pt-[12px] -translate-x-[30px] z-1"
+              "absolute min-w-[150px] grid gap-1 pt-3 -translate-x-[30px] z-1"
             }
           >
             {topicsClick &&
               topics.map((topic, index) => (
                 <Link href={"/" + topic.link} key={index}>
-                  <li className="border border-(--border-color) rounded-[5px] p-1 bg-(--background) hover:bg-(--secondary-blue) hover:text-black">
+                  <li className="border border-(--border-color) rounded-[5px] p-1 bg-background hover:bg-(--secondary-blue) hover:text-black">
                     {topic.name}
                   </li>
                 </Link>
@@ -139,12 +139,12 @@ export default function Header() {
         </li>
         <li
           ref={themeModeBtn}
-          className="border w-[30px] h-[16px] rounded-[16px] cursor-pointer duration-300"
+          className="border w-[30px] h-4 rounded-2xl cursor-pointer duration-300"
           onClick={handleThemeBtnClick}
         >
           <div
             ref={themeModeToggle}
-            className="w-[12.78px] h-[12.78px] rounded-[12.78px] bg-(--foreground)  translate-y-[.5px] duration-300"
+            className="w-[12.78px] h-[12.78px] rounded-[12.78px] bg-foreground  translate-y-[.5px] duration-300"
           ></div>
         </li>
       </ul>

@@ -40,10 +40,10 @@ export default function FeaturedBlog({ topic }: { topic: string }) {
       href={`/${
         getLinkFromTopic(featuredBlog.blogMeta.topic) + "/" + featuredBlog.id
       }`}
-      className="h-full grid grid-rows-[30px_1fr] gap-[10px] lg:gap-[20px] text-white"
+      className="h-full grid grid-rows-[30px_1fr] gap-2.5 lg:gap-5 text-white"
     >
       <div className="flex items-center">Featured Blog</div>
-      <div className="grid lg:flex gap-[10px] lg:gap-[30px] grid-rows-[200px_1fr]">
+      <div className="grid lg:flex gap-2.5 lg:gap-[30px] grid-rows-[200px_1fr]">
         <div className="relative lg:w-[50%]">
           {image && (
             <Image
@@ -66,7 +66,7 @@ export default function FeaturedBlog({ topic }: { topic: string }) {
             <div className="blog-title">{featuredBlog.blogMeta.title}</div>
             <div className="blog-font">{featuredBlog.blogMeta.subtitle}</div>
           </div>
-          <div className="flex gap-1 detail-text border-t border-white pt-[10px]">
+          <div className="flex gap-1 detail-text border-t border-white pt-2.5">
             <div className="">{featuredBlog.blogMeta.views} views</div>
             <div className="">{featuredBlog.blogMeta.comments} comments</div>
             <div className="">{featuredBlog.blogMeta.likes} likes</div>
