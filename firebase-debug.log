@@ -1,57 +1,54 @@
-[debug] [2025-12-09T12:58:05.745Z] ----------------------------------------------------------------------
-[debug] [2025-12-09T12:58:05.747Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\HomePC\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
-[debug] [2025-12-09T12:58:05.748Z] CLI Version:   14.27.0
-[debug] [2025-12-09T12:58:05.748Z] Platform:      win32
-[debug] [2025-12-09T12:58:05.748Z] Node Version:  v24.11.0
-[debug] [2025-12-09T12:58:05.748Z] Time:          Tue Dec 09 2025 15:58:05 GMT+0300 (East Africa Time)
-[debug] [2025-12-09T12:58:05.748Z] ----------------------------------------------------------------------
+[debug] [2025-12-10T08:19:53.479Z] ----------------------------------------------------------------------
+[debug] [2025-12-10T08:19:53.482Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\HomePC\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2025-12-10T08:19:53.482Z] CLI Version:   14.27.0
+[debug] [2025-12-10T08:19:53.482Z] Platform:      win32
+[debug] [2025-12-10T08:19:53.482Z] Node Version:  v24.11.0
+[debug] [2025-12-10T08:19:53.483Z] Time:          Wed Dec 10 2025 11:19:53 GMT+0300 (East Africa Time)
+[debug] [2025-12-10T08:19:53.483Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2025-12-09T12:58:05.750Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
-[debug] [2025-12-09T12:58:05.924Z] Object "/storage" in "firebase.json" has unknown property: {"additionalProperty":"bucket"}
-[debug] [2025-12-09T12:58:05.924Z] Field "/storage" in "firebase.json" is possibly invalid: must be array
-[debug] [2025-12-09T12:58:05.924Z] Field "/storage" in "firebase.json" is possibly invalid: must match a schema in anyOf
-[debug] [2025-12-09T12:58:05.928Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2025-12-09T12:58:05.928Z] > authorizing via signed-in user (bernard.i.kuria@gmail.com)
-[debug] [2025-12-09T12:58:05.928Z] [iam] checking project my-life-uncharted for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create",null]
-[debug] [2025-12-09T12:58:05.929Z] Checked if tokens are valid: false, expires at: 1765285455442
-[debug] [2025-12-09T12:58:05.929Z] Checked if tokens are valid: false, expires at: 1765285455442
-[debug] [2025-12-09T12:58:05.929Z] > refreshing access token with scopes: []
-[debug] [2025-12-09T12:58:05.930Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
-[debug] [2025-12-09T12:58:05.930Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-12-09T12:58:06.252Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
-[debug] [2025-12-09T12:58:06.252Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-12-09T12:58:06.266Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions [none]
-[debug] [2025-12-09T12:58:06.266Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions x-goog-quota-user=projects/my-life-uncharted
-[debug] [2025-12-09T12:58:06.266Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create",null]}
-[debug] [2025-12-09T12:58:06.408Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
-[debug] [2025-12-09T12:58:06.408Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
-[debug] [2025-12-09T12:58:08.096Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions 200
-[debug] [2025-12-09T12:58:08.097Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
-[debug] [2025-12-09T12:58:08.097Z] [iam] error while checking permissions, command may fail: Authorization failed. This account is missing the following required permissions on project my-life-uncharted:
+[debug] [2025-12-10T08:19:53.605Z] Object "/storage" in "firebase.json" has unknown property: {"additionalProperty":"bucket"}
+[debug] [2025-12-10T08:19:53.605Z] Field "/storage" in "firebase.json" is possibly invalid: must be array
+[debug] [2025-12-10T08:19:53.605Z] Field "/storage" in "firebase.json" is possibly invalid: must match a schema in anyOf
+[debug] [2025-12-10T08:19:53.608Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-12-10T08:19:53.608Z] > authorizing via signed-in user (bernard.i.kuria@gmail.com)
+[debug] [2025-12-10T08:19:53.609Z] [iam] checking project my-life-uncharted for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create",null]
+[debug] [2025-12-10T08:19:53.609Z] Checked if tokens are valid: false, expires at: 1765288685252
+[debug] [2025-12-10T08:19:53.609Z] Checked if tokens are valid: false, expires at: 1765288685252
+[debug] [2025-12-10T08:19:53.610Z] > refreshing access token with scopes: []
+[debug] [2025-12-10T08:19:53.611Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-12-10T08:19:53.611Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-12-10T08:19:54.234Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-12-10T08:19:54.234Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-12-10T08:19:54.243Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions [none]
+[debug] [2025-12-10T08:19:54.243Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions x-goog-quota-user=projects/my-life-uncharted
+[debug] [2025-12-10T08:19:54.243Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create",null]}
+[debug] [2025-12-10T08:19:56.738Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions 200
+[debug] [2025-12-10T08:19:56.738Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/my-life-uncharted:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2025-12-10T08:19:56.738Z] [iam] error while checking permissions, command may fail: Authorization failed. This account is missing the following required permissions on project my-life-uncharted:
 
   
-[debug] [2025-12-09T12:58:08.097Z] Checked if tokens are valid: true, expires at: 1765288685252
-[debug] [2025-12-09T12:58:08.097Z] Checked if tokens are valid: true, expires at: 1765288685252
-[debug] [2025-12-09T12:58:08.097Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/my-life-uncharted/serviceAccounts/my-life-uncharted@appspot.gserviceaccount.com:testIamPermissions [none]
-[debug] [2025-12-09T12:58:08.097Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/my-life-uncharted/serviceAccounts/my-life-uncharted@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
-[debug] [2025-12-09T12:58:09.951Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/my-life-uncharted/serviceAccounts/my-life-uncharted@appspot.gserviceaccount.com:testIamPermissions 200
-[debug] [2025-12-09T12:58:09.951Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/my-life-uncharted/serviceAccounts/my-life-uncharted@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
-[debug] [2025-12-09T12:58:09.952Z] Checked if tokens are valid: true, expires at: 1765288685252
-[debug] [2025-12-09T12:58:09.952Z] Checked if tokens are valid: true, expires at: 1765288685252
-[debug] [2025-12-09T12:58:09.952Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/my-life-uncharted [none]
-[debug] [2025-12-09T12:58:10.413Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/my-life-uncharted 200
-[debug] [2025-12-09T12:58:10.413Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/my-life-uncharted {"projectId":"my-life-uncharted","projectNumber":"913164628777","displayName":"My Life Uncharted","name":"projects/my-life-uncharted","resources":{"hostingSite":"my-life-uncharted"},"state":"ACTIVE","etag":"1_e593c9b7-a4b8-42cc-9f08-ee1e44d60950"}
-[debug] [2025-12-09T12:58:12.069Z] defaultcredentials: writing to file C:\Users\HomePC\AppData\Roaming\firebase\bernard_i.kuria_gmail.com_application_default_credentials.json
-[debug] [2025-12-09T12:58:12.070Z] Checked if tokens are valid: true, expires at: 1765288685252
-[debug] [2025-12-09T12:58:12.070Z] Checked if tokens are valid: true, expires at: 1765288685252
-[debug] [2025-12-09T12:58:12.071Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites pageToken=&pageSize=10
-[debug] [2025-12-09T12:58:14.062Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites 200
-[debug] [2025-12-09T12:58:14.062Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites {"sites":[{"name":"projects/my-life-uncharted/sites/my-life-uncharted","defaultUrl":"https://my-life-uncharted.web.app","appId":"1:913164628777:web:e80fdf57f47786ba093d38","type":"DEFAULT_SITE"}]}
-[debug] [2025-12-09T12:58:14.063Z] Checked if tokens are valid: true, expires at: 1765288685252
-[debug] [2025-12-09T12:58:14.063Z] Checked if tokens are valid: true, expires at: 1765288685252
-[debug] [2025-12-09T12:58:14.063Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:913164628777:web:e80fdf57f47786ba093d38/config [none]
-[debug] [2025-12-09T12:58:14.729Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:913164628777:web:e80fdf57f47786ba093d38/config 200
-[debug] [2025-12-09T12:58:14.729Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:913164628777:web:e80fdf57f47786ba093d38/config {"projectId":"my-life-uncharted","appId":"1:913164628777:web:e80fdf57f47786ba093d38","storageBucket":"my-life-uncharted.firebasestorage.app","apiKey":"AIzaSyDdOf3yF2LlmKBLKe0Eqn7hIfErBs-R7Xc","authDomain":"my-life-uncharted.firebaseapp.com","messagingSenderId":"913164628777","measurementId":"G-SNKCNCZMYL","projectNumber":"913164628777","version":"2"}
+[debug] [2025-12-10T08:19:56.739Z] Checked if tokens are valid: true, expires at: 1765358393234
+[debug] [2025-12-10T08:19:56.739Z] Checked if tokens are valid: true, expires at: 1765358393234
+[debug] [2025-12-10T08:19:56.739Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/my-life-uncharted/serviceAccounts/my-life-uncharted@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2025-12-10T08:19:56.739Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/my-life-uncharted/serviceAccounts/my-life-uncharted@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-12-10T08:19:58.200Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/my-life-uncharted/serviceAccounts/my-life-uncharted@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2025-12-10T08:19:58.200Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/my-life-uncharted/serviceAccounts/my-life-uncharted@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-12-10T08:19:58.201Z] Checked if tokens are valid: true, expires at: 1765358393234
+[debug] [2025-12-10T08:19:58.201Z] Checked if tokens are valid: true, expires at: 1765358393234
+[debug] [2025-12-10T08:19:58.201Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/my-life-uncharted [none]
+[debug] [2025-12-10T08:19:59.099Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/my-life-uncharted 200
+[debug] [2025-12-10T08:19:59.099Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/my-life-uncharted {"projectId":"my-life-uncharted","projectNumber":"913164628777","displayName":"My Life Uncharted","name":"projects/my-life-uncharted","resources":{"hostingSite":"my-life-uncharted"},"state":"ACTIVE","etag":"1_e593c9b7-a4b8-42cc-9f08-ee1e44d60950"}
+[debug] [2025-12-10T08:20:01.496Z] defaultcredentials: writing to file C:\Users\HomePC\AppData\Roaming\firebase\bernard_i.kuria_gmail.com_application_default_credentials.json
+[debug] [2025-12-10T08:20:01.497Z] Checked if tokens are valid: true, expires at: 1765358393234
+[debug] [2025-12-10T08:20:01.497Z] Checked if tokens are valid: true, expires at: 1765358393234
+[debug] [2025-12-10T08:20:01.497Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites pageToken=&pageSize=10
+[debug] [2025-12-10T08:20:03.753Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites 200
+[debug] [2025-12-10T08:20:03.754Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites {"sites":[{"name":"projects/my-life-uncharted/sites/my-life-uncharted","defaultUrl":"https://my-life-uncharted.web.app","appId":"1:913164628777:web:e80fdf57f47786ba093d38","type":"DEFAULT_SITE"}]}
+[debug] [2025-12-10T08:20:03.754Z] Checked if tokens are valid: true, expires at: 1765358393234
+[debug] [2025-12-10T08:20:03.754Z] Checked if tokens are valid: true, expires at: 1765358393234
+[debug] [2025-12-10T08:20:03.754Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:913164628777:web:e80fdf57f47786ba093d38/config [none]
+[debug] [2025-12-10T08:20:04.326Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:913164628777:web:e80fdf57f47786ba093d38/config 200
+[debug] [2025-12-10T08:20:04.326Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:913164628777:web:e80fdf57f47786ba093d38/config {"projectId":"my-life-uncharted","appId":"1:913164628777:web:e80fdf57f47786ba093d38","storageBucket":"my-life-uncharted.firebasestorage.app","apiKey":"AIzaSyDdOf3yF2LlmKBLKe0Eqn7hIfErBs-R7Xc","authDomain":"my-life-uncharted.firebaseapp.com","messagingSenderId":"913164628777","measurementId":"G-SNKCNCZMYL","projectNumber":"913164628777","version":"2"}
 [info] 
    Thank you for trying our early preview of Next.js support on Firebase Hosting.
    During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
@@ -63,18 +60,14 @@
 
    We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
 
-[debug] [2025-12-09T12:58:18.513Z] Checked if tokens are valid: true, expires at: 1765288685252
-[debug] [2025-12-09T12:58:18.513Z] Checked if tokens are valid: true, expires at: 1765288685252
-[debug] [2025-12-09T12:58:18.513Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted [none]
-[debug] [2025-12-09T12:58:18.895Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted 200
-[debug] [2025-12-09T12:58:18.895Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted {"name":"projects/my-life-uncharted/sites/my-life-uncharted","defaultUrl":"https://my-life-uncharted.web.app","appId":"1:913164628777:web:e80fdf57f47786ba093d38","type":"DEFAULT_SITE"}
+[debug] [2025-12-10T08:20:08.106Z] Checked if tokens are valid: true, expires at: 1765358393234
+[debug] [2025-12-10T08:20:08.106Z] Checked if tokens are valid: true, expires at: 1765358393234
+[debug] [2025-12-10T08:20:08.106Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted [none]
+[debug] [2025-12-10T08:20:08.460Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted 200
+[debug] [2025-12-10T08:20:08.460Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted {"name":"projects/my-life-uncharted/sites/my-life-uncharted","defaultUrl":"https://my-life-uncharted.web.app","appId":"1:913164628777:web:e80fdf57f47786ba093d38","type":"DEFAULT_SITE"}
 [info]    ▲ Next.js 16.0.7 (Turbopack)
 
 [info] 
 
 [info]    Creating an optimized production build ...
-
-[info]  ✓ Compiled successfully in 3.9s
-
-[info]    Running TypeScript ...
 
