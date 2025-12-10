@@ -142,3 +142,211 @@
 [debug] [2025-12-10T08:20:26.786Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted 200
 [debug] [2025-12-10T08:20:26.786Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/my-life-uncharted/sites/my-life-uncharted {"name":"projects/my-life-uncharted/sites/my-life-uncharted","defaultUrl":"https://my-life-uncharted.web.app","appId":"1:913164628777:web:e80fdf57f47786ba093d38","type":"DEFAULT_SITE"}
 [warn] !  This integration expects Node version 16, 18, or 20. You're running version 24, problems may be encountered. 
+[debug] [2025-12-10T08:20:58.972Z] [web frameworks] effective firebase.json:  {
+  "hosting": [
+    {
+      "source": ".",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "frameworksBackend": {
+        "region": "us-central1"
+      },
+      "rewrites": [
+        {
+          "source": "/api/**",
+          "function": {
+            "functionId": "nextServer"
+          }
+        },
+        {
+          "source": "/_next/image",
+          "function": {
+            "functionId": "nextServer"
+          }
+        },
+        {
+          "source": "**",
+          "function": {
+            "functionId": "nextServer"
+          }
+        },
+        {
+          "source": "/**",
+          "function": {
+            "functionId": "ssrmylifeuncharted",
+            "region": "us-central1",
+            "pinTag": true
+          }
+        }
+      ],
+      "site": "my-life-uncharted",
+      "redirects": [],
+      "headers": [
+        {
+          "source": "/_global-error",
+          "headers": [
+            {
+              "key": "x-nextjs-stale-time",
+              "value": "300"
+            },
+            {
+              "key": "x-nextjs-prerender",
+              "value": "1"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/_global-error/layout,_N_T_/_global-error/page,_N_T_/_global-error"
+            }
+          ]
+        },
+        {
+          "source": "/_not-found",
+          "headers": [
+            {
+              "key": "x-nextjs-stale-time",
+              "value": "300"
+            },
+            {
+              "key": "x-nextjs-prerender",
+              "value": "1"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/_not-found/layout,_N_T_/_not-found/page,_N_T_/_not-found"
+            }
+          ]
+        },
+        {
+          "source": "/contact",
+          "headers": [
+            {
+              "key": "x-nextjs-stale-time",
+              "value": "300"
+            },
+            {
+              "key": "x-nextjs-prerender",
+              "value": "1"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/contact/layout,_N_T_/contact/page,_N_T_/contact"
+            }
+          ]
+        },
+        {
+          "source": "/dashboard",
+          "headers": [
+            {
+              "key": "x-nextjs-stale-time",
+              "value": "300"
+            },
+            {
+              "key": "x-nextjs-prerender",
+              "value": "1"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/dashboard/layout,_N_T_/dashboard/page,_N_T_/dashboard"
+            }
+          ]
+        },
+        {
+          "source": "/login",
+          "headers": [
+            {
+              "key": "x-nextjs-stale-time",
+              "value": "300"
+            },
+            {
+              "key": "x-nextjs-prerender",
+              "value": "1"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/login/layout,_N_T_/login/page,_N_T_/login"
+            }
+          ]
+        },
+        {
+          "source": "/favicon.ico",
+          "headers": [
+            {
+              "key": "cache-control",
+              "value": "public, max-age=0, must-revalidate"
+            },
+            {
+              "key": "content-type",
+              "value": "image/x-icon"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/favicon.ico/layout,_N_T_/favicon.ico/route,_N_T_/favicon.ico"
+            }
+          ]
+        },
+        {
+          "source": "/subscription",
+          "headers": [
+            {
+              "key": "x-nextjs-stale-time",
+              "value": "300"
+            },
+            {
+              "key": "x-nextjs-prerender",
+              "value": "1"
+            },
+            {
+              "key": "x-next-cache-tags",
+              "value": "_N_T_/layout,_N_T_/subscription/layout,_N_T_/subscription/page,_N_T_/subscription"
+            }
+          ]
+        },
+        {
+          "source": "/**/*.[jt]s",
+          "headers": [
+            {
+              "key": "Set-Cookie",
+              "value": "__FIREBASE_DEFAULTS__=eyJjb25maWciOnsicHJvamVjdElkIjoibXktbGlmZS11bmNoYXJ0ZWQiLCJhcHBJZCI6IjE6OTEzMTY0NjI4Nzc3OndlYjplODBmZGY1N2Y0Nzc4NmJhMDkzZDM4Iiwic3RvcmFnZUJ1Y2tldCI6Im15LWxpZmUtdW5jaGFydGVkLmZpcmViYXNlc3RvcmFnZS5hcHAiLCJhcGlLZXkiOiJBSXphU3lEZE9mM3lGMkxsbUtCTEtlMEVxbjdoSWZFckJzLVI3WGMiLCJhdXRoRG9tYWluIjoibXktbGlmZS11bmNoYXJ0ZWQuZmlyZWJhc2VhcHAuY29tIiwibWVzc2FnaW5nU2VuZGVySWQiOiI5MTMxNjQ2Mjg3NzciLCJtZWFzdXJlbWVudElkIjoiRy1TTktDTkNaTVlMIiwicHJvamVjdE51bWJlciI6IjkxMzE2NDYyODc3NyIsInZlcnNpb24iOiIyIn0sIl9hdXRoVG9rZW5TeW5jVVJMIjoiL19fc2Vzc2lvbiJ9; SameSite=Strict; Expires=2027-11-04T19:00:58.972Z; Path=/;"
+            }
+          ]
+        }
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false,
+      "public": ".firebase\\my-life-uncharted\\hosting",
+      "webFramework": "next_ssr"
+    }
+  ],
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        ".runtimeconfig.json"
+      ]
+    },
+    {
+      "source": ".firebase\\my-life-uncharted\\functions",
+      "codebase": "firebase-frameworks-my-life-uncharted"
+    }
+  ]
+}
+[info] 
+[info] === Deploying to 'my-life-uncharted'...
+[info] 
+[info] i  deploying storage, firestore, functions, hosting, apphosting 
+[info] i  storage: ensuring required API firebasestorage.googleapis.com is enabled... 
+[debug] [2025-12-10T08:20:58.974Z] Checked if tokens are valid: true, expires at: 1765358393234
+[debug] [2025-12-10T08:20:58.974Z] Checked if tokens are valid: true, expires at: 1765358393234
+[debug] [2025-12-10T08:20:58.974Z] >>> [apiv2][query] GET https://firebasestorage.googleapis.com/v1alpha/projects/my-life-uncharted/defaultBucket [none]
