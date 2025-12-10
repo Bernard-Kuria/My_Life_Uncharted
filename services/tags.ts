@@ -2,7 +2,7 @@ import { API_BASE } from "@utils/constants";
 
 export async function getAllTags() {
   try {
-    const res = await fetch(`${API_BASE}/api/tags`, {
+    const res = await fetch(`/api/tags`, {
       cache: "no-store",
     });
     if (!res.ok)

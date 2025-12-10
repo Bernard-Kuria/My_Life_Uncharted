@@ -97,7 +97,7 @@ export default function MediaUploader() {
         </div>
 
         {blogTopics && (
-          <div className="border border-(--secondary-blue) p-2 rounded-2.5 flex flex-col gap-2.5 h-[400px]">
+          <div className="border border-(--secondary-blue) p-2 rounded-[10px] flex flex-col gap-2.5 h-[400px]">
             <div className="grid">
               Select the image to replace:
               <select
@@ -175,7 +175,7 @@ export default function MediaUploader() {
                 onDragOver={(e) => dragHandler(e)}
                 onDragLeave={(e) => dragLeaveHandler(e, outputRef)}
                 onMouseLeave={(e) => dragLeaveHandler(e, outputRef)}
-                className="flex-1 border-2 border-(--secondary-blue) border-dashed rounded-2.5 text-(--secondary-blue) w-full grid items-center"
+                className="flex-1 border-2 border-(--secondary-blue) border-dashed rounded-[10px] text-(--secondary-blue) w-full grid items-center"
               >
                 <input
                   type="file"
@@ -188,7 +188,7 @@ export default function MediaUploader() {
                 />
                 <label
                   htmlFor="file"
-                  className="flex flex-col justify-center items-center text-center gap-5 btn-theme-color px-4 py-2 rounded-2.5 cursor-pointer"
+                  className="flex flex-col justify-center items-center text-center gap-5 btn-theme-color px-4 py-2 rounded-[10px] cursor-pointer"
                 >
                   <div className="border rounded-[50%] flex justify-center items-center w-[60px] h-[60px] text-[20px] cursor-pointer">
                     <FontAwesomeIcon icon={["fas", "arrow-up-from-bracket"]} />
@@ -237,14 +237,14 @@ export default function MediaUploader() {
       {/* modifying adding topic section */}
       <div className="flex flex-col gap-2.5">
         <strong>Add, remove or modify topics</strong>
-        <div className="flex flex-col gap-2.5 border border-(--secondary-blue) rounded-2.5 p-2">
+        <div className="flex flex-col gap-2.5 border border-(--secondary-blue) rounded-[10px] p-2">
           <div>{`Select "modify existing topic" or "new topic" topic`}</div>
           {modifyTopicStatus && (
             <div className="text-(--primary-blue)">{modifyTopicStatus}</div>
           )}
           <div className="grid md:flex gap-2.5 w-full">
             <button
-              className={`border rounded-2.5 p-2 w-full ${
+              className={`border rounded-[10px] p-2 w-full ${
                 topicType === "modify"
                   ? "bg-(--primary-blue) text-(--secondary-blue) border-(--primary-blue)"
                   : "border-(--secondary-blue) text-(--primary-blue)"
@@ -254,7 +254,7 @@ export default function MediaUploader() {
               Modify existing topic
             </button>
             <button
-              className={`border rounded-2.5 p-2 w-full ${
+              className={`border rounded-[10px] p-2 w-full ${
                 topicType === "new"
                   ? "bg-(--secondary-blue) text-(--primary-blue) border-(--secondary-blue)"
                   : "border-(--secondary-blue) text-(--secondary-blue)"
@@ -264,7 +264,7 @@ export default function MediaUploader() {
               New topic
             </button>
             <button
-              className={`border rounded-2.5 p-2 w-full ${
+              className={`border rounded-[10px] p-2 w-full ${
                 topicType === "delete"
                   ? "bg-red-500 text-white border-red-500"
                   : "border-(--secondary-blue) text-red-500"
@@ -299,7 +299,7 @@ export default function MediaUploader() {
           {(topicType === "modify" || topicType === "new") && (
             <input
               type="text"
-              className="p-1 w-full border border-(--secondary-blue) rounded-2.5"
+              className="p-1 w-full border border-(--secondary-blue) rounded-[10px]"
               placeholder="new topic name"
               value={newTopic}
               onChange={(e) => setNewTopic(e.target.value)}
@@ -309,7 +309,7 @@ export default function MediaUploader() {
           <div className="flex gap-2.5 w-full">
             {(topicType === "modify" || topicType === "new") && (
               <button
-                className="border rounded-2.5 p-2 h-fit cursor-pointer w-full text-(--primary-blue)"
+                className="border rounded-[10px] p-2 h-fit cursor-pointer w-full text-(--primary-blue)"
                 onClick={handleTopicUpdate}
               >
                 {topicType === "modify" ? "Update" : "Create"} topic
@@ -317,7 +317,7 @@ export default function MediaUploader() {
             )}
             {topicType === "delete" && (
               <button
-                className="border rounded-2.5 p-2 h-fit cursor-pointer w-full text-red-500"
+                className="border rounded-[10px] p-2 h-fit cursor-pointer w-full text-red-500"
                 onClick={handleTopicRemove}
               >
                 Remove topic
@@ -330,7 +330,7 @@ export default function MediaUploader() {
       {/* Modifying and creating milestiones */}
       <div className="flex flex-col gap-2.5">
         <strong>Modify milestones</strong>
-        <div className="flex flex-col gap-2.5 border border-(--secondary-blue) rounded-2.5 p-2">
+        <div className="flex flex-col gap-2.5 border border-(--secondary-blue) rounded-[10px] p-2">
           <select
             className="border border-(--secondary-blue) w-full p-1"
             onChange={(e) => {

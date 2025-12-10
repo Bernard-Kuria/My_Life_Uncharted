@@ -4,7 +4,7 @@ import { Subscriber } from "@lib/types/types";
 
 export async function getSubscribers() {
   try {
-    const res = await fetch(`${API_BASE}/api/subscribers`, {
+    const res = await fetch(`/api/subscribers`, {
       cache: "no-store",
     });
     if (!res.ok) throw new Error(`Failed to fetch subscribers: ${res.status}`);
@@ -18,7 +18,7 @@ export async function getSubscribers() {
 
 export async function addSubscriber(data: { email: string; topics: string[] }) {
   try {
-    const res = await fetch(`${API_BASE}/api/subscribers`, {
+    const res = await fetch(`/api/subscribers`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -34,7 +34,7 @@ export async function addSubscriber(data: { email: string; topics: string[] }) {
 
 export async function updateSubscriber(data: Subscriber) {
   try {
-    const res = await fetch(`${API_BASE}/api/subscribers`, {
+    const res = await fetch(`/api/subscribers`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -50,7 +50,7 @@ export async function updateSubscriber(data: Subscriber) {
 
 export async function deleteSubscriber(email: string) {
   try {
-    const res = await fetch(`${API_BASE}/api/subscribers`, {
+    const res = await fetch(`/api/subscribers`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(email),

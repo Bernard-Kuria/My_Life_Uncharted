@@ -7,7 +7,7 @@ export async function getAllDrafts(filters?: { id?: string; topic?: string }) {
   if (filters?.id) params.append("id", filters.id);
   if (filters?.topic) params.append("topic", filters.topic);
 
-  const res = await fetch(`${API_BASE}/api/drafts?${params.toString()}`, {
+  const res = await fetch(`/api/drafts?${params.toString()}`, {
     cache: "no-store",
   });
 
@@ -17,7 +17,7 @@ export async function getAllDrafts(filters?: { id?: string; topic?: string }) {
 
 export async function getDraftMetaById(id: string) {
   try {
-    const res = await fetch(`${API_BASE}/api/drafts?id=${id}`, {
+    const res = await fetch(`/api/drafts?id=${id}`, {
       cache: "no-store",
     });
     if (!res.ok) throw new Error(`Failed to fetch drafts: ${res.status}`);

@@ -6,7 +6,7 @@ export async function getAllBlogs(filters?: { topic?: string }) {
 
   if (filters?.topic) params.append("topic", filters.topic);
 
-  const res = await fetch(`${API_BASE}/api/blogs?${params.toString()}`, {
+  const res = await fetch(`/api/blogs?${params.toString()}`, {
     cache: "no-store",
   });
 
@@ -19,7 +19,7 @@ export async function getAllBlogs(filters?: { topic?: string }) {
 
 export async function getBlogMetaById(id: string) {
   try {
-    const res = await fetch(`${API_BASE}/api/blogs?id=${id}`, {
+    const res = await fetch(`/api/blogs?id=${id}`, {
       cache: "no-store",
     });
     if (!res.ok)

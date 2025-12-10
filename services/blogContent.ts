@@ -3,7 +3,7 @@ import { API_BASE } from "@utils/constants";
 
 export async function getAllBlogsContent() {
   try {
-    const res = await fetch(`${API_BASE}/api/blogs/all`, {
+    const res = await fetch(`/api/blogs/all`, {
       cache: "no-store",
     });
     if (!res.ok) throw new Error(`Failed to fetch blogs: ${res.status}`);
@@ -17,7 +17,7 @@ export async function getAllBlogsContent() {
 
 export async function getBlogContentById(id: string) {
   try {
-    const res = await fetch(`${API_BASE}/api/blogs/${id}`, {
+    const res = await fetch(`/api/blogs/${id}`, {
       cache: "no-store",
     });
     if (!res.ok) throw new Error(`Failed to fetch blogs: ${res.status}`);

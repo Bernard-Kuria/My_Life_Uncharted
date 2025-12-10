@@ -10,12 +10,9 @@ export async function getFeaturedBlogs(filters?: {
     if (filters?.id) params.append("id", filters.id);
     if (filters?.topic) params.append("topic", filters.topic);
 
-    const res = await fetch(
-      `${API_BASE}/api/featuredBlogs?${params.toString()}`,
-      {
-        cache: "no-store",
-      }
-    );
+    const res = await fetch(`/api/featuredBlogs?${params.toString()}`, {
+      cache: "no-store",
+    });
 
     if (!res.ok)
       throw new Error(`Failed to fetch featured blogs: ${res.status}`);

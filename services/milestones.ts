@@ -4,9 +4,7 @@ import { API_BASE } from "@utils/constants";
 export async function getAllMilestones(topic?: string) {
   try {
     const res = await fetch(
-      `${API_BASE}/api/milestones?topic=${
-        topic ? encodeURIComponent(topic) : ""
-      }`,
+      `/api/milestones?topic=${topic ? encodeURIComponent(topic) : ""}`,
       {
         cache: "no-store",
       }
@@ -26,7 +24,7 @@ export async function addMilestones(data: {
   milestones: Milestone[];
 }) {
   try {
-    const res = await fetch(`${API_BASE}/api/milestones`, {
+    const res = await fetch(`/api/milestones`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -42,7 +40,7 @@ export async function addMilestones(data: {
 
 export async function updateMilestone(data: Milestones) {
   try {
-    const res = await fetch(`${API_BASE}/api/milestones`, {
+    const res = await fetch(`/api/milestones`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -58,7 +56,7 @@ export async function updateMilestone(data: Milestones) {
 
 export async function deleteMilestones(topic: string) {
   try {
-    const res = await fetch(`${API_BASE}/api/milestones`, {
+    const res = await fetch(`/api/milestones`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(topic),

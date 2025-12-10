@@ -102,7 +102,7 @@ export default function Header() {
         </div>
       </div>
 
-      <ul className="flex items-center justify-around right-0 top-0 w-full md:w-[410px] mx-2.5 md:mx-0 h-10 text-[12px] text-center md:border-t border-b border-l border-r md:border-r-0 border-(--border-color) md:rounded-tl-2.5 rounded-br-2.5 md:rounded-br-none rounded-bl-2.5">
+      <ul className="flex items-center justify-around right-0 top-0 w-full md:w-[410px] mx-2.5 md:mx-0 h-10 text-[12px] text-center md:border-t border-b border-l border-r md:border-r-0 border-(--border-color) md:rounded-tl-[10px] rounded-br-[10px] md:rounded-br-none rounded-bl-[10px]">
         <li>
           <Link href={"/"}>Home</Link>
         </li>

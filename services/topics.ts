@@ -3,7 +3,7 @@ import { API_BASE } from "@utils/constants";
 
 export async function getAllTopics() {
   try {
-    const res = await fetch(`${API_BASE}/api/blogTopics`, {
+    const res = await fetch(`/api/blogTopics`, {
       cache: "no-store",
     });
     if (!res.ok) throw new Error(`Failed to fetch topics: ${res.status}`);
@@ -17,7 +17,7 @@ export async function getAllTopics() {
 
 export async function addTopic(title: string) {
   try {
-    const res = await fetch(`${API_BASE}/api/blogTopics`, {
+    const res = await fetch(`/api/blogTopics`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -41,7 +41,7 @@ export async function updateTopic(data: {
   title?: string;
 }) {
   try {
-    const res = await fetch(`${API_BASE}/api/blogTopics`, {
+    const res = await fetch(`/api/blogTopics`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -57,7 +57,7 @@ export async function updateTopic(data: {
 
 export async function deleteTopic(id: string) {
   try {
-    const res = await fetch(`${API_BASE}/api/blogTopics`, {
+    const res = await fetch(`/api/blogTopics`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(id),

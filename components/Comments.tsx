@@ -109,10 +109,10 @@ function EditComment({
   };
 
   return (
-    <div className="flex gap-2.5">
-      <div className="w-3.5 h-full bg-(--secondary-blue)" />
+    <div className="flex gap-2">
+      <div className="rounded-[10px] w-3.5 h-full bg-(--secondary-blue)" />
 
-      <div className="bg-white rounded-2.5 dark:bg-black w-full p-2 flex gap-2.5 items-center">
+      <div className="bg-white rounded-[10px] dark:bg-black w-full p-2 flex gap-2.5 items-center">
         <input
           type="text"
           placeholder="Add comment here"
@@ -122,7 +122,7 @@ function EditComment({
         />
 
         <button
-          className="text-(--primary-blue) cursor-pointer rounded-2.5 p-1 h-7 bg-(--secondary-blue) hover:bg-(--primary-blue) hover:text-(--secondary-blue)"
+          className="text-(--primary-blue) cursor-pointer rounded-[10px] p-1 h-7 bg-(--secondary-blue) hover:bg-(--primary-blue) hover:text-(--secondary-blue)"
           onClick={submit}
         >
           {commentAddStatus ? "Adding Comment..." : "Add comment"}{" "}
@@ -185,9 +185,9 @@ function Comment({
   };
 
   return (
-    <div className="flex gap-2.5">
-      <div className="w-3.5 h-full bg-(--secondary-blue)"></div>
-      <div className="grid gap-2.5 bg-white rounded-2.5 dark:bg-black w-full p-2">
+    <div className="flex gap-2">
+      <div className="rounded-[10px] w-3.5 h-full bg-(--secondary-blue)"></div>
+      <div className="rounded-[10px] grid gap-2.5 bg-white rounded-2.5 dark:bg-black w-full p-2">
         <div>{comment.comment}</div>
         <div className="flex gap-2.5 items-center">
           {comment.likes}

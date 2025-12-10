@@ -58,7 +58,7 @@ export default function Hero({
   ];
 
   return (
-    <div className="relative w-full rounded-2.5 border-(--border-color) flex items-center flex-col-reverse lg:flex-row lg:h-[450px] mt-10 p-2.5 lg:p-[30px] border-[5px]">
+    <div className="relative w-full rounded-[10px] border-(--border-color) flex items-center flex-col-reverse lg:flex-row lg:h-[450px] mt-10 p-2.5 lg:p-[30px] border-[5px]">
       <div className="merriweather-font text-[20px] lg:text-[80px] flex-1 font-semibold leading-tight">
         Miles, <span className="text-(--primary-blue)">Mindsets</span> & Making
         Stuff

@@ -3,7 +3,7 @@ import { API_BASE } from "@utils/constants";
 
 export async function getAllComments() {
   try {
-    const res = await fetch(`${API_BASE}/api/comments`, {
+    const res = await fetch(`/api/comments`, {
       cache: "no-store",
     });
     if (!res.ok)
@@ -18,7 +18,7 @@ export async function getAllComments() {
 
 export const getSpecificBlogComments = async (id: string) => {
   try {
-    const res = await fetch(`${API_BASE}/api/comments/${id}`, {
+    const res = await fetch(`/api/comments/${id}`, {
       cache: "no-store",
     });
 
@@ -35,7 +35,7 @@ export const getSpecificBlogComments = async (id: string) => {
 
 export const getSpecificBlog = async (blog: string, id: string) => {
   try {
-    const res = await fetch(`${API_BASE}/api/comments/${blog}/${id}`, {
+    const res = await fetch(`/api/comments/${blog}/${id}`, {
       cache: "no-store",
     });
 
@@ -52,7 +52,7 @@ export const getSpecificBlog = async (blog: string, id: string) => {
 
 export async function addComment(data: Comment) {
   try {
-    const res = await fetch(`${API_BASE}/api/comments`, {
+    const res = await fetch(`/api/comments`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -72,7 +72,7 @@ export async function updateComment(data: {
   likes?: number;
 }) {
   try {
-    const res = await fetch(`${API_BASE}/api/comments`, {
+    const res = await fetch(`/api/comments`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -88,7 +88,7 @@ export async function updateComment(data: {
 
 export async function deleteBlogMeta(id: string) {
   try {
-    const res = await fetch(`${API_BASE}/api/comments`, {
+    const res = await fetch(`/api/comments`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(id),
