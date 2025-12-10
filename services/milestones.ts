@@ -1,5 +1,4 @@
 import { Milestone, Milestones } from "@lib/types/types";
-import { API_BASE } from "@utils/constants";
 
 export async function getAllMilestones(topic?: string) {
   try {

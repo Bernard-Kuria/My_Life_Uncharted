@@ -1,5 +1,3 @@
-import { API_BASE } from "@utils/constants";
-
 import { Subscriber } from "@lib/types/types";
 
 export async function getSubscribers() {
@@ -58,7 +56,7 @@ export async function deleteSubscriber(email: string) {
 
     if (!res.ok) throw new Error(`No email found`);
     return await res.json();
-  } catch (err) {
+  } catch {
     throw "Error disconnecting; either email doesn't exist or network problems.";
   }
 }

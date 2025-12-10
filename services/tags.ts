@@ -1,5 +1,3 @@
-import { API_BASE } from "@utils/constants";
-
 export async function getAllTags() {
   try {
     const res = await fetch(`/api/tags`, {

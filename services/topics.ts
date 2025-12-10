@@ -1,5 +1,4 @@
 import { getCurrentDateFormatted } from "@lib/utils";
-import { API_BASE } from "@utils/constants";
 
 export async function getAllTopics() {
   try {

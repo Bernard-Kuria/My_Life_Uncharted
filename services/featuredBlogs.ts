@@ -1,5 +1,3 @@
-import { API_BASE } from "@utils/constants";
-
 export async function getFeaturedBlogs(filters?: {
   id?: string;
   topic?: string;

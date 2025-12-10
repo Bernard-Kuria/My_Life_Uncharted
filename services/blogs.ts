@@ -1,5 +1,4 @@
 import { Blog, BlogMetaParams } from "@lib/types/types";
-import { API_BASE } from "@utils/constants";
 
 export async function getAllBlogs(filters?: { topic?: string }) {
   const params = new URLSearchParams();
@@ -9,11 +8,6 @@ export async function getAllBlogs(filters?: { topic?: string }) {
   const res = await fetch(`/api/blogs?${params.toString()}`, {
     cache: "no-store",
   });
-
-  // if (!res.ok) {
-  //   const message = await res.text(); // or res.json()
-  //   return message;
-  // }
   return res.json();
 }
 

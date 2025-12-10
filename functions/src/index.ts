@@ -1,12 +1,64 @@
-import * as functions from "firebase-functions/v2";
-
+import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import sharp from "sharp";
+import { tmpdir } from "os";
+import { join, basename } from "path";
+import { promises as fs } from "fs";
 
 import { BlogType, ContactType } from "../utils/types";
+import { onObjectFinalized, StorageEvent } from "firebase-functions/storage";
 
 admin.initializeApp();
+
 const EMAIL_COLLECTION = "email";
-const BASE_URL = "https://my-life-uncharted.vercel.app";
+// const BASE_URL = "https://my-life-uncharted.web.app";
+
+admin.initializeApp();
+
+// Cloud Function: triggers whenever a new object is finalized (uploaded) in storage
+export const compressImages = onObjectFinalized(async (event: StorageEvent) => {
+  // Extract actual metadata about the uploaded file
+  const object = event.data;
+  if (!object) return null; // Safety check: exit if no metadata
+
+  const filePath = object.name; // full path of uploaded file in the bucket
+  const contentType = object.contentType || ""; // MIME type (e.g., image/jpeg)
+
+  // Skip if no path or not an image
+  if (!filePath || !contentType.startsWith("image/")) return null;
+
+  // Get a reference to the bucket where the file was uploaded
+  const bucket = admin.storage().bucket(object.bucket);
+
+  // Temporary local path to download the file for processing
+  const tempFilePath = join(tmpdir(), basename(filePath));
+
+  // Download the uploaded file from storage to the temp path
+  await bucket.file(filePath).download({ destination: tempFilePath });
+
+  // Initialize sharp with the downloaded file
+  const image = sharp(tempFilePath);
+
+  // Compress the image based on its type
+  if (contentType.includes("jpeg") || contentType.includes("jpg")) {
+    // JPEG compression: set quality to 70%
+    await image.jpeg({ quality: 70 }).toFile(tempFilePath);
+  } else if (contentType.includes("png")) {
+    // PNG compression: set compression level (0–9)
+    await image.png({ compressionLevel: 8 }).toFile(tempFilePath);
+  }
+
+  // Upload the compressed image back to the **same location**, overwriting the original
+  await bucket.upload(tempFilePath, { destination: filePath });
+
+  // Remove the temporary file from the local system
+  await fs.unlink(tempFilePath);
+
+  // Log success for debugging
+  console.log(`Compressed and replaced: ${filePath}`);
+
+  return null; // Cloud Functions v2 requires a return value (null here)
+});
 
 export const notifySubscribersOnNewBlog = functions.firestore.onDocumentCreated(
   "blogs/{blogId}",
@@ -46,7 +98,7 @@ export const notifySubscribersOnNewBlog = functions.firestore.onDocumentCreated(
       if (emails.length === 0) return;
 
       // 3. Compose link
-      const blogLink = `${BASE_URL}/${topic}/${id}`;
+      const blogLink = `${window.location.origin}/${topic}/${id}`;
 
       // 4. Add a document to the Trigger Email collection
       await admin
