@@ -16,12 +16,7 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "frameworksBackend": {
       "region": "us-central1"
-    },
-    "rewrites": [
-      { "source": "/api/**", "function": "nextServer" },
-      { "source": "/_next/image", "function": "nextServer" },
-      { "source": "**", "function": "nextServer" }
-    ]
+    }
   },
   "firestore": {
     "database": "(default)",
