@@ -44,7 +44,7 @@ export default function Dashboard() {
               section === "blogs"
                 ? "bg-(--primary-blue) dark:bg-(--secondary-blue) text-(--secondary-blue)  dark:text-(--primary-blue)"
                 : "text-(--primary-blue) dark:text-(--secondary-blue)"
-            } border border-(--secondary-blue) rounded-2.5 p-2 h-fit cursor-pointer`}
+            } border border-(--secondary-blue) rounded-[10px] p-2 h-fit cursor-pointer`}
           >
             Blogs
           </button>
@@ -55,7 +55,7 @@ export default function Dashboard() {
               section === "settings"
                 ? "bg-(--primary-blue) dark:bg-(--secondary-blue) text-(--secondary-blue)  dark:text-(--primary-blue)"
                 : "text-(--primary-blue) dark:text-(--secondary-blue)"
-            } border border-(--secondary-blue) rounded-2.5 p-2 h-fit cursor-pointer`}
+            } border border-(--secondary-blue) rounded-[10px] p-2 h-fit cursor-pointer`}
           >
             Other settings
           </button>

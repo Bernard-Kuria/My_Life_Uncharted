@@ -26,6 +26,7 @@ export default function MediaEditor({ block, onChange }) {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
   const [url, setUrl] = useState();
+  const [compressing, setCompressing] = useState(false);
   const [uploadedFileName, setUploadedFileName] = useState(null); // track last uploaded
   const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -118,6 +119,11 @@ export default function MediaEditor({ block, onChange }) {
 
   return (
     <div className="border w-full h-[250px] relative">
+      {compressing && (
+        <div className="absolute top-2 right-2 text-sm text-blue-600">
+          Processing...
+        </div>
+      )}
       {loading && (
         <div className="absolute top-2 right-2 text-sm text-blue-600">
           Uploading...
@@ -191,7 +197,7 @@ export default function MediaEditor({ block, onChange }) {
       ) : (
         <div
           ref={output}
-          onDrop={(e) => dropHandler(e, setFile, setFileName)}
+          onDrop={(e) => dropHandler(e, setFile, setFileName, setCompressing)}
           onDragOver={(e) => dragHandler(e, output)}
           onDragLeave={(e) => dragLeaveHandler(e, output)}
           onMouseLeave={(e) => dragLeaveHandler(e, output)}
@@ -201,7 +207,9 @@ export default function MediaEditor({ block, onChange }) {
             type="file"
             id="file"
             className="hidden"
-            onChange={(e) => onFileChange(e, setFile, setFileName)}
+            onChange={(e) =>
+              onFileChange(e, setFile, setFileName, setCompressing)
+            }
           />
           <label
             htmlFor="file"

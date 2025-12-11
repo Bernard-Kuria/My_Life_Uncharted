@@ -69,7 +69,7 @@ export default function Contact() {
         <SectionTitle title="Let's talk" />
         <div>
           Feel free to follow me on my socials :)
-          <div className="flex items-center justify-around h-10 border-[3px] border-(--secondary-blue) rounded-2.5">
+          <div className="flex items-center justify-around h-10 border-[3px] border-(--secondary-blue) rounded-[10px]">
             {socials.map((social, idx) => (
               <Link key={idx} href={social.socialHandle}>
                 <span
@@ -94,7 +94,7 @@ export default function Contact() {
             <textarea
               ref={thoughtRef}
               placeholder="share your thoughts..."
-              className="px-4 py-2 border border-(--secondary-blue) w-full h-[200px] rounded-2.5 text-foreground"
+              className="px-4 py-2 border border-(--secondary-blue) w-full h-[200px] rounded-[10px] text-foreground"
             />
             <div>Your email:</div>
             <div className="flex items-center gap-2.5">
@@ -103,7 +103,7 @@ export default function Contact() {
                 type="email"
                 placeholder="example@test.com"
                 required
-                className="flex-1 border border-(--secondary-blue) w-full rounded-2.5 px-4 py-2 text-foreground"
+                className="flex-1 border border-(--secondary-blue) w-full rounded-[10px] px-4 py-2 text-foreground"
               />
               <div className="w-[50px] h-full">
                 <button type="submit" className="w-full button">

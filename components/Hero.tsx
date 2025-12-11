@@ -140,13 +140,13 @@ export default function Hero({
           ))
         : null}
 
-      <div className="absolute h-auto left-[70%] top-1 flex">
+      <div className="absolute h-auto left-[70%] -top-1 flex">
         {[1, 2, 3, 4, 5].map((_, i) => (
           <LineBreaks key={i} />
         ))}
       </div>
 
-      <div className="absolute h-auto left-[30%] bottom-1 flex">
+      <div className="absolute h-auto left-[30%] -bottom-1 flex">
         {[1, 2, 3, 4, 5].map((_, i) => (
           <LineBreaks key={i} />
         ))}

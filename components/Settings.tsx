@@ -25,6 +25,8 @@ export default function MediaUploader() {
     fileName,
     url,
     uploading,
+    compressing,
+    setCompressing,
     deleting,
     error,
     setError,
@@ -68,6 +70,9 @@ export default function MediaUploader() {
       <div className="flex flex-col gap-2.5">
         <div className="flex gap-2.5 items-center">
           <strong>Change main page and blog topic images</strong>
+          {compressing && (
+            <div className="text-sm text-(--primary-blue)">Processing...</div>
+          )}
           {uploading && (
             <div className="text-sm text-(--primary-blue)">Uploading...</div>
           )}
@@ -132,7 +137,7 @@ export default function MediaUploader() {
                     src={
                       file instanceof File
                         ? URL.createObjectURL(file)
-                        : url || ""
+                        : url ?? ""
                     }
                     alt="preview"
                     fill
@@ -148,7 +153,7 @@ export default function MediaUploader() {
                       src={
                         file instanceof File
                           ? URL.createObjectURL(file)
-                          : url || ""
+                          : url ?? ""
                       }
                       type="video/mp4"
                     />
@@ -170,7 +175,7 @@ export default function MediaUploader() {
                 ref={outputRef}
                 onDrop={(e) => {
                   setError(null);
-                  dropHandler(e, setFile, setFileName);
+                  dropHandler(e, setFile, setFileName, setCompressing);
                 }}
                 onDragOver={(e) => dragHandler(e)}
                 onDragLeave={(e) => dragLeaveHandler(e, outputRef)}
@@ -183,7 +188,7 @@ export default function MediaUploader() {
                   className="hidden"
                   onChange={(e) => {
                     setError(null);
-                    onFileChange(e, setFile, setFileName);
+                    onFileChange(e, setFile, setFileName, setCompressing);
                   }}
                 />
                 <label

@@ -141,6 +141,7 @@ export async function uploadBlogTopicImage(
 ): Promise<string | null> {
   try {
     const fileName = (file as File).name;
+    console.log(fileName);
     const storageRef = ref(storage, `blogTopicImg/${fileName}`);
     await uploadBytes(storageRef, file);
     return fileName;

@@ -66,6 +66,7 @@ export const useSettings = () => {
   const [modifyTopicStatus, setModifyTopicStatus] = useState<string>("");
   const [refreshTrigger, setRefreshTrigger] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [compressing, setCompressing] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [mergingTopicAndImage, setMergingTopicAndImage] = useState(false);
@@ -310,7 +311,7 @@ export const useSettings = () => {
       }
 
       //   Resetting the image and image section inputs
-      setImageName("");
+      setImageName("select image");
       setFile(null);
       setUrl(null);
       setFileName("");
@@ -368,6 +369,8 @@ export const useSettings = () => {
     fileName,
     url,
     uploading,
+    compressing,
+    setCompressing,
     deleting,
     type,
     error,

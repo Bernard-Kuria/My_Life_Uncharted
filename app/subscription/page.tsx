@@ -32,7 +32,7 @@ export default function Subscription() {
       >
         <SectionTitle title="Stay in touch" />
 
-        <div className="border border-(--secondary-blue) rounded-2.5 p-2 md:p-5 grid gap-5">
+        <div className="border border-(--secondary-blue) rounded-[10px] p-2 md:p-5 grid gap-5">
           <div className="grid gap-5">
             {`Get connected so you don't miss a content on the topics you love.`}
 
@@ -43,7 +43,7 @@ export default function Subscription() {
                 value={connectEmail}
                 placeholder="example@test.com"
                 required
-                className="border border-(--secondary-blue) w-full rounded-2.5 px-4 py-2 text-foreground"
+                className="border border-(--secondary-blue) w-full rounded-[10px] px-4 py-2 text-foreground"
                 onChange={(e) => setConnectEmail(e.target.value)}
               />
             </div>
@@ -99,7 +99,7 @@ export default function Subscription() {
             type="email"
             placeholder="example@test.com"
             value={disconnectEmail}
-            className="border border-(--secondary-blue) w-full rounded-2.5 px-4 py-2 text-foreground"
+            className="border border-(--secondary-blue) w-full rounded-[10px] px-4 py-2 text-foreground"
             onChange={(e) => setDisconnectEmail(e.target.value)}
           />
         </div>

@@ -88,7 +88,7 @@ export default function CreateModifyBlog({
               {topicStatus === false && "*required!*"}
             </span>
             <select
-              className="border p-2 rounded-2.5"
+              className="border p-2 rounded-[10px]"
               name="topics"
               value={selectedTopic}
               required
@@ -112,13 +112,13 @@ export default function CreateModifyBlog({
             <span className="text-sm text-red-500">
               {tagStatus === false && "*atleast one tag is required!*"}
             </span>
-            <div className="flex gap-[5px] border p-1 rounded-2.5">
+            <div className="flex gap-[5px] border p-1 rounded-[10px]">
               {selectedTags &&
                 selectedTags.length > 0 &&
                 selectedTags.map((tag) => (
                   <div
                     key={tag}
-                    className="p-1 rounded-2.5 bg-[linear-gradient(45deg,var(--primary-blue)_0%,var(--background))]"
+                    className="p-1 rounded-[10px] bg-[linear-gradient(45deg,var(--primary-blue)_0%,var(--background))]"
                   >
                     {tag}
                   </div>
