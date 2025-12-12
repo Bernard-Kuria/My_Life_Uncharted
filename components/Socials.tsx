@@ -10,16 +10,16 @@ import Link from "@node_modules/next/link";
 const socials = [
   { socialHandle: "https://bernard-webfolio.web.app", icon: ["fas", "globe"] },
   {
-    socialHandle: "https://bernard-webfolio.web.app",
+    socialHandle: "https://www.instagram.com/bena_isaiah/",
     icon: ["fab", "instagram"],
   },
-  { socialHandle: "https://bernard-webfolio.web.app", icon: ["fab", "github"] },
+  { socialHandle: "https://github.com/Bernard-Kuria", icon: ["fab", "github"] },
   {
-    socialHandle: "https://bernard-webfolio.web.app",
+    socialHandle: "https://x.com/BernardKur55605",
     icon: ["fab", "x-twitter"],
   },
   {
-    socialHandle: "https://bernard-webfolio.web.app",
+    socialHandle: "https://www.facebook.com/bernard.kuria.161786",
     icon: ["fab", "facebook-f"],
   },
 ];

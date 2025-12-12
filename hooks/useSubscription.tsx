@@ -3,8 +3,13 @@
 import { useState, useEffect, useCallback, FormEvent } from "react";
 
 import { getAllTopics } from "@services/topics";
-import { BlogTopicsType } from "@lib/types/types";
-import { addSubscriber, deleteSubscriber } from "@services/subscribers";
+import { BlogTopicsType, Subscriber, Subscribers } from "@lib/types/types";
+import {
+  addSubscriber,
+  deleteSubscriber,
+  getSubscribers,
+  updateSubscriber,
+} from "@services/subscribers";
 
 interface TopicStatus {
   [key: string]: boolean;
@@ -58,12 +63,40 @@ export default function useSubscription() {
     }));
   }, []);
 
-  // 5. Submit
+  // 5. Add subscriber
   const handleConnect = async (e: FormEvent) => {
     e.preventDefault();
     setConnecting(true);
 
     try {
+      const subscribers: Subscribers = await getSubscribers();
+
+      // Find if the subscriber exists
+      const subscriberExists = subscribers.find(
+        (subscriber) => subscriber.email === connectEmail
+      );
+
+      if (subscriberExists) {
+        const subscriberTopicsExists =
+          subscriberExists.topics.length === selectedTopics.length;
+
+        // If new topics have been selected, update topics
+        if (subscriberTopicsExists) {
+          setNotification("You're are already connected!");
+          setNotificationStatus("info");
+          return;
+        } else {
+          await updateSubscriber({
+            id: subscriberExists.id,
+            email: connectEmail,
+            topics: selectedTopics,
+          });
+          setNotification("Topics updated for this email");
+          setNotificationStatus("ok");
+          return;
+        }
+      }
+
       await addSubscriber({
         email: connectEmail,
         topics: selectedTopics,
@@ -85,6 +118,19 @@ export default function useSubscription() {
     setDisconnecting(true);
 
     try {
+      const subscribers: Subscribers = await getSubscribers();
+
+      // Find if the subscriber exists
+      const subscriberExists = subscribers.find(
+        (subscriber) => subscriber.email === disconnectEmail
+      );
+
+      if (!subscriberExists) {
+        setNotification("You are already disconnected!");
+        setNotificationStatus("info");
+        return;
+      }
+
       await deleteSubscriber(disconnectEmail);
       setNotification("disconnected successfully!");
       setNotificationStatus("ok");
