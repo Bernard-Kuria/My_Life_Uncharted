@@ -58,7 +58,7 @@ async function getSingleImageFromFolder(folderName: string) {
     return await getDownloadURL(fileRef);
   } catch (err) {
     console.error(`Error fetching image from folder ${folderName}:`, err);
-    return null;
+    throw new Error(`Error fetching image from folde: ${folderName}`);
   }
 }
 
@@ -69,7 +69,7 @@ async function getSingleImageNameFromFolder(folderName: string) {
 
     if (items.items.length === 0) {
       console.error(`No files found in folder: ${folderName}`);
-      return null;
+      throw new Error(`No files found in folder: ${folderName}`);
     }
 
     // Take the first (and only) image inside the folder
@@ -77,7 +77,7 @@ async function getSingleImageNameFromFolder(folderName: string) {
     return fileRef.name;
   } catch (err) {
     console.error(`Error fetching image from folder ${folderName}:`, err);
-    return null;
+    throw new Error(`Error fetching image from folder ${folderName}`);
   }
 }
 

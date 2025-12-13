@@ -28,7 +28,7 @@ export default function Dashboard() {
             />
             {section === "blogs" ? (
               <button className="button">
-                <Link href={"/dashboard/new"}>create new blog</Link>
+                <Link href={"/dashboard/new"}>Create new blog</Link>
               </button>
             ) : null}
           </div>

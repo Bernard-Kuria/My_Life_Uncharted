@@ -25,7 +25,7 @@ export default function Options({ handleClick }) {
       {blocks.map((block) => (
         <Tooltip key={block.id} text={`${block.type}`}>
           <div
-            className={`flex items-center gap-2.5 h-10 p-2 border-2 border-gray-600 cursor-pointer rounded-2.5 text-sm md:text-md ${
+            className={`flex items-center gap-2.5 h-10 p-2 border-2 border-gray-600 cursor-pointer rounded-[10px] text-sm md:text-md ${
               activeId === block.id ? "text-(--theme-color)" : "text-gray-600"
             }`}
           >

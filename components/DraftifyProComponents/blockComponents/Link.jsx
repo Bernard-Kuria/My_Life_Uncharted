@@ -3,6 +3,7 @@ export default function LinkEditor({ block, onChange }) {
     <input
       type="text"
       placeholder="Enter link..."
+      autoFocus
       className="border-b link"
       value={block.content}
       onChange={(e) => onChange(block.id, e.target.value)}

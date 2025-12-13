@@ -242,7 +242,7 @@ export default function MediaUploader() {
                   })
                 }
               >
-                Upload
+                Modify
               </button>
               <button
                 onClick={handleRemove}

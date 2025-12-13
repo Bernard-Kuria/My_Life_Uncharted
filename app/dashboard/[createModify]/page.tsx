@@ -118,7 +118,7 @@ export default function CreateModifyBlog({
                 selectedTags.map((tag) => (
                   <div
                     key={tag}
-                    className="p-1 rounded-[10px] bg-[linear-gradient(45deg,var(--primary-blue)_0%,var(--background))]"
+                    className="p-1 rounded-[10px] border border-(--primary-blue) text-(--primary-blue) dark:border-(--secondary-blue) dark:text-(--secondary-blue)"
                   >
                     {tag}
                   </div>
@@ -192,7 +192,7 @@ export default function CreateModifyBlog({
           <div className="flex flex-col md:flex-row justify-between gap-2">
             {type === "blogs" ? (
               <button
-                className="create-modify-btn text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue)"
+                className="create-modify-btn text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) dark:border-(--secondary-blue) dark:text-(--secondary-blue)"
                 onClick={() => {
                   handleUpdateBlog();
                   router.push("/dashboard");
@@ -202,7 +202,7 @@ export default function CreateModifyBlog({
               </button>
             ) : (
               <button
-                className="create-modify-btn text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue)"
+                className="create-modify-btn text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) dark:border-(--secondary-blue) dark:text-(--secondary-blue)"
                 onClick={() => {
                   handleUpdateDraft();
                   router.push("/dashboard");
@@ -212,7 +212,7 @@ export default function CreateModifyBlog({
               </button>
             )}
             <button
-              className="create-modify-btn text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue)"
+              className="create-modify-btn text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) dark:border-(--secondary-blue) dark:text-(--secondary-blue)"
               onClick={() => {
                 if (topicStatus && tagStatus) {
                   handleAddBlog();

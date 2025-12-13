@@ -36,6 +36,15 @@ export function useDraftify(blocksData, setBlocksData) {
   };
 
   const handleDelete = (id) => {
+    const block = blocksData.find((block) => block.id === id);
+
+    // ensure media block is deleted only if no media is uploaded
+    if (
+      (block.type === "image" || block.type === "video") &&
+      block.content !== ""
+    )
+      return;
+
     setBlocksData((prev) => prev.filter((b) => b.id !== id));
   };
 

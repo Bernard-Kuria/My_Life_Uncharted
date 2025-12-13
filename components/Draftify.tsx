@@ -97,7 +97,7 @@ export default function Draftify({ draftify }: DraftifyProps) {
 
                       <FontAwesomeIcon
                         icon={["fas", "trash"]}
-                        className="cursor-pointer hover:text-red-500"
+                        className="cursor-pointer text-black hover:text-red-500"
                         onClick={() => handleDelete(b.id)}
                       />
                     </motion.div>

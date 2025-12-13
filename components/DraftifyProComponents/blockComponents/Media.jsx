@@ -22,7 +22,6 @@ import { mediaType } from "@utils/conversions";
 
 export default function MediaEditor({ block, onChange }) {
   const output = useRef(null);
-
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
   const [url, setUrl] = useState();
@@ -118,30 +117,52 @@ export default function MediaEditor({ block, onChange }) {
     handleUpload();
   }, [file]);
 
+  const handleRefresh = async () => {
+    const targetFileName = file?.name || uploadedFileName;
+    if (!targetFileName) return; // nothing to delete
+
+    setDeleting(true);
+    try {
+      const currentType = mediaType(file?.name || uploadedFileName);
+      if (currentType === "image") await deleteBlogImage(targetFileName);
+      else if (currentType === "video") await deleteBlogVideo(targetFileName);
+
+      onChange(block.id, "");
+
+      // reset state
+      setFile(null);
+      setFileName("");
+      setUrl(undefined);
+      setUploadedFileName(null);
+    } catch (err) {
+      console.error("Error deleting file on refresh:", err);
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   return (
-    <div className="border w-full h-[250px] relative">
+    <div className="border w-full h-[270px] relative">
       {(compressing ||
         (compressionProgress !== null && compressionProgress !== 100)) && (
-        <div className="absolute top-2 right-2 text-sm text-blue-600">
+        <div className="absolute bottom-0 text-sm text-blue-600">
           {`Processing...${
             compressionProgress !== null && compressionProgress
           }%`}
         </div>
       )}
       {loading && (
-        <div className="absolute top-2 right-2 text-sm text-blue-600">
+        <div className="absolute bottom-0 text-sm text-blue-600">
           Uploading...
         </div>
       )}
       {deleting && (
-        <div className="absolute top-2 left-2 text-sm text-red-600">
-          Deleting previous file...
+        <div className="absolute bottom-0 text-sm text-red-600">
+          Deleting previous/current file...
         </div>
       )}
       {error && (
-        <div className="absolute bottom-2 left-2 text-sm text-red-500">
-          {error}
-        </div>
+        <div className="absolute bottom-0 text-sm text-red-500">{error}</div>
       )}
 
       {file || url ? (
@@ -152,15 +173,13 @@ export default function MediaEditor({ block, onChange }) {
               alt=""
               className="media"
             />
-            <RefreshButton
-              file={file}
-              url={url}
-              uploadedFileName={uploadedFileName}
-              setFile={setFile}
-              setFileName={setFileName}
-              setUrl={setUrl}
-              setUploadedFileName={setUploadedFileName}
-            />
+
+            <div className="h-fit border border-dashed cursor-pointer relative">
+              <FontAwesomeIcon
+                icon={["fas", "refresh"]}
+                onClick={handleRefresh}
+              />
+            </div>
           </div>
         ) : type === "video" ? (
           <div className="w-full h-[250px] flex text-blue-600 font-medium border-blue-200">
@@ -170,32 +189,28 @@ export default function MediaEditor({ block, onChange }) {
                 type="video/mp4"
               />
             </video>
-            <RefreshButton
-              file={file}
-              url={url}
-              uploadedFileName={uploadedFileName}
-              setFile={setFile}
-              setFileName={setFileName}
-              setUrl={setUrl}
-              setUploadedFileName={setUploadedFileName}
-            />
+
+            <div className="h-fit border border-dashed cursor-pointer relative">
+              <FontAwesomeIcon
+                icon={["fas", "refresh"]}
+                onClick={handleRefresh}
+              />
+            </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center h-full gap-4 p-4 text-gray-500 text-center">
+          <div className="flex flex-col items-center justify-center h-[250px] gap-4 p-4 text-gray-500 text-center">
             <FontAwesomeIcon icon={["fas", "file"]} size="2x" />
             <p className="text-sm font-medium">wrong format: {fileName}</p>
             <p className="text-sm font-medium">
               accepted formats: png, jpg, jpeg, gif, mp4, webm, ogg
             </p>
-            <RefreshButton
-              file={file}
-              url={url}
-              uploadedFileName={uploadedFileName}
-              setFile={setFile}
-              setFileName={setFileName}
-              setUrl={setUrl}
-              setUploadedFileName={setUploadedFileName}
-            />
+
+            <div className="h-fit border border-dashed cursor-pointer relative">
+              <FontAwesomeIcon
+                icon={["fas", "refresh"]}
+                onClick={handleRefresh}
+              />
+            </div>
           </div>
         )
       ) : (
@@ -213,7 +228,7 @@ export default function MediaEditor({ block, onChange }) {
           onDragOver={(e) => dragHandler(e, output)}
           onDragLeave={(e) => dragLeaveHandler(e, output)}
           onMouseLeave={(e) => dragLeaveHandler(e, output)}
-          className="border-2 border-dashed w-full h-full grid items-center"
+          className="border-2 border-dashed w-full h-[250px] grid items-center"
         >
           <input
             type="file"
@@ -250,51 +265,6 @@ export default function MediaEditor({ block, onChange }) {
             </div>
           </label>
         </div>
-      )}
-    </div>
-  );
-}
-
-function RefreshButton({
-  file,
-  url,
-  uploadedFileName,
-  setFile,
-  setFileName,
-  setUrl,
-  setUploadedFileName,
-}) {
-  const [deleting, setDeleting] = useState(false);
-
-  const handleRefresh = async () => {
-    const targetFileName = file?.name || uploadedFileName;
-    if (!targetFileName) return; // nothing to delete
-
-    setDeleting(true);
-    try {
-      const currentType = mediaType(file?.name || uploadedFileName);
-      if (currentType === "image") await deleteBlogImage(targetFileName);
-      else if (currentType === "video") await deleteBlogVideo(targetFileName);
-
-      // reset state
-      setFile(null);
-      setFileName("");
-      setUrl(undefined);
-      setUploadedFileName(null);
-    } catch (err) {
-      console.error("Error deleting file on refresh:", err);
-    } finally {
-      setDeleting(false);
-    }
-  };
-
-  return (
-    <div className="h-fit border border-dashed cursor-pointer relative">
-      <FontAwesomeIcon icon={["fas", "refresh"]} onClick={handleRefresh} />
-      {deleting && (
-        <span className="absolute top-0 right-0 text-xs text-red-600">
-          Deleting...
-        </span>
       )}
     </div>
   );

@@ -32,13 +32,13 @@ export default function ToolBar({ view, setView, blocksData }) {
         </div>
         <div className="md:absolute right-0 flex items-center gap-2.5">
           <button
-            className="border rounded-2.5 bg-(--secondary-blue) text-white hover:font-semibold hover:bg-(--primary-blue) p-1 cursor-pointer"
+            className="border rounded-[10px] bg-(--secondary-blue) text-white hover:font-semibold hover:bg-(--primary-blue) p-1 cursor-pointer"
             onClick={() => handleDownloadJSON(blocksData)}
           >
             Download JSON <FontAwesomeIcon icon={["fas", "download"]} />
           </button>
           <button
-            className="border rounded-2.5 bg-(--secondary-blue) text-white hover:font-semibold hover:bg-(--primary-blue) p-1 cursor-pointer"
+            className="border rounded-[10px] bg-(--secondary-blue) text-white hover:font-semibold hover:bg-(--primary-blue) p-1 cursor-pointer"
             onClick={() => exportBlocksToDocx(blocksData)}
           >
             Export .docx <FontAwesomeIcon icon={["fas", "download"]} />
@@ -55,7 +55,7 @@ export default function ToolBar({ view, setView, blocksData }) {
           </div>
           <div
             ref={themeModeBtn}
-            className="border w-[30px] h-4 rounded-4 cursor-pointer duration-300 flex items-center p-0"
+            className="border border-black w-[30px] h-4 rounded-[12px] cursor-pointer duration-300 flex items-center p-0"
             onClick={() => {
               setView((prev) => (prev === "editor" ? "preview" : "editor"));
               handleThemeBtnClick(
@@ -67,14 +67,14 @@ export default function ToolBar({ view, setView, blocksData }) {
           >
             <div
               ref={themeModeToggle}
-              className="w-3 h-3 rounded-xl bg-[#232323] duration-300 flex items-center leading-2 justify-center translate-x-px"
+              className="w-3 h-3 rounded-[12px] bg-[#232323] duration-300 flex items-center leading-2 justify-center translate-x-px"
             >
               <div className="flex items-center h-full text-white -translate-y-0.5">
                 {view === "editor" ? "e" : "p"}
               </div>
             </div>
           </div>{" "}
-          <div className="w-[100px]">viewing {view}</div>
+          <div className="w-[100px] text-black">viewing {view}</div>
         </div>
       </div>
     </div>

@@ -103,33 +103,33 @@ body {
 
 .heading {
   font-family: var(--font-lexend);
-  @apply w-full outline-none text-[24px] md:text-[32px] font-semibold;
+  @apply w-full outline-none text-[#232323] text-[24px] md:text-[32px] font-semibold;
 }
 
 .subheading {
   font-family: var(--font-lexend);
-  @apply w-full outline-none text-[18px] md:text-[24px] font-medium;
+  @apply w-full outline-none text-[#232323] text-[18px] md:text-[24px] font-medium;
 }
 
 .paragraph {
   font-family: var(--font-mulish);
-  @apply w-full h-fit outline-none text-[14px] md:text-[16px] font-normal;
+  @apply w-full h-fit outline-none text-[#232323] text-[14px] md:text-[16px] font-normal;
 }
 
 .quote {
-  @apply w-full border-l-4 outline-none text-[16px] md:text-[18px] italic pl-2;
+  @apply w-full border-l-4 outline-none text-[#232323] text-[16px] md:text-[18px] italic pl-2;
 }
 
 .list {
-  @apply outline-none text-sm;
+  @apply outline-none text-[#232323] text-sm;
 }
 
 .link {
-  @apply text-(--primary-blue) w-full outline-none text-sm;
+  @apply text-(--primary-blue) w-full outline-none text-[#232323] text-sm;
 }
 
 .code {
-  @apply font-mono bg-black text-white p-2 w-full whitespace-pre-wrap;
+  @apply font-mono bg-black text-[#232323] text-white p-2 w-full whitespace-pre-wrap;
 }
 
 .media {
@@ -147,6 +147,10 @@ body {
 
 .create-modify-btn {
   @apply border p-2 hover:text-white cursor-pointer rounded-[10px];
+}
+
+option {
+  @apply text-foreground border-foreground bg-background rounded-[10px];
 }
 
 @keyframes likeBounce {

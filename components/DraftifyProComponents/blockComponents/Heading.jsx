@@ -3,6 +3,7 @@ export default function HeadingEditor({ block, onChange }) {
     <input
       type="text"
       className="border-b heading"
+      autoFocus
       placeholder="Heading..."
       value={block.content}
       onChange={(e) => onChange(block.id, e.target.value)}

@@ -230,7 +230,8 @@ export const useSettings = () => {
       } catch (error) {
         if (error instanceof Error)
           setError(
-            error.message + ":" + "it could be that the image doesn't exist."
+            error.message +
+              ", please allow some time between uploading and modifying or upload different image then change image back."
           );
       }
     }
