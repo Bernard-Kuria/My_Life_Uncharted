@@ -50,7 +50,7 @@ async function getSingleImageFromFolder(folderName: string) {
 
     if (items.items.length === 0) {
       console.error(`No files found in folder: ${folderName}`);
-      return null;
+      throw new Error(`No files found in folder: ${folderName}`);
     }
 
     // Take the first (and only) image inside the folder

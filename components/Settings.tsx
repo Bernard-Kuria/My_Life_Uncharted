@@ -27,6 +27,8 @@ export default function MediaUploader() {
     uploading,
     compressing,
     setCompressing,
+    compressionProgress,
+    setCompressionProgress,
     deleting,
     error,
     setError,
@@ -70,8 +72,11 @@ export default function MediaUploader() {
       <div className="flex flex-col gap-2.5">
         <div className="flex gap-2.5 items-center">
           <strong>Change main page and blog topic images</strong>
-          {compressing && (
-            <div className="text-sm text-(--primary-blue)">Processing...</div>
+          {(compressing ||
+            (compressionProgress !== null && compressionProgress !== 100)) && (
+            <div className="text-sm text-(--primary-blue)">{`Processing...${
+              compressionProgress !== null && compressionProgress
+            }%`}</div>
           )}
           {uploading && (
             <div className="text-sm text-(--primary-blue)">Uploading...</div>
@@ -107,6 +112,7 @@ export default function MediaUploader() {
               Select the image to replace:
               <select
                 className="border border-(--secondary-blue) p-1"
+                value={imageName}
                 onChange={(e) => {
                   setImageName(e.target.value);
                   setError(null);
@@ -175,7 +181,13 @@ export default function MediaUploader() {
                 ref={outputRef}
                 onDrop={(e) => {
                   setError(null);
-                  dropHandler(e, setFile, setFileName, setCompressing);
+                  dropHandler(
+                    e,
+                    setFile,
+                    setFileName,
+                    setCompressing,
+                    setCompressionProgress
+                  );
                 }}
                 onDragOver={(e) => dragHandler(e)}
                 onDragLeave={(e) => dragLeaveHandler(e, outputRef)}
@@ -188,7 +200,13 @@ export default function MediaUploader() {
                   className="hidden"
                   onChange={(e) => {
                     setError(null);
-                    onFileChange(e, setFile, setFileName, setCompressing);
+                    onFileChange(
+                      e,
+                      setFile,
+                      setFileName,
+                      setCompressing,
+                      setCompressionProgress
+                    );
                   }}
                 />
                 <label

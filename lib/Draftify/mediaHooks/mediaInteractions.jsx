@@ -2,20 +2,25 @@ import imageCompression from "browser-image-compression";
 import { mediaType } from "@utils/conversions";
 
 // Shared compression function
-async function compressImageIfNeeded(file) {
-  // Only compress images
+async function compressImageIfNeeded(
+  file,
+  setCompressing,
+  setCompressionProgress
+) {
   if (mediaType(file.name) !== "image") return file;
 
   const options = {
     maxSizeMB: 1,
     maxWidthOrHeight: 1920,
     useWebWorker: true,
+    onProgress: (p) => setCompressionProgress(p),
   };
 
   try {
+    setCompressing(true);
+
     const compressedBlob = await imageCompression(file, options);
 
-    // Ensure we have a File, not just a Blob
     const compressedFile =
       compressedBlob instanceof File
         ? compressedBlob
@@ -24,35 +29,56 @@ async function compressImageIfNeeded(file) {
     return compressedFile;
   } catch (err) {
     console.error("Compression failed; using original file:", err);
-    return file; // fallback
+    return file;
+  } finally {
+    setCompressing(false);
   }
 }
 
-export async function dropHandler(e, setFile, setFileName, setCompressing) {
+export async function dropHandler(
+  e,
+  setFile,
+  setFileName,
+  setCompressing,
+  setCompressionProgress
+) {
   e.preventDefault();
+
   for (const item of e.dataTransfer.items) {
     if (item.kind === "file") {
       const fileObj = item.getAsFile();
-      if (fileObj) {
-        setCompressing(true);
-        const compressed = await compressImageIfNeeded(fileObj);
-        setCompressing(false);
-        setFile(compressed);
-        setFileName(compressed.name);
-      }
+      if (!fileObj) continue;
+
+      const compressed = await compressImageIfNeeded(
+        fileObj,
+        setCompressing,
+        setCompressionProgress
+      );
+
+      setFile(compressed);
+      setFileName(compressed.name);
     }
   }
 }
 
-export async function onFileChange(e, setFile, setFileName, setCompressing) {
-  const selectedFile = e.target.files[0];
-  if (selectedFile) {
-    setCompressing(true);
-    const compressed = await compressImageIfNeeded(selectedFile);
-    setCompressing(false);
-    setFile(compressed);
-    setFileName(compressed.name);
-  }
+export async function onFileChange(
+  e,
+  setFile,
+  setFileName,
+  setCompressing,
+  setCompressionProgress
+) {
+  const selectedFile = e.target.files?.[0];
+  if (!selectedFile) return;
+
+  const compressed = await compressImageIfNeeded(
+    selectedFile,
+    setCompressing,
+    setCompressionProgress
+  );
+
+  setFile(compressed);
+  setFileName(compressed.name);
 }
 
 export function dragHandler(e, output) {

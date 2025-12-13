@@ -53,7 +53,7 @@ export const useSettings = () => {
   const [landingPageImages, setLandingPageImages] = useState<ObjectType>({});
   const [blogTopics, setBlogTopics] = useState<BlogTopicsType | undefined>();
   const [file, setFile] = useState<File | null>(null);
-  const [imageName, setImageName] = useState<string | null>("");
+  const [imageName, setImageName] = useState<string>("select image");
   const [fileName, setFileName] = useState("");
   const [url, setUrl] = useState<string | null>(null);
   const [milestones, setMilestones] = useState<MilestonesMap>({});
@@ -64,9 +64,11 @@ export const useSettings = () => {
 
   //   statuses
   const [modifyTopicStatus, setModifyTopicStatus] = useState<string>("");
-  const [refreshTrigger, setRefreshTrigger] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [compressing, setCompressing] = useState(false);
+  const [compressionProgress, setCompressionProgress] = useState<number | null>(
+    null
+  );
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [mergingTopicAndImage, setMergingTopicAndImage] = useState(false);
@@ -217,17 +219,19 @@ export const useSettings = () => {
 
         setLandingPageImages((prev) => ({
           ...prev,
-          ...(mainImg ? { "main-image": mainImg } : {}),
+          ...(mainImg ? { "main-image": mainImg } : { "main-image": "" }),
           ...(secondaryTopImg
             ? { "secondary-top-image": secondaryTopImg }
-            : {}),
+            : { "secondary-top-image": "" }),
           ...(secondaryBottomImg
             ? { "secondary-bottom-image": secondaryBottomImg }
-            : {}),
+            : { "secondary-bottom-image": "" }),
         }));
       } catch (error) {
         if (error instanceof Error)
-          setError(error.message + ":" + "try refreshing the page");
+          setError(
+            error.message + ":" + "it could be that the image doesn't exist."
+          );
       }
     }
 
@@ -244,6 +248,12 @@ export const useSettings = () => {
     // Check if image to change has been selected
     if (!imageName) {
       setError("Please select or reselect the image to replace");
+      return;
+    }
+
+    // Check if the file is done compressing
+    if (compressing) {
+      setError("Image is still being processed");
       return;
     }
 
@@ -362,8 +372,6 @@ export const useSettings = () => {
     setImageName,
     landingPageImages,
     topics,
-    refreshTrigger,
-    setRefreshTrigger,
     outputRef,
     file,
     fileName,
@@ -371,6 +379,8 @@ export const useSettings = () => {
     uploading,
     compressing,
     setCompressing,
+    compressionProgress,
+    setCompressionProgress,
     deleting,
     type,
     error,

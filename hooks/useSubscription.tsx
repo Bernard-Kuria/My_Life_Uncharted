@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, FormEvent } from "react";
 
 import { getAllTopics } from "@services/topics";
-import { BlogTopicsType, Subscriber, Subscribers } from "@lib/types/types";
+import { BlogTopicsType, Subscribers } from "@lib/types/types";
 import {
   addSubscriber,
   deleteSubscriber,

@@ -27,6 +27,7 @@ export default function MediaEditor({ block, onChange }) {
   const [fileName, setFileName] = useState("");
   const [url, setUrl] = useState();
   const [compressing, setCompressing] = useState(false);
+  const [compressionProgress, setCompressionProgress] = useState(null);
   const [uploadedFileName, setUploadedFileName] = useState(null); // track last uploaded
   const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -119,9 +120,12 @@ export default function MediaEditor({ block, onChange }) {
 
   return (
     <div className="border w-full h-[250px] relative">
-      {compressing && (
+      {(compressing ||
+        (compressionProgress !== null && compressionProgress !== 100)) && (
         <div className="absolute top-2 right-2 text-sm text-blue-600">
-          Processing...
+          {`Processing...${
+            compressionProgress !== null && compressionProgress
+          }%`}
         </div>
       )}
       {loading && (
@@ -197,7 +201,15 @@ export default function MediaEditor({ block, onChange }) {
       ) : (
         <div
           ref={output}
-          onDrop={(e) => dropHandler(e, setFile, setFileName, setCompressing)}
+          onDrop={(e) =>
+            dropHandler(
+              e,
+              setFile,
+              setFileName,
+              setCompressing,
+              setCompressionProgress
+            )
+          }
           onDragOver={(e) => dragHandler(e, output)}
           onDragLeave={(e) => dragLeaveHandler(e, output)}
           onMouseLeave={(e) => dragLeaveHandler(e, output)}
@@ -208,7 +220,13 @@ export default function MediaEditor({ block, onChange }) {
             id="file"
             className="hidden"
             onChange={(e) =>
-              onFileChange(e, setFile, setFileName, setCompressing)
+              onFileChange(
+                e,
+                setFile,
+                setFileName,
+                setCompressing,
+                setCompressionProgress
+              )
             }
           />
           <label
