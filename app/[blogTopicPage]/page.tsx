@@ -28,7 +28,7 @@ export default function Page({
   return (
     <div className="flex flex-col gap-5 w-full">
       {/* Background Image */}
-      <div className="absolute w-screen left-0 h-[400px] lg:h-[calc(100vh-70px)]">
+      <div className="relative h-[600px]">
         {image &&
           (imageType === "image" ? (
             <Image
@@ -46,25 +46,23 @@ export default function Page({
           ) : null)}
       </div>
 
-      <div className="page-layout">
-        <div className="grid gap-5">
-          <div className="w-full h-[430px] lg:h-[400px] mt-[200px] lg:mt-[calc(100vh-270px)] p-5 lg:p-10 z-1 bg-(--primary-blue)/80">
-            {topicPage && <FeaturedBlog topic={topicPage?.title || ""} />}
-          </div>
+      <div className="page-layout grid gap-5">
+        <div className="w-full h-[430px] lg:h-[430px] -mt-[215px] p-5 lg:p-10 z-1 bg-(--primary-blue)/80">
+          {topicPage && <FeaturedBlog topic={topicPage?.title || ""} />}
+        </div>
 
-          <div>
-            <div className="sub-title">Recent Posts</div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {targetBlogs &&
-                targetBlogs.map((blog) => (
-                  <BlogCards
-                    key={blog.id}
-                    location={page}
-                    blog={blog}
-                    imageType={imageType}
-                  />
-                ))}
-            </div>
+        <div>
+          <div className="sub-title">Recent Posts</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {targetBlogs &&
+              targetBlogs.map((blog) => (
+                <BlogCards
+                  key={blog.id}
+                  location={page}
+                  blog={blog}
+                  imageType={imageType}
+                />
+              ))}
           </div>
         </div>
       </div>

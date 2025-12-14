@@ -66,7 +66,7 @@ export default function FeaturedBlog({ topic }: { topic: string }) {
             <div className="blog-title">{featuredBlog.blogMeta.title}</div>
             <div className="blog-font">{featuredBlog.blogMeta.subtitle}</div>
           </div>
-          <div className="flex gap-1 detail-text border-t border-white pt-2.5">
+          <div className="flex gap-2 detail-text border-t border-white pt-2.5">
             <div className="">{featuredBlog.blogMeta.views} views</div>
             <div className="">{featuredBlog.blogMeta.comments} comments</div>
             <div className="">{featuredBlog.blogMeta.likes} likes</div>

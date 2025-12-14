@@ -36,7 +36,7 @@ export default function Home() {
         secondaryBottomImg={secondaryBottomImg}
       />
       <div
-        className={`${
+        className={`flex flex-col gap-2 ${
           location === "/" ? "justify-center text-center" : "text-left"
         } text-(--secondary-blue) section-title hover:border-(--primary-blue)`}
       >
