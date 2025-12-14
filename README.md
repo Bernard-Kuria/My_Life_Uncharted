@@ -6,7 +6,7 @@ I also enjoy helping those who have tech ideas and are thinking of making money 
 
 ## Wait, who am I?
 
-- Well, I'm just another developer out there who loves building things for fun.
+Well, I'm just another developer out there who loves building things for fun.
 
 I love building things both hardware (Embedded systems, IOT, PCB,...) and software (web apps).
 
