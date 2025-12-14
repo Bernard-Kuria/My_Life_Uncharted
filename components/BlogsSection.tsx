@@ -1,6 +1,6 @@
 "use client";
 
-import Loading from "@app/loading";
+import Loading, { SectionLoading } from "@app/loading";
 
 import { FontAwesomeIcon } from "@node_modules/@fortawesome/react-fontawesome/dist";
 
@@ -92,10 +92,7 @@ export default function BlogsSection() {
                   >
                     <DraftList blog={blog} />
                     {deletingBlogStatus ? (
-                      <div className="relative w-10 h-10 rounded-full">
-                        <div className="absolute border-4 border-red rounded-full w-full h-full border-l-transparent animate-[rotate_1s_cubic-bezier(0.15,0.61,0.58,0.4)_infinite]"></div>
-                        <div className="absolute border-4 border-red rounded-full w-5 h-5 translate-x-[17.5px] translate-y-[17.5px] border-t-transparent animate-[rotate-reverse_1s_cubic-bezier(0.15,0.61,0.58,0.4)_infinite]"></div>
-                      </div>
+                      <SectionLoading loading="loading drafts..." />
                     ) : (
                       <FontAwesomeIcon
                         icon={["fas", "trash"]}
