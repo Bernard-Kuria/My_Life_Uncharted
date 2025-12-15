@@ -112,7 +112,15 @@ function EditComment({
     <div className="flex gap-2">
       <div className="rounded-[10px] w-3.5 h-full bg-(--secondary-blue)" />
 
-      <div className="bg-white rounded-[10px] dark:bg-black w-full p-2 flex gap-2.5 items-center">
+      <div
+        className="bg-white rounded-[10px] dark:bg-black w-full p-2 flex gap-2.5 items-center"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            submit();
+          }
+        }}
+        tabIndex={0} // allows div to capture keyboard events
+      >
         <input
           type="text"
           placeholder="Add comment here"

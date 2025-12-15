@@ -85,7 +85,7 @@ export async function updateComment(data: {
   }
 }
 
-export async function deleteBlogMeta(id: string) {
+export async function deleteComments(id: string) {
   try {
     const res = await fetch(`/api/comments`, {
       method: "DELETE",

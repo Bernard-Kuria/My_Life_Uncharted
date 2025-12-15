@@ -122,16 +122,54 @@ export async function PUT(req: Request) {
 
 // DELETE: delete comment by ID
 export async function DELETE(req: Request) {
+  // We assume req.json() succeeds and the body contains { internalId: string }
+  const internalId = await req.json();
+
   try {
-    const id = await req.json();
+    // 1. Query the collection to find all documents matching the internalId field
+    const commentsRef = collection(db, "comments");
+    const q = query(commentsRef, where("internalId", "==", internalId));
 
-    if (!id) return new Response("Missing comment ID", { status: 400 });
+    // Execute the query
+    const querySnapshot = await getDocs(q);
 
-    await deleteDoc(doc(db, "comments", id));
+    if (querySnapshot.empty) {
+      // If no document matches the internalId, return a success message
+      // since there is nothing to delete.
+      return NextResponse.json({
+        internalId,
+        message:
+          "No comments found matching the internalId. No documents deleted.",
+      });
+    }
 
-    return NextResponse.json({ id, message: "comment deleted!" });
+    const deletePromises: Promise<void>[] = [];
+    let deletedCount = 0;
+
+    // 2. Iterate over all found documents and schedule deletion
+    querySnapshot.forEach((documentSnapshot) => {
+      // Get the actual document reference using its Firebase Document ID
+      const docRef = doc(db, "comments", documentSnapshot.id);
+
+      // Push the delete operation promise into an array
+      deletePromises.push(deleteDoc(docRef));
+      deletedCount++;
+    });
+
+    // 3. Wait for all delete operations to complete concurrently
+    await Promise.all(deletePromises);
+
+    // 4. Return success response
+    return NextResponse.json({
+      internalId,
+      count: deletedCount,
+      message: `Successfully deleted ${deletedCount} comment(s) matching internalId.`,
+    });
   } catch (error) {
-    console.error("Error deleting comment:", error);
-    return new Response("Failed to delete comment", { status: 500 });
+    console.error("Error during batch comment deletion:", error);
+    // Return a generic server error message
+    return new Response("Failed to delete comments due to an internal error", {
+      status: 500,
+    });
   }
 }

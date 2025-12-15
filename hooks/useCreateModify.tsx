@@ -37,6 +37,7 @@ import {
   getDraftMetaById,
   updateDraftMeta,
 } from "@services/drafts";
+import { deleteComments } from "@services/comments";
 
 export function useCreateModify(id: string, type: string) {
   // topics and tags
@@ -218,6 +219,7 @@ export function useCreateModify(id: string, type: string) {
       setDeleteStatus(true);
       await deleteBlogMeta(id);
       await deleteBlogContent(id);
+      await deleteComments(id);
     } finally {
       setDeleteStatus(false);
     }

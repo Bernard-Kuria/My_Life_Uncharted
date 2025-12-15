@@ -1,7 +1,7 @@
 "use client";
 
 import { deleteBlogMeta, getAllBlogs } from "@services/blogs";
-import { getAllDrafts } from "@services/drafts";
+import { deleteDraftMeta, getAllDrafts } from "@services/drafts";
 import { getAllTopics } from "@services/topics";
 
 import { BlogsType, BlogTopicsType, DraftsType } from "@lib/types/types";
@@ -10,6 +10,7 @@ import { deleteBlogContent } from "@services/blogContent";
 import { useState, useRef, useEffect } from "react";
 import { mediaType } from "@utils/conversions";
 import { uploadBlogImage, deleteBlogImage } from "@services/FirestoreStorage";
+import { deleteComments } from "@services/comments";
 
 const sendDataToDatabase = async (mediaUrl: string | null) => {
   console.log("Simulating sending data to database:", mediaUrl);
@@ -163,10 +164,23 @@ export const useDashboard = () => {
     try {
       await deleteBlogMeta(id);
       await deleteBlogContent(id);
+      await deleteComments(id);
     } catch (error) {
       console.error(error);
     } finally {
       setReloadBlogs((prev) => !prev);
+      setDeletingBlogStatus(false);
+    }
+  };
+
+  const handleDeleteDraft = async (id: string) => {
+    setDeletingBlogStatus(true);
+    try {
+      await deleteDraftMeta(id);
+      await deleteBlogContent(id);
+    } catch (error) {
+      console.error(error);
+    } finally {
       setDeletingBlogStatus(false);
     }
   };
@@ -182,6 +196,7 @@ export const useDashboard = () => {
     refreshTrigger,
     setRefreshTrigger,
     handleDelete,
+    handleDeleteDraft,
     deletingBlogStatus,
     loading,
     section,

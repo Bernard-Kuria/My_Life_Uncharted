@@ -32,8 +32,12 @@ export default function FeaturedBlog({ topic }: { topic: string }) {
     }
   }, [featuredBlog]);
 
-  if (!featuredBlog || !loaded)
-    return <SectionLoading loading={"Loading Featured blog"} />;
+  if (!loaded) return <SectionLoading loading={"Loading Featured blog"} />;
+
+  if (!featuredBlog)
+    return (
+      <div className="text-(--secondary-blue)">No featured blog found</div>
+    );
 
   return (
     <Link

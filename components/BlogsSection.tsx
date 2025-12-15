@@ -19,6 +19,7 @@ export default function BlogsSection() {
     refreshTrigger,
     setRefreshTrigger,
     handleDelete,
+    handleDeleteDraft,
     deletingBlogStatus,
   } = useDashboard();
 
@@ -97,7 +98,7 @@ export default function BlogsSection() {
                       <FontAwesomeIcon
                         icon={["fas", "trash"]}
                         className="hover:text-red-500 cursor-pointer"
-                        onClick={() => handleDelete(blog.id)}
+                        onClick={() => handleDeleteDraft(blog.id)}
                       />
                     )}
                   </div>
