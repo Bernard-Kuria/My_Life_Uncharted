@@ -81,7 +81,7 @@ body {
 }
 
 .page-layout {
-  @apply box-border lg:w-[1024px] w-full px-2 pb-7.5 lg:mx-auto;
+  @apply box-border lg:w-[1024px] w-full px-2 lg:mx-auto;
 }
 
 .section-title {
