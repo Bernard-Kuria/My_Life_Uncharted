@@ -52,7 +52,7 @@ export default function BlogCards({
           ) : null}
         </div>
         <div className="grid gap-2.5 p-5">
-          <div className="h-[65px] overflow-hidden sub-title text-(--primary-blue)">
+          <div className="h-[65px] overflow-hidden sub-title text-(--primary-blue) dark:text-(--secondary-blue)">
             {title}
           </div>
           <div className="flex justify-between border-t border-gray-600 detail-text pt-2.5">
