@@ -51,7 +51,7 @@ export default function Draftify({ draftify }: DraftifyProps) {
   return (
     <>
       <BackGround gridDots={gridDots} />
-      <div className="flex flex-col md:gap-2.5 gap-5 w-full md:w-full min-h-screen h-fit border border-(--primary-blue) rounded-2xl p-2 md:p-5 bg-white">
+      <div className="flex flex-col md:gap-2.5 gap-5 w-full min-h-screen h-fit border border-(--primary-blue) rounded-2xl p-2 md:p-5 bg-white">
         <ToolBar view={view} setView={setView} blocksData={blocksData} />
 
         {view === "editor" && (

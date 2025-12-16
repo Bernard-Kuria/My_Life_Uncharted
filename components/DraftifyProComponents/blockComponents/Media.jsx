@@ -118,7 +118,7 @@ export default function MediaEditor({ block, onChange }) {
   }, [file]);
 
   const handleRefresh = async () => {
-    const targetFileName = file?.name || uploadedFileName;
+    const targetFileName = file?.name || block.content;
     if (!targetFileName) return; // nothing to delete
 
     setDeleting(true);
