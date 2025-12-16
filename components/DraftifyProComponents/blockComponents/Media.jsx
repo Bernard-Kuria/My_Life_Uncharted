@@ -34,6 +34,10 @@ export default function MediaEditor({ block, onChange }) {
 
   const type = mediaType(fileName || url || block.content || "");
 
+  useEffect(() => {
+    setUploadedFileName(block.content || null);
+  });
+
   // Prevent default drag/drop on window
   useEffect(() => {
     const handleDrag = (e) => e.preventDefault();
@@ -44,13 +48,6 @@ export default function MediaEditor({ block, onChange }) {
       window.removeEventListener("drop", handleDrag);
     };
   }, []);
-
-  // Update block content when a new file is selected
-  useEffect(() => {
-    if (file) {
-      onChange(block.id, file.name);
-    }
-  }, [file]);
 
   // Fetch Firebase URL for existing content
   useEffect(() => {
@@ -95,14 +92,8 @@ export default function MediaEditor({ block, onChange }) {
           return;
         }
 
-        // Delete previous uploaded file if exists
-        if (uploadedFileName && uploadedFileName !== file.name) {
-          setDeleting(true);
-          if (currentType === "image") await deleteBlogImage(uploadedFileName);
-          else if (currentType === "video")
-            await deleteBlogVideo(uploadedFileName);
-          setDeleting(false);
-        }
+        // Update block content when a new file is selected
+        onChange(block.id, file.name);
 
         setUrl(downloadURL);
         setUploadedFileName(file.name); // track current uploaded
@@ -118,7 +109,7 @@ export default function MediaEditor({ block, onChange }) {
   }, [file]);
 
   const handleRefresh = async () => {
-    const targetFileName = file?.name || block.content;
+    const targetFileName = file?.name || uploadedFileName;
     if (!targetFileName) return; // nothing to delete
 
     setDeleting(true);
