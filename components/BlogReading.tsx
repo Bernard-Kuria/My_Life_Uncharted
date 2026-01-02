@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
 import { Reader } from "draftify-react";
-import Tooltip from "./ToolTip";
+import Tooltip from "./Tooltip";
 
 // types
 import type { DraftifyBlock } from "draftify";
