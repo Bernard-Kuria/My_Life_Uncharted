@@ -12,10 +12,6 @@ import { mediaType } from "@utils/conversions";
 import { uploadBlogImage, deleteBlogImage } from "@services/FirestoreStorage";
 import { deleteComments } from "@services/comments";
 
-const sendDataToDatabase = async (mediaUrl: string | null) => {
-  console.log("Simulating sending data to database:", mediaUrl);
-};
-
 export const useDashboard = () => {
   const [topics, setTopics] = useState<BlogTopicsType>();
   const [blogsByTopic, setBlogsByTopic] = useState<Record<string, BlogsType>>(
@@ -85,7 +81,6 @@ export const useDashboard = () => {
 
         setUrl(downloadURL);
         setUploadedFileName(file.name);
-        await sendDataToDatabase(downloadURL);
       } catch (err) {
         if (err instanceof Error)
           setError(`An error occurred during upload: ${err.message}`);
@@ -105,7 +100,6 @@ export const useDashboard = () => {
       setFileName("");
       if (url) {
         setUrl(null);
-        await sendDataToDatabase(null);
       }
       return;
     }
@@ -114,8 +108,6 @@ export const useDashboard = () => {
     try {
       const currentType = mediaType(targetFileName || undefined);
       if (currentType === "image") await deleteBlogImage(targetFileName);
-
-      await sendDataToDatabase(null);
 
       setFile(null);
       setFileName("");

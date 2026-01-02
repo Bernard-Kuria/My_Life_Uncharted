@@ -1,5 +1,12 @@
-// Tooltip.jsx
-export default function Tooltip({ text, children }) {
+import type { JSX } from "react";
+
+export default function Tooltip({
+  text,
+  children,
+}: {
+  text: string | number;
+  children: JSX.Element;
+}) {
   return (
     <div className="relative inline-block group">
       {children}

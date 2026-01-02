@@ -5,16 +5,17 @@ import { getAllBlogs, getBlogMetaById, updateBlogMeta } from "@services/blogs";
 
 import { cleanUpLink, getTopicFromLink } from "@utils/conversions";
 
-import { Blog, BlogContent, BlogsType } from "@lib/types/types";
+import { Blog, BlogsType } from "@lib/types/types";
 import { addComment, updateComment } from "@services/comments";
 import { getBlogContentById } from "@services/blogContent";
+import { DraftifyBlock } from "@node_modules/draftify-react";
 
 export const useBlogPage = (blogpage: string, topicPage: string) => {
   const [blogs, setBlogs] = useState<BlogsType | undefined>(undefined);
   const [loaded, setLoaded] = useState(false);
   const [viewed, setViewed] = useState(false);
   const [blog, setBlog] = useState<Blog>();
-  const [blogContent, setBlogContent] = useState<BlogContent>();
+  const [blogContent, setBlogContent] = useState<DraftifyBlock[]>();
   const [isMetaLoading, setIsMetaloading] = useState(true);
   const [isContentLoading, setIsContentloading] = useState(true);
   const [liked, setLiked] = useState(false);
@@ -104,7 +105,7 @@ export const useBlogPage = (blogpage: string, topicPage: string) => {
         const content = await getBlogContentById(blogId);
 
         if (mounted) {
-          setBlogContent(content);
+          setBlogContent(content.blogContent);
         }
       } catch (err) {
         console.error("Failed to load blog content:", err);

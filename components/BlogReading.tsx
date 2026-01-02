@@ -1,8 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import OutputBlock from "./DraftifyProComponents/OutputBlock";
-import Tooltip from "./DraftifyProComponents/Tooltip";
 
-import { BlogContent, Blog } from "@lib/types/types";
+// components
+import { Reader } from "draftify-react";
+import Tooltip from "./ToolTip";
+
+// types
+import type { DraftifyBlock } from "draftify";
+import type { Blog } from "@lib/types/types";
 
 export default function BlogArea({
   blogContent,
@@ -15,7 +19,7 @@ export default function BlogArea({
   handleLikeClick,
   handleShare,
 }: {
-  blogContent: BlogContent | undefined;
+  blogContent: DraftifyBlock[] | undefined;
   isMetaLoading: boolean;
   isContentLoading: boolean;
   blog: Blog | undefined;
@@ -47,7 +51,7 @@ export default function BlogArea({
 
       {blogContent ? (
         <div className="flex-1 flex flex-col gap-3">
-          <OutputBlock blocksData={blogContent.blogContent} />
+          <Reader blocksData={blogContent} />
         </div>
       ) : (
         <div>No blog data</div>

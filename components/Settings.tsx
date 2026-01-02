@@ -13,13 +13,18 @@ import {
 import { getWordAfterColon, getWordBeforeColon } from "@utils/conversions";
 import { useRequireAuth } from "@hooks/useRequireAuth";
 
-export default function MediaUploader() {
+export default function Settings() {
   const {
+    // blogs data
     blogTopics,
-    landingPageImages,
     topics,
+    landingPageImages,
+
+    // blog & blog topic image modification states
     imageName,
     setImageName,
+
+    // media states and interactions
     outputRef,
     file,
     fileName,
@@ -38,6 +43,8 @@ export default function MediaUploader() {
     handleRemove,
     handleTopicImageUpload,
     mergingTopicAndImage,
+
+    // topic statuses
     topicType,
     setTopicType,
     newTopic,
@@ -47,6 +54,8 @@ export default function MediaUploader() {
     setModifyTopicStatus,
     handleTopicUpdate,
     handleTopicRemove,
+
+    // milestone statuses
     milestoneTopic,
     setMilestoneTopic,
     milestones,

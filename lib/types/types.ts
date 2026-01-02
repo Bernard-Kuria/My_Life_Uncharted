@@ -1,3 +1,5 @@
+import { DraftifyBlock } from "@node_modules/draftify-react";
+
 export type LinesTypes = {
   width?: string;
   height?: string;
@@ -8,16 +10,9 @@ export type LinesTypes = {
   angle: string;
 };
 
-export type Content = {
-  id: string;
-  type: string;
-  content: string | string[];
-  tableContent?: null;
-};
-
 export type BlogContent = {
   id: string;
-  blogContent: Content[];
+  blogContent: DraftifyBlock[];
 };
 
 export type Topic = {
@@ -31,6 +26,7 @@ export type BlogTopicsType = Topic[];
 
 export type BlogMeta = {
   image: string;
+  video?: string;
   topic: string;
   title: string;
   subtitle: string;

@@ -1,5 +1,7 @@
-import { BlogTopicsType, Content } from "../lib/types/types";
+import { DraftifyBlock } from "@node_modules/draftify-react";
+import { BlogTopicsType } from "../lib/types/types";
 import { getAllTopics } from "@services/topics";
+import { DraftifyBlockType } from "@node_modules/draftify/dist";
 
 // converts ASCII value "%26" back to normal string "&"
 export const cleanUpLink = (link: string) =>
@@ -29,11 +31,6 @@ export const getBlogMatchingPage = async (page: string) => {
   const topics: BlogTopicsType = await getAllTopics();
   return topics.find((t) => getLinkFromTopic(t.title) === cleanUpLink(page));
 };
-
-// Match search with standard lowercase naming
-export const findByType = (type: string, blocksData: Content[]) =>
-  blocksData.find((b) => b.type.toLowerCase() === type.toLowerCase())
-    ?.content ?? "";
 
 // Get media url type
 export const mediaType = (url?: string) => {

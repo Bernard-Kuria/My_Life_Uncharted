@@ -6,11 +6,12 @@ import { useRouter } from "next/navigation";
 
 import Loading from "@app/loading";
 
-import Draftify from "@c/Draftify";
 import SectionTitle from "@c/SectionTitle";
 
 import { useCreateModify } from "@hooks/useCreateModify";
 import { toCamelCase } from "@utils/conversions";
+import DraftifyReact from "@node_modules/draftify-react";
+import "draftify-react/styles.css";
 
 export default function CreateModifyBlog({
   params,
@@ -31,7 +32,6 @@ export default function CreateModifyBlog({
     setSelectedTags,
     topicList,
     tagList,
-    blogContent,
 
     // handle functions
     handleTagChange,
@@ -55,9 +55,8 @@ export default function CreateModifyBlog({
     updateBlogStatus,
     updateDraftStatus,
     deleteStatus,
-
-    // hook
-    draftify,
+    blocksData,
+    modifyBlocks,
   } = useCreateModify(id, type);
 
   if (loading)
@@ -78,7 +77,9 @@ export default function CreateModifyBlog({
           &larr; Back
         </Link>
 
-        {blogContent && <Draftify draftify={draftify} />}
+        {blocksData && (
+          <DraftifyReact blocksData={blocksData} modifyBlocks={modifyBlocks} />
+        )}
 
         <div className="grid md:flex gap-5 md:gap-[100px]">
           {/* Topic Selector */}
