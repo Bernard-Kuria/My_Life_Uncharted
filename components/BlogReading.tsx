@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // components
-import { Reader } from "draftify-react";
+import { DraftifyBlocksReader } from "draftify-react";
 import Tooltip from "./Tooltip";
 
 // types
@@ -51,7 +51,7 @@ export default function BlogArea({
 
       {blogContent ? (
         <div className="flex-1 flex flex-col gap-3">
-          <Reader blocksData={blogContent} />
+          <DraftifyBlocksReader blocksData={blogContent} />
         </div>
       ) : (
         <div>No blog data</div>

@@ -66,9 +66,7 @@ export const useSettings = () => {
   const [modifyTopicStatus, setModifyTopicStatus] = useState<string>("");
   const [uploading, setUploading] = useState(false);
   const [compressing, setCompressing] = useState(false);
-  const [compressionProgress, setCompressionProgress] = useState<number | null>(
-    null
-  );
+  const [compressionProgress, setCompressionProgress] = useState<number>(0);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [mergingTopicAndImage, setMergingTopicAndImage] = useState(false);

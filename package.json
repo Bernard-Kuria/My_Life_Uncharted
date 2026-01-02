@@ -20,7 +20,7 @@
     "browser-image-compression": "^2.0.2",
     "docx": "^9.5.1",
     "draftify": "^0.1.2",
-    "draftify-react": "^0.1.5",
+    "draftify-react": "^0.2.0",
     "file-saver": "^2.0.5",
     "firebase": "^12.4.0",
     "firebase-admin": "^13.5.0",

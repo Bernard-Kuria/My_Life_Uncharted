@@ -190,7 +190,7 @@ export default function CreateModifyBlog({
             </Link>
           </div>
         ) : (
-          <div className="flex flex-col md:flex-row justify-between gap-2">
+          <div className="flex md:flex-row justify-between gap-2">
             {type === "blogs" ? (
               <button
                 className="create-modify-btn text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) dark:border-(--secondary-blue) dark:text-(--secondary-blue)"

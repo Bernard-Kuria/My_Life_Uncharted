@@ -9,7 +9,8 @@ import {
   dragLeaveHandler,
   dropHandler,
   onFileChange,
-} from "@lib/Draftify/mediaHooks/mediaInteractions";
+} from "draftify-react";
+
 import { getWordAfterColon, getWordBeforeColon } from "@utils/conversions";
 import { useRequireAuth } from "@hooks/useRequireAuth";
 
@@ -198,7 +199,7 @@ export default function Settings() {
                     setCompressionProgress
                   );
                 }}
-                onDragOver={(e) => dragHandler(e)}
+                onDragOver={(e) => dragHandler(e, outputRef)}
                 onDragLeave={(e) => dragLeaveHandler(e, outputRef)}
                 onMouseLeave={(e) => dragLeaveHandler(e, outputRef)}
                 className="flex-1 border-2 border-(--secondary-blue) border-dashed rounded-[10px] text-(--secondary-blue) w-full grid items-center"
