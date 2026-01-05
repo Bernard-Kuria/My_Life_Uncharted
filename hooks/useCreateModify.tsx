@@ -157,9 +157,11 @@ export function useCreateModify(id: string, type: string) {
 
     return {
       image:
-        blocks.find((b) => b.type === "image")?.data.src ?? "image placeholder",
+        blocks.find((b) => b.type === "image" || b.type === "custom-1")?.data
+          .src ?? "image placeholder",
       video:
-        blocks.find((b) => b.type === "video")?.data.src ?? "video placeholder",
+        blocks.find((b) => b.type === "video" || b.type === "custom-2")?.data
+          .src ?? "video placeholder",
       topic: toCamelCase(selectedTopic),
       title: blocks.find((b) => b.type === "heading")?.data.text ?? "title",
       subtitle:
