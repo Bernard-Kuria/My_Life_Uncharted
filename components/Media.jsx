@@ -310,9 +310,9 @@ export function MediaOutput({ customBlock }) {
   }, [customBlock.data.src]);
 
   return (
-    <div key={customBlock.id} className="relative w-full h-[400px] media">
+    <div key={customBlock.id} className="relative w-full h-[400px]">
       {url && (
-        <video autoPlay muted controls>
+        <video autoPlay muted controls className="media">
           <source src={url} type="video/mp4" />
         </video>
       )}

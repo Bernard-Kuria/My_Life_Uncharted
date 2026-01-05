@@ -101,6 +101,7 @@ export default function CreateModifyBlog({
             CustomOutput2={MediaOutput}
             defaultCustomData1={defaultImgData}
             defaultCustomData2={defaultVidData}
+            backgroundEnable={true}
           />
         )}
 

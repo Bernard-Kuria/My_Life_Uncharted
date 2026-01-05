@@ -105,6 +105,10 @@ body {
   @apply border border-(--secondary-blue) rounded-[10px] p-2 w-full;
 }
 
+.media {
+  @apply w-full h-full object-cover;
+}
+
 /* Like Bounce */
 .like-bounce {
   animation: likeBounce 200ms ease-out;

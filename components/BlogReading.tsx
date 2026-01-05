@@ -7,6 +7,7 @@ import Tooltip from "./Tooltip";
 // types
 import type { DraftifyBlock } from "draftify";
 import type { Blog } from "@lib/types/types";
+import { ImageOutput, MediaOutput } from "./Media";
 
 export default function BlogArea({
   blogContent,
@@ -51,7 +52,11 @@ export default function BlogArea({
 
       {blogContent ? (
         <div className="flex-1 flex flex-col gap-3">
-          <DraftifyBlocksReader blocksData={blogContent} />
+          <DraftifyBlocksReader
+            blocksData={blogContent}
+            CustomOutput1={ImageOutput}
+            CustomOutput2={MediaOutput}
+          />
         </div>
       ) : (
         <div>No blog data</div>
