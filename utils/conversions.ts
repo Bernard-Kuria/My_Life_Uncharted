@@ -1,7 +1,5 @@
-import { DraftifyBlock } from "@node_modules/draftify-react";
 import { BlogTopicsType } from "../lib/types/types";
 import { getAllTopics } from "@services/topics";
-import { DraftifyBlockType } from "@node_modules/draftify/dist";
 
 // converts ASCII value "%26" back to normal string "&"
 export const cleanUpLink = (link: string) =>

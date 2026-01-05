@@ -31,3 +31,14 @@ export const defaultMilestones: Milestone[] = [
     value: "",
   },
 ];
+
+export const defaultImgData: { src: string; alt: string; caption: string } = {
+  src: "",
+  alt: "",
+  caption: "",
+};
+
+export const defaultVidData: { src: string; provider: string } = {
+  src: "",
+  provider: "",
+};

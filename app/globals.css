@@ -70,7 +70,7 @@ html.dark {
 }
 
 .icon-size {
-  @apply w-[12px] h-[12px];
+  @apply w-3 h-3;
 }
 
 /* Other styles */
@@ -81,7 +81,7 @@ body {
 }
 
 .page-layout {
-  @apply box-border lg:w-[1024px] w-full px-2 lg:mx-auto;
+  @apply box-border lg:w-5xl w-full px-2 lg:mx-auto;
 }
 
 .section-title {
@@ -98,42 +98,7 @@ body {
 
 /* Draftify Styles */
 .logo-text {
-  @apply bg-gradient-to-br from-blue-800 to-purple-500 bg-clip-text text-transparent;
-}
-
-.heading {
-  font-family: var(--font-lexend);
-  @apply w-full outline-none text-[#232323] text-[24px] md:text-[32px] font-semibold;
-}
-
-.subheading {
-  font-family: var(--font-lexend);
-  @apply w-full outline-none text-[#232323] text-[18px] md:text-[24px] font-medium;
-}
-
-.paragraph {
-  font-family: var(--font-mulish);
-  @apply w-full h-fit outline-none text-[#232323] text-[14px] md:text-[16px] font-normal;
-}
-
-.quote {
-  @apply w-full border-l-4 outline-none text-[#232323] text-[16px] md:text-[18px] italic pl-2;
-}
-
-.list {
-  @apply outline-none text-[#232323] text-sm;
-}
-
-.link {
-  @apply text-(--primary-blue) w-full outline-none text-[#232323] text-sm;
-}
-
-.code {
-  @apply font-mono bg-black text-[#232323] text-white p-2 w-full whitespace-pre-wrap;
-}
-
-.media {
-  @apply object-cover w-full h-full;
+  @apply bg-linear-to-br from-blue-800 to-purple-500 bg-clip-text text-transparent;
 }
 
 .border-style {
@@ -146,7 +111,7 @@ body {
 }
 
 .create-modify-btn {
-  @apply border p-2 hover:text-white cursor-pointer rounded-[10px];
+  @apply border p-2 hover:text-white cursor-pointer rounded-[10px] text-center;
 }
 
 option {

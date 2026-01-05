@@ -7,11 +7,13 @@ import { useRouter } from "next/navigation";
 import Loading from "@app/loading";
 
 import SectionTitle from "@c/SectionTitle";
+import MediaEditor, { ImageOutput, MediaOutput } from "@c/Media";
+import DraftifyReact from "draftify-react";
+import "draftify-react/styles.css";
 
 import { useCreateModify } from "@hooks/useCreateModify";
 import { toCamelCase } from "@utils/conversions";
-import DraftifyReact from "@node_modules/draftify-react";
-import "draftify-react/styles.css";
+import { defaultImgData, defaultVidData } from "@utils/constants";
 
 export default function CreateModifyBlog({
   params,
@@ -78,7 +80,28 @@ export default function CreateModifyBlog({
         </Link>
 
         {blocksData && (
-          <DraftifyReact blocksData={blocksData} modifyBlocks={modifyBlocks} />
+          <DraftifyReact
+            blocksData={blocksData}
+            modifyBlocks={modifyBlocks}
+            options={[
+              "heading",
+              "subheading",
+              "paragraph",
+              "list",
+              "quote",
+              "code",
+              "link",
+              "table",
+              "custom-1-Img",
+              "custom-2-Vid",
+            ]}
+            CustomEditor1={MediaEditor}
+            CustomEditor2={MediaEditor}
+            CustomOutput1={ImageOutput}
+            CustomOutput2={MediaOutput}
+            defaultCustomData1={defaultImgData}
+            defaultCustomData2={defaultVidData}
+          />
         )}
 
         <div className="grid md:flex gap-5 md:gap-[100px]">
@@ -190,7 +213,7 @@ export default function CreateModifyBlog({
             </Link>
           </div>
         ) : (
-          <div className="flex md:flex-row justify-between gap-2">
+          <div className="flex flex-col md:flex-row justify-between gap-2">
             {type === "blogs" ? (
               <button
                 className="create-modify-btn text-(--primary-blue) border-(--primary-blue) hover:bg-(--primary-blue) dark:border-(--secondary-blue) dark:text-(--secondary-blue)"

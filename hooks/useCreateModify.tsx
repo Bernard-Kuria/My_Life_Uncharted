@@ -6,7 +6,7 @@ import { nanoid } from "nanoid";
 import { toCamelCase } from "@utils/conversions";
 import { defaultMeta } from "@utils/constants";
 
-import type { DraftifyBlock } from "@node_modules/draftify-react";
+import type { DraftifyBlock } from "draftify-react";
 
 import {
   AnyMeta,

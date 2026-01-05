@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 import { Mulish, Lexend } from "next/font/google";
 
@@ -36,6 +36,11 @@ export const metadata: Metadata = {
     siteName: "My Life Uncharted",
     locale: "en_US",
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({
