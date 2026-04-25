@@ -18,7 +18,7 @@ export async function getBlogMetaById(id: string) {
     });
     if (!res.ok)
       throw new Error(
-        `Failed to fetch blog meta for provided id: ${res.status}`
+        `Failed to fetch blog meta for provided id: ${res.status}`,
       );
     const data = await res.json();
     return { type: "blogs", id: data.id, blogMeta: data.blogMeta };

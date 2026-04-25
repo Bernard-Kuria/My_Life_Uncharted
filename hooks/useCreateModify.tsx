@@ -38,9 +38,14 @@ import {
   updateDraftMeta,
 } from "@services/drafts";
 import { deleteComments } from "@services/comments";
+import { DraftifyDocument } from "@node_modules/draftify/dist";
 
 export function useCreateModify(id: string, type: string) {
   // data
+  const [draftifyDoc, modifyDoc] = useState<DraftifyDocument>({
+    version: "0.0.2",
+    blocks: [],
+  });
   const [blocksData, modifyBlocks] = useState<DraftifyBlock[]>([]);
   const [blogMeta, setBlogMeta] = useState<AnyMeta | null>(null);
 
@@ -59,7 +64,7 @@ export function useCreateModify(id: string, type: string) {
   const [updateDraftStatus, setUpdateDraftStatus] = useState(false);
   const [deleteStatus, setDeleteStatus] = useState(false);
   const [topicStatus, setTopicStatus] = useState<boolean | undefined>(
-    undefined
+    undefined,
   );
   const [tagStatus, setTagStatus] = useState<boolean | undefined>(undefined);
 
@@ -83,8 +88,8 @@ export function useCreateModify(id: string, type: string) {
           id === "new"
             ? { type: "blogs", id: "", blogMeta: defaultMeta }
             : type === "blogs"
-            ? ((await getBlogMetaById(id)) as Blog)
-            : ((await getDraftMetaById(id)) as Draft);
+              ? ((await getBlogMetaById(id)) as Blog)
+              : ((await getDraftMetaById(id)) as Draft);
 
         let meta: AnyMeta;
 
@@ -98,11 +103,13 @@ export function useCreateModify(id: string, type: string) {
 
         if (!content || !meta) {
           setError(`Blog with ID ${id} not found`);
-          modifyBlocks([]);
           return;
         }
 
-        modifyBlocks(content ?? []);
+        modifyDoc((prev) => {
+          return { ...prev, blocks: content ?? [] };
+        });
+
         setBlogMeta(meta ?? defaultMeta);
 
         // fetching tags and topics
@@ -122,7 +129,7 @@ export function useCreateModify(id: string, type: string) {
         console.error(err);
         console.error(
           "Error fetching tags or blog:",
-          err instanceof Error ? err.message : err
+          err instanceof Error ? err.message : err,
         );
       } finally {
         setLoading(false);
@@ -142,7 +149,7 @@ export function useCreateModify(id: string, type: string) {
   const handleTagChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
     selectedTags: string[],
-    setSelectedTags: Dispatch<SetStateAction<string[]>>
+    setSelectedTags: Dispatch<SetStateAction<string[]>>,
   ) => {
     const newTag = e.target.value;
     if (!selectedTags.includes(newTag)) {
@@ -153,7 +160,7 @@ export function useCreateModify(id: string, type: string) {
   // Called when adding or updating blogs or drafts
 
   const updates = () => {
-    const blocks = blocksData ?? [];
+    const blocks = draftifyDoc.blocks ?? [];
 
     return {
       image:
@@ -176,14 +183,14 @@ export function useCreateModify(id: string, type: string) {
   const handleAddBlog = async () => {
     const BlogId = nanoid();
 
-    if (!blocksData) {
+    if (!draftifyDoc.blocks) {
       console.error("No blog content found, aborting...");
       return;
     }
 
     try {
       setAddBlogStatus(true);
-      await addBlogContent({ id: BlogId, blogContent: blocksData });
+      await addBlogContent({ id: BlogId, blogContent: draftifyDoc.blocks });
       await addBlogMeta({
         type: "blogs",
         id: BlogId,
@@ -201,14 +208,14 @@ export function useCreateModify(id: string, type: string) {
   };
 
   const handleUpdateBlog = async () => {
-    if (!blogMeta || !blocksData) {
+    if (!blogMeta || !draftifyDoc.blocks) {
       console.error("No blog content found, aborting...");
       return;
     }
 
     try {
       setUpdateBlogStatus(true);
-      await updateBlogContent({ id: id, blogContent: blocksData });
+      await updateBlogContent({ id: id, blogContent: draftifyDoc.blocks });
       await updateBlogMeta({
         id: id,
         blogMeta: updates(),
@@ -234,14 +241,14 @@ export function useCreateModify(id: string, type: string) {
   const handleAddDraft = async () => {
     const BlogId = nanoid();
 
-    if (!blocksData) {
+    if (!draftifyDoc.blocks) {
       console.error("No blog content found, aborting...");
       return;
     }
 
     try {
       setAddDraftStatus(true);
-      await addBlogContent({ id: BlogId, blogContent: blocksData });
+      await addBlogContent({ id: BlogId, blogContent: draftifyDoc.blocks });
       await addDraftMeta({
         type: "draft",
         id: BlogId,
@@ -253,14 +260,14 @@ export function useCreateModify(id: string, type: string) {
   };
 
   const handleUpdateDraft = async () => {
-    if (!blogMeta || !blocksData) {
+    if (!blogMeta || !draftifyDoc.blocks) {
       console.error("No blog content found, aborting...");
       return;
     }
 
     try {
       setUpdateDraftStatus(true);
-      await updateBlogContent({ id: id, blogContent: blocksData });
+      await updateBlogContent({ id: id, blogContent: draftifyDoc.blocks });
       await updateDraftMeta({
         id: id,
         draftMeta: updates(),
@@ -271,7 +278,7 @@ export function useCreateModify(id: string, type: string) {
   };
 
   const handleConvertDraftToBlog = async () => {
-    if (!blocksData) {
+    if (!draftifyDoc.blocks) {
       console.error("No blog content found, aborting...");
       return;
     }
@@ -306,6 +313,10 @@ export function useCreateModify(id: string, type: string) {
   };
 
   return {
+    draftifyDoc,
+    modifyDoc,
+    blocksData,
+    modifyBlocks,
     selectedTopic,
     setSelectedTopic,
     topicStatus,
@@ -318,8 +329,6 @@ export function useCreateModify(id: string, type: string) {
     tagList,
     loading,
     error,
-    blocksData,
-    modifyBlocks,
     handleTagChange,
     handleAddBlog,
     handleAddDraft,

@@ -57,8 +57,8 @@ export default function CreateModifyBlog({
     updateBlogStatus,
     updateDraftStatus,
     deleteStatus,
-    blocksData,
-    modifyBlocks,
+    draftifyDoc,
+    modifyDoc,
   } = useCreateModify(id, type);
 
   if (loading)
@@ -67,7 +67,7 @@ export default function CreateModifyBlog({
 
   return (
     <div className="md:flex md:flex-col md:justify-center">
-      <div className="page-layout flex flex-col gap-[30px]">
+      <div className="page-layout flex flex-col gap-7.5">
         <SectionTitle
           title={
             id === "new"
@@ -79,10 +79,10 @@ export default function CreateModifyBlog({
           &larr; Back
         </Link>
 
-        {blocksData && (
+        {draftifyDoc && (
           <DraftifyReact
-            blocksData={blocksData}
-            modifyBlocks={modifyBlocks}
+            draftifyDoc={draftifyDoc}
+            setDoc={modifyDoc}
             options={[
               "heading",
               "subheading",
@@ -101,11 +101,12 @@ export default function CreateModifyBlog({
             CustomOutput2={MediaOutput}
             defaultCustomData1={defaultImgData}
             defaultCustomData2={defaultVidData}
-            backgroundEnable={true}
+            backgroundEnable
+            ToolBarEnable
           />
         )}
 
-        <div className="grid md:flex gap-5 md:gap-[100px]">
+        <div className="grid md:flex gap-5 md:gap-25">
           {/* Topic Selector */}
           <div className="grid gap-2.5">
             Select Topic{" "}
@@ -137,7 +138,7 @@ export default function CreateModifyBlog({
             <span className="text-sm text-red-500">
               {tagStatus === false && "*atleast one tag is required!*"}
             </span>
-            <div className="flex gap-[5px] border p-1 rounded-[10px]">
+            <div className="flex gap-1.25 border p-1 rounded-[10px]">
               {selectedTags &&
                 selectedTags.length > 0 &&
                 selectedTags.map((tag) => (
@@ -168,7 +169,7 @@ export default function CreateModifyBlog({
                           <option key={idx} value={tag}>
                             {tag}
                           </option>
-                        )
+                        ),
                     )
                   : null}
               </select>

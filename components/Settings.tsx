@@ -153,7 +153,7 @@ export default function Settings() {
                     src={
                       file instanceof File
                         ? URL.createObjectURL(file)
-                        : url ?? ""
+                        : (url ?? "")
                     }
                     alt="preview"
                     fill
@@ -169,7 +169,7 @@ export default function Settings() {
                       src={
                         file instanceof File
                           ? URL.createObjectURL(file)
-                          : url ?? ""
+                          : (url ?? "")
                       }
                       type="video/mp4"
                     />
@@ -196,7 +196,7 @@ export default function Settings() {
                     setFile,
                     setFileName,
                     setCompressing,
-                    setCompressionProgress
+                    setCompressionProgress,
                   );
                 }}
                 onDragOver={(e) => dragHandler(e, outputRef)}
@@ -215,7 +215,7 @@ export default function Settings() {
                       setFile,
                       setFileName,
                       setCompressing,
-                      setCompressionProgress
+                      setCompressionProgress,
                     );
                   }}
                 />
@@ -245,7 +245,7 @@ export default function Settings() {
                         getWordBeforeColon(imageName) === "topic" &&
                         blogTopics.find(
                           (topic) =>
-                            topic.image === getWordAfterColon(imageName)
+                            topic.image === getWordAfterColon(imageName),
                         )?.id) ||
                       "",
                     imageName: imageName || "",
@@ -313,7 +313,7 @@ export default function Settings() {
               className="border border-(--secondary-blue) w-full p-1"
               onChange={(e) => {
                 setTopicModify(
-                  blogTopics?.find((topic) => topic.title === e.target.value)
+                  blogTopics?.find((topic) => topic.title === e.target.value),
                 );
                 setModifyTopicStatus("");
               }}
@@ -370,7 +370,7 @@ export default function Settings() {
               const topic = e.target.value as keyof typeof milestones | "null";
               setMilestoneTopic(topic !== "null" ? topic : null);
               setEditableMilestones(
-                topic !== "null" ? [...milestones[topic]] : []
+                topic !== "null" ? [...milestones[topic]] : [],
               );
               setUpdateMilestoneStatus("");
             }}
@@ -422,14 +422,9 @@ export default function Settings() {
               ))
             ) : (
               <div className="grid grid-cols-2 gap-2.5">
-                <input className="border-style" />
-                <input className="border-style" />
-                <input className="border-style" />
-                <input className="border-style" />
-                <input className="border-style" />
-                <input className="border-style" />
-                <input className="border-style" />
-                <input className="border-style" />
+                {new Array(8).map((_, idx) => (
+                  <input key={idx} className="border-style" />
+                ))}
               </div>
             )}
           </div>

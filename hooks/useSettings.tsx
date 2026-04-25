@@ -366,11 +366,16 @@ export const useSettings = () => {
   };
 
   return {
+    // blogs data
     blogTopics,
+    topics,
+    landingPageImages,
+
+    // blog & blog topic image modification states
     imageName,
     setImageName,
-    landingPageImages,
-    topics,
+
+    // media states and interactions
     outputRef,
     file,
     fileName,
@@ -381,25 +386,27 @@ export const useSettings = () => {
     compressionProgress,
     setCompressionProgress,
     deleting,
-    type,
     error,
     setError,
+    type,
     setFile,
     setFileName,
-    setUrl,
     handleRemove,
     handleTopicImageUpload,
     mergingTopicAndImage,
+
+    // topic statuses
     topicType,
     setTopicType,
     newTopic,
     setNewTopic,
-    topicModify,
     setTopicModify,
     modifyTopicStatus,
     setModifyTopicStatus,
     handleTopicUpdate,
     handleTopicRemove,
+
+    // milestone statuses
     milestoneTopic,
     setMilestoneTopic,
     milestones,

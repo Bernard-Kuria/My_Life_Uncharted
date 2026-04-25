@@ -60,7 +60,7 @@ export default function Contact() {
   return (
     <div className="flex flex-col justify-center items-center page-layout">
       <form
-        className="flex flex-col gap-5 w-full md:w-[400px]"
+        className="flex flex-col gap-5 w-full md:w-100"
         onSubmit={(e) => {
           e.preventDefault();
           handleSubmit();
@@ -94,7 +94,7 @@ export default function Contact() {
             <textarea
               ref={thoughtRef}
               placeholder="share your thoughts..."
-              className="px-4 py-2 border border-(--secondary-blue) w-full h-[200px] rounded-[10px] text-foreground"
+              className="px-4 py-2 border border-(--secondary-blue) w-full h-50 rounded-[10px] text-foreground"
             />
             <div>Your email:</div>
             <div className="flex items-center gap-2.5">
@@ -105,7 +105,7 @@ export default function Contact() {
                 required
                 className="flex-1 border border-(--secondary-blue) w-full rounded-[10px] px-4 py-2 text-foreground"
               />
-              <div className="w-[50px] h-full">
+              <div className="w-12.5 h-full">
                 <button type="submit" className="w-full button">
                   <FontAwesomeIcon
                     icon={["far", "paper-plane"]}

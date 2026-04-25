@@ -43,7 +43,7 @@ export default function Page({
   if (!loaded) return <Loading loading="Loading Blog" />;
 
   return (
-    <div className="page-layout grid gap-[30px]">
+    <div className="page-layout grid gap-7.5">
       <button
         className="cursor-pointer w-fit detail-text"
         onClick={() => router.push(`/${topicPage}`)}

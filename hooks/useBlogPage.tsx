@@ -46,7 +46,7 @@ export const useBlogPage = (blogpage: string, topicPage: string) => {
 
   useEffect(() => {
     const viewedBlogs: string[] = JSON.parse(
-      localStorage.getItem("viewedBlogs") || "[]"
+      localStorage.getItem("viewedBlogs") || "[]",
     );
 
     if (viewed || viewedBlogs.includes(blogpage)) {
@@ -76,6 +76,7 @@ export const useBlogPage = (blogpage: string, topicPage: string) => {
 
   useEffect(() => {
     let mounted = true;
+    console.log(blogId);
 
     async function fetchData() {
       try {
@@ -123,7 +124,7 @@ export const useBlogPage = (blogpage: string, topicPage: string) => {
 
   const handleShare = async () => {
     const shareUrl = `${window.location.origin}/${cleanUpLink(
-      topicPage
+      topicPage,
     )}/${blogId}`;
 
     try {
@@ -193,7 +194,7 @@ export const useBlogPage = (blogpage: string, topicPage: string) => {
     } catch (error) {
       console.error(
         `Error updating blog ${views} ${comments} ${likes}}:`,
-        error
+        error,
       );
     }
   };

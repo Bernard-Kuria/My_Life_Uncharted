@@ -17,10 +17,11 @@
     "@fortawesome/react-fontawesome": "^3.1.0",
     "@georgedoescode/spline": "^1.0.1",
     "@opentelemetry/api": "^1.9.0",
+    "@tailwindcss/vite": "^4.2.4",
     "browser-image-compression": "^2.0.2",
     "docx": "^9.5.1",
     "draftify": "^0.1.3",
-    "draftify-react": "^0.2.8",
+    "draftify-react": "^0.3.4",
     "file-saver": "^2.0.5",
     "firebase": "^12.4.0",
     "firebase-admin": "^13.5.0",
@@ -39,7 +40,12 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
-    "tailwindcss": "^4",
+    "tailwindcss": "^4.2.4",
     "typescript": "5.9.3"
+  },
+  "overrides": {
+    "postcss": "^8.5.10",
+    "uuid": "^14.0.0",
+    "@tootallnate/once": "^3.0.1"
   }
 }
