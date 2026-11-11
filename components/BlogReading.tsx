@@ -8,6 +8,7 @@ import Tooltip from "./Tooltip";
 import type { DraftifyBlock } from "draftify";
 import type { Blog } from "@lib/types/types";
 import { ImageOutput, MediaOutput } from "./Media";
+import { DocumentOutput } from "./Document";
 
 export default function BlogArea({
   blogContent,
@@ -56,6 +57,7 @@ export default function BlogArea({
             blocksData={blogContent}
             CustomOutput1={ImageOutput}
             CustomOutput2={MediaOutput}
+            CustomOutput3={DocumentOutput}
           />
         </div>
       ) : (

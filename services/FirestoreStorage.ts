@@ -186,6 +186,16 @@ export async function getBlogVideoUrl(imageName: string) {
   }
 }
 
+export async function getBlogDocumentUrl(documentName: string) {
+  const documentRef = ref(storage, `blog/documents/${documentName}`);
+  try {
+    return await getDownloadURL(documentRef);
+  } catch (error) {
+    console.error("Error fetching blog document URL:", error);
+    return null;
+  }
+}
+
 export async function uploadBlogImage(
   file: File | Blob
 ): Promise<string | null> {
@@ -212,6 +222,22 @@ export async function uploadBlogVideo(
   }
 }
 
+export async function uploadBlogDocument(
+  file: File | Blob,
+  documentName = (file as File).name
+): Promise<string | null> {
+  try {
+    const storageRef = ref(storage, `blog/documents/${documentName}`);
+    await uploadBytes(storageRef, file, {
+      contentType: file.type || "application/octet-stream",
+    });
+    return await getDownloadURL(storageRef);
+  } catch (error) {
+    console.error("Error uploading document:", error);
+    return null;
+  }
+}
+
 export async function deleteBlogImage(fullUrl: string): Promise<boolean> {
   try {
     const storageRef = ref(storage, `blog/images/${fullUrl}`);
@@ -230,6 +256,19 @@ export async function deleteBlogVideo(fullUrl: string): Promise<boolean> {
     return true;
   } catch (err) {
     console.error("Error deleting file:", err);
+    return false;
+  }
+}
+
+export async function deleteBlogDocument(
+  documentName: string
+): Promise<boolean> {
+  try {
+    const storageRef = ref(storage, `blog/documents/${documentName}`);
+    await deleteObject(storageRef);
+    return true;
+  } catch (err) {
+    console.error("Error deleting document:", err);
     return false;
   }
 }

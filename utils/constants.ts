@@ -42,3 +42,15 @@ export const defaultVidData: { src: string; provider: string } = {
   src: "",
   provider: "",
 };
+
+export const defaultDocData: {
+  src: string;
+  name: string;
+  mimeType: string;
+  size: number;
+} = {
+  src: "",
+  name: "",
+  mimeType: "",
+  size: 0,
+};

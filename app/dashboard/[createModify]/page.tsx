@@ -8,12 +8,17 @@ import Loading from "@app/loading";
 
 import SectionTitle from "@c/SectionTitle";
 import MediaEditor, { ImageOutput, MediaOutput } from "@c/Media";
+import DocumentEditor, { DocumentOutput } from "@c/Document";
 import DraftifyReact from "draftify-react";
 import "draftify-react/styles.css";
 
 import { useCreateModify } from "@hooks/useCreateModify";
 import { toCamelCase } from "@utils/conversions";
-import { defaultImgData, defaultVidData } from "@utils/constants";
+import {
+  defaultDocData,
+  defaultImgData,
+  defaultVidData,
+} from "@utils/constants";
 
 export default function CreateModifyBlog({
   params,
@@ -94,13 +99,17 @@ export default function CreateModifyBlog({
               "table",
               "custom-1-Img",
               "custom-2-Vid",
+              "custom-3-Doc",
             ]}
             CustomEditor1={MediaEditor}
             CustomEditor2={MediaEditor}
+            CustomEditor3={DocumentEditor}
             CustomOutput1={ImageOutput}
             CustomOutput2={MediaOutput}
+            CustomOutput3={DocumentOutput}
             defaultCustomData1={defaultImgData}
             defaultCustomData2={defaultVidData}
+            defaultCustomData3={defaultDocData}
             backgroundEnable
             ToolBarEnable
           />
